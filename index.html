@@ -3001,6 +3001,435 @@ body.dark #analysisPreferenceSelect.active{
 }
 </style>
 
+
+<style id="jp-dba-kotcharam">
+#btnDBAKotcharam{background:linear-gradient(135deg,#0284c7,#2563eb)!important;color:#fff!important;border-color:#0369a1!important}
+#btnDBAKotcharam.active{background:linear-gradient(135deg,#0f766e,#0284c7)!important;color:#fff!important}
+#tblKotcharamDBA{border-radius:14px;overflow:hidden}
+#tblKotcharamDBA thead th{background:linear-gradient(90deg,#0284c7,#2563eb)!important;color:#fff!important;font-weight:850}
+#tblKotcharamDBA tbody tr:nth-child(even){background:rgba(224,242,254,.55)}
+body.dark #tblKotcharamDBA tbody tr:nth-child(even){background:#10243a}
+@media(max-width:900px){
+ #tblKotcharamDBA thead{display:none}
+ #tblKotcharamDBA tr{display:block;background:var(--card,#fff);border:1px solid var(--outline,#ddd);border-radius:12px;padding:8px 10px;margin-bottom:8px}
+ #tblKotcharamDBA td{display:flex;justify-content:space-between;gap:14px;border:none;border-bottom:1px dashed var(--outline,#ddd);padding:8px 4px}
+ #tblKotcharamDBA td::before{content:attr(data-label);font-weight:700;color:var(--muted,#666);min-width:44%}
+}
+</style>
+
+
+<style id="jp-bhava-list-view-v1">
+#bhavaChooser{
+  display:flex!important;
+  align-items:center;
+  justify-content:center;
+  width:100%;
+  box-sizing:border-box;
+}
+#bhavaViewSelect{
+  min-height:36px;
+  min-width:220px;
+  max-width:310px;
+  padding:7px 38px 7px 12px;
+  border:1px solid #7c3aed;
+  border-radius:10px;
+  background:linear-gradient(135deg,#f5f3ff,#ede9fe);
+  color:#4c1d95;
+  font-weight:850;
+  font-size:13px;
+  cursor:pointer;
+  box-shadow:0 2px 7px rgba(124,58,237,.13);
+  outline:none;
+}
+#bhavaViewSelect:focus{
+  border-color:#6d28d9;
+  box-shadow:0 0 0 3px rgba(124,58,237,.18),0 3px 10px rgba(124,58,237,.12);
+}
+#bhavaViewSelect.active{
+  border-color:#16a34a;
+  background:linear-gradient(135deg,#16a34a,#0d9488);
+  color:#fff;
+}
+#bhavaLegacyButtons{
+  display:none!important;
+}
+body.dark #bhavaViewSelect{
+  border-color:#8b5cf6;
+  background:#281b45;
+  color:#ddd6fe;
+}
+body.dark #bhavaViewSelect.active{
+  background:linear-gradient(135deg,#7c3aed,#4f46e5);
+  color:#fff;
+}
+@media(max-width:700px){
+  #bhavaChooser{
+    align-items:stretch!important;
+    flex-direction:column;
+    gap:6px!important;
+    padding:8px;
+  }
+  #bhavaChooser strong{
+    text-align:center;
+    margin-right:0!important;
+  }
+  #bhavaViewSelect{
+    width:100%;
+    max-width:100%;
+    min-width:0;
+  }
+}
+</style>
+
+
+<style id="jp-planet-lagna-list-v1">
+/* ===== PLANET / LAGNA / DEFAULT DASA PREFERENCE LIST ===== */
+#planetLagnaPreferenceAboveChart{
+  width:100%;
+  box-sizing:border-box;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  margin:6px 0 9px;
+  padding:8px 10px;
+  border:1px solid #c4b5fd;
+  border-radius:14px;
+  background:linear-gradient(90deg,#f5f3ff,#eff6ff,#ecfeff);
+  box-shadow:0 4px 14px rgba(79,70,229,.08);
+}
+#planetLagnaPreferenceAboveChart .planet-lagna-preference-label{
+  font-weight:900;
+  color:#4338ca;
+  white-space:nowrap;
+}
+#planetLagnaViewSelect{
+  min-height:38px;
+  min-width:260px;
+  max-width:360px;
+  padding:7px 38px 7px 12px;
+  border:1px solid #6366f1;
+  border-radius:10px;
+  background:linear-gradient(135deg,#eef2ff,#e0f2fe);
+  color:#1e1b4b;
+  font-weight:850;
+  font-size:13px;
+  cursor:pointer;
+  box-shadow:0 2px 7px rgba(79,70,229,.12);
+  outline:none;
+}
+#planetLagnaViewSelect:focus{
+  border-color:#4f46e5;
+  box-shadow:0 0 0 4px rgba(79,70,229,.12);
+}
+#planetLagnaViewSelect.active{
+  background:linear-gradient(135deg,#7c3aed,#2563eb);
+  color:#fff;
+  border-color:#4338ca;
+}
+#planetButtons,
+#btnDefaultDasa{
+  display:none!important;
+}
+body.dark #planetLagnaPreferenceAboveChart{
+  border-color:#374151;
+  background:linear-gradient(90deg,#18152b,#10233a,#102525);
+}
+body.dark #planetLagnaPreferenceAboveChart .planet-lagna-preference-label{
+  color:#c4b5fd;
+}
+body.dark #planetLagnaViewSelect{
+  background:#17152b;
+  color:#e0e7ff;
+  border-color:#6366f1;
+}
+body.dark #planetLagnaViewSelect.active{
+  background:linear-gradient(135deg,#7c3aed,#2563eb);
+  color:#fff;
+}
+@media(max-width:700px){
+  #planetLagnaPreferenceAboveChart{
+    align-items:stretch;
+    flex-direction:column;
+    gap:6px;
+    padding:8px;
+  }
+  #planetLagnaPreferenceAboveChart .planet-lagna-preference-label{
+    text-align:center;
+  }
+  #planetLagnaViewSelect{
+    width:100%;
+    min-width:0;
+    max-width:100%;
+  }
+}
+</style>
+
+
+
+
+<style id="jp-navamsa-info-slideshow-v2">
+/* =========================================================
+   NAVAMSA INFORMATION SLIDESHOW — INSIDE THE CHART CENTRE
+   It uses the SAME information slides as the Rasi slideshow:
+   12 Bhavas, 9 Planets, Thithi, Karana, Yoga, Nakshatra owners.
+   ========================================================= */
+
+/* Give Navamsa the same South-Indian 4×4-with-centre layout
+   as the Rasi chart. The 12 Navamsa boxes stay around the centre. */
+#navamsaChart{
+  display:grid !important;
+  grid-template-columns:repeat(4,minmax(0,1fr)) !important;
+  grid-template-areas:
+    "r10 r11 r12 r01"
+    "r09 photo photo r02"
+    "r08 photo photo r03"
+    "r07 r06 r05 r04" !important;
+  gap:6px !important;
+  position:relative;
+  min-height:0;
+}
+#navamsaChart .box.r01{grid-area:r01!important}
+#navamsaChart .box.r02{grid-area:r02!important}
+#navamsaChart .box.r03{grid-area:r03!important}
+#navamsaChart .box.r04{grid-area:r04!important}
+#navamsaChart .box.r05{grid-area:r05!important}
+#navamsaChart .box.r06{grid-area:r06!important}
+#navamsaChart .box.r07{grid-area:r07!important}
+#navamsaChart .box.r08{grid-area:r08!important}
+#navamsaChart .box.r09{grid-area:r09!important}
+#navamsaChart .box.r10{grid-area:r10!important}
+#navamsaChart .box.r11{grid-area:r11!important}
+#navamsaChart .box.r12{grid-area:r12!important}
+
+#navamsaInfoSlideshow{
+  grid-area:photo !important;
+  position:relative !important;
+  inset:auto !important;
+  z-index:20;
+  min-width:0;
+  min-height:0;
+  margin:6px;
+  padding:0;
+  border:2px solid var(--accent);
+  border-radius:12px;
+  background:var(--card);
+  box-shadow:var(--shadow);
+  overflow:hidden;
+  display:flex;
+  align-items:stretch;
+  justify-content:center;
+  box-sizing:border-box;
+}
+#navamsaInfoSlideshow .navamsa-info-slide{
+  width:100%;
+  height:100%;
+  min-height:0;
+  padding:10px;
+  box-sizing:border-box;
+  overflow:auto;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+}
+#navamsaInfoSlideshow .navamsa-info-title{
+  text-align:center;
+  font-size:18px;
+  font-weight:950;
+  color:var(--brand);
+  margin:0 0 5px;
+}
+#navamsaInfoSlideshow .navamsa-info-subtitle{
+  text-align:center;
+  font-size:10.5px;
+  font-weight:700;
+  opacity:.82;
+  margin:0 0 7px;
+  line-height:1.25;
+}
+#navamsaInfoSlideshow .navamsa-info-grid{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:4px;
+  width:100%;
+}
+#navamsaInfoSlideshow .navamsa-info-item{
+  min-height:40px;
+  padding:5px 4px;
+  box-sizing:border-box;
+  border:1px solid var(--outline);
+  border-radius:7px;
+  background:rgba(255,255,255,.62);
+  text-align:center;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:10px;
+  line-height:1.2;
+  font-weight:700;
+  text-decoration:none;
+  color:var(--ink);
+}
+#navamsaInfoSlideshow .navamsa-info-item strong{
+  font-weight:950;
+  color:var(--brand);
+}
+#navamsaInfoSlideshow .navamsa-planet-name{
+  font-size:11px;
+  font-weight:950;
+  color:var(--brand);
+  margin-bottom:1px;
+}
+#navamsaInfoSlideshow .navamsa-planet-desc{
+  font-weight:700;
+}
+#navamsaInfoSlideshow .navamsa-info-nav{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:6px;
+  margin-top:6px;
+}
+#navamsaInfoSlideshow .navamsa-info-nav button{
+  border:1px solid #6366f1;
+  border-radius:7px;
+  min-height:25px;
+  padding:3px 8px;
+  background:linear-gradient(135deg,#eef2ff,#e0e7ff);
+  color:#3730a3;
+  font-weight:850;
+  cursor:pointer;
+}
+#navamsaInfoSlideshow .navamsa-info-nav span{
+  padding:3px 7px;
+  border-radius:7px;
+  background:rgba(255,255,255,.9);
+  color:#4338ca;
+  font-size:9.5px;
+  font-weight:850;
+}
+body.dark #navamsaInfoSlideshow{
+  background:#101923;
+  border-color:#4f46e5;
+}
+body.dark #navamsaInfoSlideshow .navamsa-info-item{
+  background:#17212c;
+  border-color:#334e68;
+}
+body.dark #navamsaInfoSlideshow .navamsa-info-nav span{
+  background:#17212c;
+  color:#c7d2fe;
+}
+body.dark #navamsaInfoSlideshow .navamsa-info-nav button{
+  background:#25204a;
+  color:#ddd6fe;
+}
+
+/* When 3×4 flat layout is selected, don't let the centre slideshow
+   destroy that layout. Put it as a compact full-width top row. */
+#navamsaChart.flat3{
+  grid-template-columns:repeat(3,minmax(0,1fr)) !important;
+  grid-template-areas:none !important;
+}
+#navamsaChart.flat3 #navamsaInfoSlideshow{
+  grid-column:1 / -1 !important;
+  grid-row:1 !important;
+  min-height:250px;
+}
+#navamsaChart.flat3 .box{
+  grid-area:auto !important;
+}
+
+@media(max-width:900px){
+  #navamsaChart{
+    grid-template-columns:repeat(2,minmax(0,1fr)) !important;
+    grid-template-areas:
+      "r01 r02"
+      "r03 r04"
+      "r05 r06"
+      "photo photo"
+      "r07 r08"
+      "r09 r10"
+      "r11 r12" !important;
+  }
+  #navamsaInfoSlideshow{
+    min-height:330px;
+    margin:4px 0;
+  }
+  #navamsaInfoSlideshow .navamsa-info-grid{
+    grid-template-columns:repeat(2,minmax(0,1fr));
+  }
+}
+@media(max-width:600px){
+  #navamsaInfoSlideshow{
+    min-height:360px;
+  }
+  #navamsaInfoSlideshow .navamsa-info-grid{
+    grid-template-columns:1fr;
+  }
+}
+</style>
+
+
+<style id="jp-matra-rasi-center-v3">
+#rasiChart{position:relative}
+#rasiChart.jp-analysis-center-active .rasi-info-slideshow{
+  display:none!important;
+}
+#rasiAnalysisCenter{
+  grid-area:photo!important;
+  z-index:50!important;
+  min-width:0;
+  min-height:0;
+  margin:6px;
+  border:2px solid #f59e0b;
+  border-radius:12px;
+  background:var(--card,#fff);
+  box-shadow:0 5px 18px rgba(234,88,12,.16);
+  overflow:auto;
+  box-sizing:border-box;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+#rasiAnalysisCenter .rasi-analysis-inner{
+  width:100%;
+  padding:10px 12px;
+  box-sizing:border-box;
+  text-align:center;
+  line-height:1.45;
+}
+#rasiAnalysisCenter .rasi-analysis-heading{
+  font-size:17px;
+  font-weight:950;
+  color:#c2410c;
+  margin-bottom:7px;
+}
+#rasiAnalysisCenter .rasi-analysis-moved-info{position:static!important;transform:none!important;left:auto!important;right:auto!important;top:auto!important;bottom:auto!important;
+  display:block!important;
+  width:100%!important;
+  max-width:100%!important;
+  margin:0!important;
+  box-sizing:border-box!important;
+}
+#rasiAnalysisCenter .rasi-analysis-moved-info .mudakku-title,
+#rasiAnalysisCenter .rasi-analysis-moved-info .karana-title,
+#rasiAnalysisCenter .rasi-analysis-moved-info .vainasigam-title,
+#rasiAnalysisCenter .rasi-analysis-moved-info .yogi-title,
+#rasiAnalysisCenter .rasi-analysis-moved-info .thithi-sunya-title{
+  font-weight:950;
+}
+body.dark #rasiAnalysisCenter{
+  background:#111923;
+  border-color:#f59e0b;
+}
+@media(max-width:600px){
+  #rasiAnalysisCenter{margin:4px;min-height:200px}
+  #rasiAnalysisCenter .rasi-analysis-inner{padding:8px}
+  #rasiAnalysisCenter .rasi-analysis-heading{font-size:15px}
+}
+</style>
+
 </head>
 <body>
 
@@ -3366,6 +3795,12 @@ body.dark #analysisPreferenceSelect.active{
     </thead>
     <tbody></tbody>
   </table>
+  <h4 id="hdrKotcharamDBA" style="margin:14px 0 8px;display:none;">கொச்சாரத்தில் — தசை / புக்தி / அந்தரம்</h4>
+  <table id="tblKotcharamDBA" style="width:100%;display:none;">
+    <thead><tr>
+      <th>கிரகம்</th><th>கொச்சார அளவு</th><th>தசை</th><th>புக்தி</th><th>அந்தரம்</th>
+    </tr></thead><tbody></tbody>
+  </table>
 </section>
 <!-- === DBA Tables JS === -->
 
@@ -3385,24 +3820,42 @@ body.dark #analysisPreferenceSelect.active{
   <button id="btnBlinkDasa"  class="btn">தசை மின்மினிப்பு</button>
   <button id="btnBlinkPuthi" class="btn">புக்தி மின்மினிப்பு</button>
   <button id="btnBlinkAnth"  class="btn">அந்தரம் மின்மினிப்பு</button>
-<button id="btnMudakku" class="btn" type="button" title="சூரியன் பிறப்பு நிலையை வைத்து முடக்கு ராசி காட்டும்">முடக்கு</button> <button type="button" class="btn" id="btnThithiSunya">திதி சூன்யம்</button> <button type="button" class="btn kotcharam-toggle-btn" id="btnKotcharam" aria-pressed="false" title="பஞ்சாங்கம் + கொச்சார கிரகங்கள் + கொச்சார கிரக தொடர்புகள்">கொச்சாரம்</button> <button type="button" class="btn cpbh-toggle-btn" id="btnBirthPlanetBhava" aria-pressed="false" title="பிறப்பு கிரக பாவக தொடர்புகளை காட்ட / மறைக்க">பிறப்பு கிரக பாவக தொடர்புகள்</button> <button type="button" class="btn" id="btnALP" title="120 ஆண்டுகள் / 108 நட்சத்திர பாதங்கள் அடிப்படையில் ALP">ALP</button> <button type="button" class="btn" id="btnDasaMeeting" title="Dasa Degree → Planet Meetings">தசை சந்திப்பு</button> <button type="button" class="btn" id="btnPuthiMeeting" title="Puthi Degree → Planet Meetings">புக்தி சந்திப்பு</button> <button type="button" class="btn" id="btnYogiAvayogi" title="பிறப்பு யோகத்தின் யோகி மற்றும் அவயோகி நட்சத்திர பாதங்கள்">யோகி — அவயோகி</button> <button type="button" class="btn" id="btnKarana" title="பிறப்பு கரணம் மற்றும் பரிகார ஸ்தலம்">கரணம்</button> <button type="button" class="btn" id="btnVainasigam" title="பிறப்பு சந்திர நட்சத்திரத்தின் 22-வது வைநாசிக நட்சத்திரம் மற்றும் பரிகார ஸ்தலம்">வைநாசிகம்</button> <button type="button" class="btn dba-toggle-btn" id="btnDBABirth" aria-pressed="false" title="பிறப்பில் தசை / புக்தி / அந்தரம் அட்டவணையை காட்ட / மறைக்க">DBA — பிறப்பில்</button> <button type="button" class="btn dba-toggle-btn" id="btnDBACurrent" aria-pressed="false" title="தற்போது தசை / புக்தி / அந்தரம் அட்டவணையை காட்ட / மறைக்க">DBA — இப்போது</button>
+<button id="btnMudakku" class="btn" type="button" title="சூரியன் பிறப்பு நிலையை வைத்து முடக்கு ராசி காட்டும்">முடக்கு</button> <button type="button" class="btn" id="btnThithiSunya">திதி சூன்யம்</button> <button type="button" class="btn kotcharam-toggle-btn" id="btnKotcharam" aria-pressed="false" title="பஞ்சாங்கம் + கொச்சார கிரகங்கள் + கொச்சார கிரக தொடர்புகள்">கொச்சாரம்</button> <button type="button" class="btn cpbh-toggle-btn" id="btnBirthPlanetBhava" aria-pressed="false" title="பிறப்பு கிரக பாவக தொடர்புகளை காட்ட / மறைக்க">பிறப்பு கிரக பாவக தொடர்புகள்</button> <button type="button" class="btn" id="btnALP" title="120 ஆண்டுகள் / 108 நட்சத்திர பாதங்கள் அடிப்படையில் ALP">ALP</button> <button type="button" class="btn" id="btnDasaMeeting" title="Dasa Degree → Planet Meetings">தசை சந்திப்பு</button> <button type="button" class="btn" id="btnPuthiMeeting" title="Puthi Degree → Planet Meetings">புக்தி சந்திப்பு</button> <button type="button" class="btn" id="btnYogiAvayogi" title="பிறப்பு யோகத்தின் யோகி மற்றும் அவயோகி நட்சத்திர பாதங்கள்">யோகி — அவயோகி</button> <button type="button" class="btn" id="btnKarana" title="பிறப்பு கரணம் மற்றும் பரிகார ஸ்தலம்">கரணம்</button> <button type="button" class="btn" id="btnVainasigam" title="பிறப்பு சந்திர நட்சத்திரத்தின் 22-வது வைநாசிக நட்சத்திரம் மற்றும் பரிகார ஸ்தலம்">வைநாசிகம்</button> <button type="button" class="btn dba-toggle-btn" id="btnDBABirth" aria-pressed="false" title="பிறப்பில் தசை / புக்தி / அந்தரம் அட்டவணையை காட்ட / மறைக்க">DBA — பிறப்பில்</button> <button type="button" class="btn dba-toggle-btn" id="btnDBACurrent" aria-pressed="false" title="தற்போது தசை / புக்தி / அந்தரம் அட்டவணையை காட்ட / மறைக்க">DBA — இப்போது</button> <button type="button" class="btn dba-toggle-btn" id="btnDBAKotcharam" aria-pressed="false" title="கொச்சார கிரகங்களின் அடிப்படையில் தசை / புக்தி / அந்தரம் அட்டவணை">DBA — கொச்சாரம்</button>
 
 </div>
 
 <div id="bhavaChooser" class="toolbar" style="flex-wrap:wrap;gap:6px;">
   <strong style="margin-right:6px;">Bhavam:</strong>
-  <button class="bitem active" data-bhava="1">1</button>
-  <button class="bitem" data-bhava="2">2</button>
-  <button class="bitem" data-bhava="3">3</button>
-  <button class="bitem" data-bhava="4">4</button>
-  <button class="bitem" data-bhava="5">5</button>
-  <button class="bitem" data-bhava="6">6</button>
-  <button class="bitem" data-bhava="7">7</button>
-  <button class="bitem" data-bhava="8">8</button>
-  <button class="bitem" data-bhava="9">9</button>
-  <button class="bitem" data-bhava="10">10</button>
-  <button class="bitem" data-bhava="11">11</button>
-  <button class="bitem" data-bhava="12">12</button>
+  <select id="bhavaViewSelect" aria-label="Bhavam தேர்வு" title="Bhavam தேர்வு">
+    <option value="1" selected>பாவம் 1</option>
+    <option value="2">பாவம் 2</option>
+    <option value="3">பாவம் 3</option>
+    <option value="4">பாவம் 4</option>
+    <option value="5">பாவம் 5</option>
+    <option value="6">பாவம் 6</option>
+    <option value="7">பாவம் 7</option>
+    <option value="8">பாவம் 8</option>
+    <option value="9">பாவம் 9</option>
+    <option value="10">பாவம் 10</option>
+    <option value="11">பாவம் 11</option>
+    <option value="12">பாவம் 12</option>
+  </select>
+
+  <!-- Original controls retained for the existing Bhava engine -->
+  <div id="bhavaLegacyButtons" aria-hidden="true">
+    <button class="bitem active" data-bhava="1" type="button">1</button>
+    <button class="bitem" data-bhava="2" type="button">2</button>
+    <button class="bitem" data-bhava="3" type="button">3</button>
+    <button class="bitem" data-bhava="4" type="button">4</button>
+    <button class="bitem" data-bhava="5" type="button">5</button>
+    <button class="bitem" data-bhava="6" type="button">6</button>
+    <button class="bitem" data-bhava="7" type="button">7</button>
+    <button class="bitem" data-bhava="8" type="button">8</button>
+    <button class="bitem" data-bhava="9" type="button">9</button>
+    <button class="bitem" data-bhava="10" type="button">10</button>
+    <button class="bitem" data-bhava="11" type="button">11</button>
+    <button class="bitem" data-bhava="12" type="button">12</button>
+  </div>
 </div>
 
   <!-- Rasi chart -->
@@ -3438,6 +3891,23 @@ body.dark #analysisPreferenceSelect.active{
   <div id="pdmTableWrap"></div>
 </section>
 
+
+<div id="planetLagnaPreferenceAboveChart" class="planet-lagna-preference-above-chart">
+  <span class="planet-lagna-preference-label">கிரகம் / லக்னம்:</span>
+  <select id="planetLagnaViewSelect" aria-label="கிரகம் / லக்னம் தேர்வு" title="கிரகம் / லக்னம் தேர்வு">
+    <option value="moon" selected>சந்திரன் — விம்‌சோத்தரி தசை</option>
+    <option value="default-dasa">Default Dasa</option>
+    <option value="Ascendant">லக்னம்</option>
+    <option value="Sun">சூரியன்</option>
+    <option value="Mercury">புதன்</option>
+    <option value="Venus">சுக்கிரன்</option>
+    <option value="Mars">செவ்வாய்</option>
+    <option value="Jupiter">குரு</option>
+    <option value="Saturn">சனி</option>
+    <option value="Rahu">ராகு</option>
+    <option value="Ketu">கேது</option>
+  </select>
+</div>
 
 <div id="blinkPreferenceAboveChart" class="blink-preference-above-chart">
   <span class="blink-preference-label">மின்மினிப்பு:</span>
@@ -7226,6 +7696,8 @@ document.getElementById('btnYogiAvayogi')?.addEventListener('click',toggleYogiAv
 
 /* ===== Rasi grid (bilingual, exact matching) ===== */
 let mode="current"; let padaDomList=[];
+// Minminippu is OFF by default. Current DBA green highlights are shown only when the user selects a minminippu mode.
+let CURRENT_DBA_HIGHLIGHT_ENABLED = false;
 
 /* ===== NAVAMSA D-9 — exact-degree method confirmed from user's examples =====
    D9 is calculated from the exact degree inside the birth Rasi.
@@ -7682,7 +8154,7 @@ function renderRasiInfoSlideshow(){
     box=document.createElement('div');
     box.id='rasiInfoSlideshow';
     box.className='rasi-info-slideshow';
-    const bottomHost=document.getElementById('rasiInfoBottom');
+    const bottomHost=null;
     if(bottomHost) bottomHost.appendChild(box);
     else document.body.appendChild(box);
   }
@@ -7747,7 +8219,7 @@ function startRasiInfoSlideshow(){
   rasiInfoSlideTimer=setInterval(()=>{
     if(!document.getElementById('rasiInfoSlideshow')) return;
     rasiInfoSlideIndex=(rasiInfoSlideIndex+1)%RASI_INFO_SLIDES.length;
-    renderRasiInfoSlideshow();
+
   },8000);
 }
 
@@ -7801,8 +8273,7 @@ function drawChartGrid(){
 
     rasiChart.appendChild(box);
   });
-     renderRasiInfoSlideshow();
-     startRasiInfoSlideshow();
+
      applyRasiNumberChips(); 
   applyMudakkuHighlight();
   if (thithiSunyaActive) applyThithiSunyaHighlight();
@@ -7844,6 +8315,7 @@ function findPadaIndexById(nakId,padaNum){
 }
 function showCurrentDasaPadaHighlight(){
   clearGreenHighlights();
+  if (!CURRENT_DBA_HIGHLIGHT_ENABLED) return;
   if(!vimData||!vimCurrentPath) return;
 
   const now=caldate.value? new Date(caldate.value): new Date();
@@ -10531,6 +11003,140 @@ document.getElementById('bhavaChooser')?.addEventListener('click', (ev)=>{
     window.applyLang = function(){ const r=_al.apply(this, arguments); try{ updateFromPage(); }catch(_){} return r; };
   }
 
+  // ===== DBA Kotcharam display =====
+  (function(){
+    const card = document.getElementById('dasaTablesCard');
+    const btn = document.getElementById('btnDBAKotcharam');
+    const title = document.getElementById('hdrKotcharamDBA');
+    const table = document.getElementById('tblKotcharamDBA');
+    const body = table?.querySelector('tbody');
+    if(!card || !btn || !title || !table || !body) return;
+
+    function setActive(on){
+      btn.classList.toggle('active',!!on);
+      btn.setAttribute('aria-pressed',on?'true':'false');
+    }
+
+    function hideOtherDBAViews(){
+      ['hdrBirthDBA','tblBirthDBA','hdrCurrentDBA','tblCurrentDBA'].forEach(id=>{
+        const el=document.getElementById(id);
+        if(el) el.style.display='none';
+      });
+    }
+
+    /*
+      KOTCHARAM DBA: calculate the hierarchy from the TRANSIT position and
+      the selected Kotcharam date, not from the natal/birth DBA tree.
+      Example: if the Sun is in Magam, Magam lord = Ketu, therefore Dasa=Ketu.
+      Puthi and Anthra are the periods current on the selected Kotcharam date.
+    */
+    function computeKotcharamDBA(baseDeg, when){
+      try{
+        const tree=dasaTree(Number(baseDeg), when, when);
+        const path=findCurrentPath(tree);
+        if(path.dasa<0) return null;
+        const md=tree[path.dasa];
+        const pt=path.puthi>=0 ? md?.puthis?.[path.puthi] : null;
+        const at=path.anth>=0 ? pt?.antharas?.[path.anth] : null;
+        const mdP=getCurrentPada(md,when)||{};
+        const ptP=getCurrentPada(pt,when)||{};
+        const atP=getCurrentPada(at,when)||{};
+        const mdId=mdP.nakId || (Number.isFinite(md?.nakIdx)?md.nakIdx+1:null);
+        const ptId=ptP.nakId || (Number.isFinite(pt?.nakIdx)?pt.nakIdx+1:null);
+        const atId=atP.nakId || (Number.isFinite(at?.nakIdx)?at.nakIdx+1:null);
+        const mdLord=normalizePlanetKey(md?.lordKey)||md?.lordKey;
+        const ptLord=normalizePlanetKey(pt?.lordKey)||pt?.lordKey;
+        const atLord=normalizePlanetKey(at?.lordKey)||at?.lordKey;
+        return {
+          dasa:{txt:fmtNakPada(mdId,mdP.pada,mdLord),lord:mdLord},
+          puthi:{txt:fmtNakPada(ptId,ptP.pada,ptLord),lord:ptLord},
+          anth:{txt:fmtNakPada(atId,atP.pada,atLord),lord:atLord}
+        };
+      }catch(e){
+        console.warn('Kotcharam DBA calculation error:',e);
+        return null;
+      }
+    }
+
+    function renderKotcharamDBA(){
+      // currentPlanetsForChart is the SAME response already fetched by Kotcharam.
+      const source = currentPlanetsForChart || {};
+      const order = ['Sun','Moon','Mercury','Venus','Mars','Jupiter','Saturn','Rahu','Ketu'];
+      const calEl = document.getElementById('caldate') || document.getElementById('summaryCal');
+      const when = calEl?.value ? new Date(calEl.value) : new Date();
+
+      title.textContent = 'கொச்சாரத்தில் — தசை / புக்தி / அந்தரம்';
+      body.innerHTML='';
+      let any=false;
+
+      order.forEach(key=>{
+        const obj=source[key];
+        const deg=Number(obj?.fullDegree);
+        if(!Number.isFinite(deg)) return;
+        any=true;
+        const d=toDMS(deg);
+        const x=computeKotcharamDBA(deg,when);
+        body.insertAdjacentHTML('beforeend',`
+          <tr>
+            <td data-label="கிரகம்">${planetLabelByLang(key)}</td>
+            <td data-label="கொச்சார அளவு">${d.d}° ${d.m}′ ${d.s}″</td>
+            <td data-label="தசை">${x.dasa.txt}</td>
+            <td data-label="புக்தி">${x.puthi.txt}</td>
+            <td data-label="அந்தரம்">${x.anth.txt}</td>
+          </tr>`);
+      });
+
+      if(!any){
+        body.innerHTML='<tr><td colspan="5" style="opacity:.7;padding:.6rem;">முதலில் கொச்சாரம் கணக்கிடவும்.</td></tr>';
+      }
+
+      card.style.display='block';
+      hideOtherDBAViews();
+      title.style.display='';
+      table.style.display='';
+    }
+
+    async function openKotcharamDBA(){
+      // If Kotcharam is not loaded, use the existing Kotcharam button/function.
+      // That function performs the single current-planet request and caches it.
+      if(!currentPlanetsForChart){
+        const kot=document.getElementById('btnKotcharam');
+        if(kot && kot.getAttribute('aria-pressed')!=='true'){
+          kot.click();
+        }
+        let tries=0;
+        while(!currentPlanetsForChart && tries<100){
+          await new Promise(r=>setTimeout(r,100));
+          tries++;
+        }
+      }
+      renderKotcharamDBA();
+    }
+
+    btn.addEventListener('click', async function(){
+      if(btn.classList.contains('active')){
+        setActive(false);
+        title.style.display='none';
+        table.style.display='none';
+        card.style.display='none';
+        return;
+      }
+
+      try{
+        if(typeof window.jpHideOtherFeatureInfo==='function'){
+          window.jpHideOtherFeatureInfo('dasaTablesCard');
+        }
+      }catch(e){}
+
+      setActive(true);
+      await openKotcharamDBA();
+    });
+
+    setActive(false);
+    title.style.display='none';
+    table.style.display='none';
+  })();
+
   // ===== DBA Birth / Current display buttons =====
   (function(){
     const card = document.getElementById('dasaTablesCard');
@@ -11824,7 +12430,7 @@ document.addEventListener('click', ()=>{
   window.jpHideOtherFeatureInfo=hideOthers;
 
   document.addEventListener('click',function(ev){
-    const b=ev.target.closest('#btnALP,#btnDasaMeeting,#btnPuthiMeeting,#btnYogiAvayogi,#btnKarana,#btnVainasigam,#btnDBABirth,#btnDBACurrent,#btnThithiSunya,#btnMudakku');
+    const b=ev.target.closest('#btnALP,#btnDasaMeeting,#btnPuthiMeeting,#btnYogiAvayogi,#btnKarana,#btnVainasigam,#btnDBABirth,#btnDBACurrent,#btnDBAKotcharam,#btnThithiSunya,#btnMudakku');
     if(!b)return;
     const map={
       btnALP:'alpInfoBox',
@@ -12610,104 +13216,6 @@ document.getElementById('caldate')?.addEventListener('change',()=>{
 </script>
 
 
-<section id="rasiInfoBottom" aria-label="Rasi information slideshow">
-  <div class="rasi-info-bottom-heading">
-    <span>ராசி தகவல்கள்</span>
-    <small>தகவல் ஸ்லைட்ஷோ</small>
-  </div>
-</section>
-
-<style id="jp-rasi-slideshow-bottom-v4">
-/* ===== RASI INFORMATION SLIDESHOW — BOTTOM OF PAGE ===== */
-#rasiInfoBottom{
-  width:100%;
-  max-width:1280px;
-  margin:26px auto 36px;
-  padding:0 0 10px;
-  box-sizing:border-box;
-}
-#rasiInfoBottom .rasi-info-bottom-heading{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:10px;
-  margin:0 0 9px;
-  padding:10px 14px;
-  border-radius:14px;
-  background:linear-gradient(90deg,#eef2ff,#f5f3ff,#ecfeff);
-  border:1px solid #c7d2fe;
-  color:#312e81;
-  box-shadow:0 4px 14px rgba(37,99,235,.07);
-}
-#rasiInfoBottom .rasi-info-bottom-heading span{
-  font-size:17px;
-  font-weight:900;
-}
-#rasiInfoBottom .rasi-info-bottom-heading small{
-  font-size:12px;
-  font-weight:800;
-  color:#64748b;
-}
-#rasiInfoBottom .rasi-info-slideshow{
-  grid-area:auto!important;
-  width:100%!important;
-  min-height:0!important;
-  height:auto!important;
-  margin:0!important;
-  padding:0!important;
-  display:block!important;
-  border:2px solid #818cf8!important;
-  border-radius:17px!important;
-  background:linear-gradient(145deg,rgba(255,255,255,.98),rgba(248,250,252,.98))!important;
-  box-shadow:0 8px 24px rgba(79,70,229,.10)!important;
-  overflow:hidden!important;
-}
-#rasiInfoBottom .rasi-info-slide{
-  width:100%!important;
-  height:auto!important;
-  min-height:230px;
-  padding:16px!important;
-  box-sizing:border-box;
-  justify-content:flex-start!important;
-}
-#rasiInfoBottom .rasi-info-title{
-  font-size:20px!important;
-  margin-bottom:7px!important;
-}
-#rasiInfoBottom .rasi-info-subtitle{
-  margin-bottom:10px!important;
-}
-#rasiInfoBottom .bhava-info-grid,
-#rasiInfoBottom .planet-info-grid,
-#rasiInfoBottom .thithi-info-grid,
-#rasiInfoBottom .yoga-info-grid,
-#rasiInfoBottom .nak-owner-info-grid{
-  width:100%;
-}
-body.dark #rasiInfoBottom .rasi-info-bottom-heading{
-  background:linear-gradient(90deg,#172554,#24163b,#123c46);
-  border-color:#334e68;
-  color:#c7d2fe;
-}
-body.dark #rasiInfoBottom .rasi-info-bottom-heading small{color:#9fb0c4}
-body.dark #rasiInfoBottom .rasi-info-slideshow{
-  background:linear-gradient(145deg,#101923,#0e1721)!important;
-  border-color:#4f46e5!important;
-}
-@media(max-width:700px){
-  #rasiInfoBottom{
-    margin:18px auto 25px;
-  }
-  #rasiInfoBottom .rasi-info-bottom-heading{
-    padding:9px 11px;
-  }
-  #rasiInfoBottom .rasi-info-bottom-heading span{font-size:15px}
-  #rasiInfoBottom .rasi-info-slide{
-    padding:11px!important;
-    min-height:0;
-  }
-}
-</style>
 
 
 <script id="jp-top-layout-control-js-v5">
@@ -12763,7 +13271,13 @@ body.dark #rasiInfoBottom .rasi-info-slideshow{
   sel.addEventListener('change',function(){
     const v=sel.value;
     stopAll();
-    if(v==='off'){sel.classList.remove('active');return;}
+    if(v==='off'){
+      CURRENT_DBA_HIGHLIGHT_ENABLED = false;
+      clearGreenHighlights();
+      sel.classList.remove('active');
+      return;
+    }
+    CURRENT_DBA_HIGHLIGHT_ENABLED = true;
     if(v==='dasa'||v==='puthi'||v==='anthra'){
       const b=document.getElementById(modes[v]);
       if(b)b.click();
@@ -12776,6 +13290,8 @@ body.dark #rasiInfoBottom .rasi-info-slideshow{
   });
   sel.value='off';
   sel.classList.remove('active');
+  CURRENT_DBA_HIGHLIGHT_ENABLED = false;
+  clearGreenHighlights();
 })();
 </script>
 
@@ -12833,5 +13349,478 @@ body.dark #rasiInfoBottom .rasi-info-slideshow{
 })();
 </script>
 
+
+
+
+
+<script id="jp-bhava-list-view-controller-v1">
+(function(){
+  const sel=document.getElementById('bhavaViewSelect');
+  const legacy=document.getElementById('bhavaLegacyButtons');
+  if(!sel || !legacy) return;
+
+  sel.addEventListener('change',function(){
+    const n=Number(this.value);
+    if(!(n>=1 && n<=12)) return;
+
+    const btn=legacy.querySelector('.bitem[data-bhava="'+n+'"]');
+    if(!btn) return;
+
+    // Reuse the application's original Bhava click handler.
+    btn.click();
+
+    this.classList.add('active');
+  });
+
+  // Default = Bhava 1.
+  sel.value='1';
+  sel.classList.add('active');
+
+  // Keep the list synchronized if another part of the app changes
+  // BHAVA_SELECTED and the legacy button state.
+  const observer=new MutationObserver(function(){
+    const active=legacy.querySelector('.bitem.active');
+    if(active){
+      const n=active.dataset.bhava;
+      if(n && sel.value!==n){
+        sel.value=n;
+        sel.classList.add('active');
+      }
+    }
+  });
+
+  observer.observe(legacy,{subtree:true,attributes:true,attributeFilter:['class']});
+})();
+</script>
+
+
+<script id="jp-planet-lagna-list-controller-v1">
+(function(){
+  const sel=document.getElementById('planetLagnaViewSelect');
+  if(!sel) return;
+
+  const aliases={
+    Ascendant:['Ascendant','ascendant','lagna','Lagna','லக்கினம்','லக்னம்'],
+    Sun:['Sun','sun','சூரியன்'],
+    Moon:['Moon','moon','சந்திரன்'],
+    Mercury:['Mercury','mercury','புதன்'],
+    Venus:['Venus','venus','சுக்கிரன்','சுக்ரன்'],
+    Mars:['Mars','mars','செவ்வாய்'],
+    Jupiter:['Jupiter','jupiter','குரு'],
+    Saturn:['Saturn','saturn','சனி'],
+    Rahu:['Rahu','rahu','ராகு'],
+    Ketu:['Ketu','ketu','கேது']
+  };
+
+  function findLegacyButton(key){
+    const wrap=document.getElementById('planetButtons');
+    if(!wrap) return null;
+
+    // Current planet buttons use data-key.
+    let b=wrap.querySelector('button[data-key="'+key.toLowerCase()+'"]');
+    if(b) return b;
+
+    // Some older versions may use data-planet-key.
+    b=wrap.querySelector('button[data-planet-key="'+key.toLowerCase()+'"]');
+    if(b) return b;
+
+    const wanted=(aliases[key]||[]).map(x=>String(x).toLowerCase());
+    return Array.from(wrap.querySelectorAll('button')).find(x=>{
+      const t=(x.textContent||'').trim().toLowerCase();
+      return wanted.includes(t);
+    }) || null;
+  }
+
+  function setActive(){
+    sel.classList.add('active');
+  }
+
+  function choose(key){
+    if(key==='default-dasa'){
+      const b=document.getElementById('btnDefaultDasa');
+      if(b){
+        b.click();
+        setActive();
+        return true;
+      }
+      return false;
+    }
+
+    const b=findLegacyButton(key);
+    if(b){
+      b.click();
+      setActive();
+      return true;
+    }
+
+    // If the planet button has not yet been generated, directly use the
+    // existing degree map and the same Moon inputs/run pathway.
+    const src=window.planetDegrees||{};
+    let apiKey=null;
+    const wanted=(aliases[key]||[]).map(x=>String(x).toLowerCase());
+    for(const k of Object.keys(src)){
+      const lk=String(k).toLowerCase();
+      if(lk===String(key).toLowerCase() || wanted.includes(lk)){
+        apiKey=k; break;
+      }
+    }
+
+    if(apiKey==null) return false;
+
+    const deg=Number(src[apiKey]);
+    if(!Number.isFinite(deg)) return false;
+
+    const d=Math.floor(deg);
+    const mf=(deg-d)*60;
+    const m=Math.floor(mf);
+    const ss=Math.round((mf-m)*60);
+
+    const md=document.getElementById('moon_deg');
+    const mm=document.getElementById('moon_min');
+    const ms=document.getElementById('moon_sec');
+    if(md){md.value=d}
+    if(mm){mm.value=m}
+    if(ms){ms.value=ss}
+
+    try{
+      if(typeof flashCell==='function') flashCell(getGlobalPada(deg));
+    }catch(e){}
+    try{
+      if(typeof run==='function') run();
+    }catch(e){
+      console.warn('Planet/Lagna list run failed:',e);
+    }
+
+    setActive();
+    return true;
+  }
+
+  sel.addEventListener('change',function(){
+    choose(this.value);
+  });
+
+  /*
+    Default state:
+    Chandiran is selected and its existing planet-button behavior is run.
+    This gives the normal Vimshottari Dasa/Puthi/Anthra display immediately
+    after the planet data/buttons are available.
+  */
+  function initDefaultMoon(attempt){
+    attempt=attempt||0;
+    if(choose('Moon')) return;
+    if(attempt<40){
+      setTimeout(()=>initDefaultMoon(attempt+1),150);
+    }
+  }
+
+  sel.value='moon';
+  setActive();
+
+  // Run after current script stack and after planet data can be populated.
+  setTimeout(()=>initDefaultMoon(0),50);
+})();
+</script>
+
+
+<script id="jp-navamsa-info-slideshow-v2">
+(function(){
+  let timer=null;
+  let index=0;
+  const INTERVAL=8000;
+
+  function slides(){
+    try{
+      return Array.isArray(RASI_INFO_SLIDES) ? RASI_INFO_SLIDES : [];
+    }catch(e){ return []; }
+  }
+
+  function chart(){
+    return document.getElementById('navamsaChart');
+  }
+
+  function esc(v){
+    return String(v??'')
+      .replace(/&/g,'&amp;').replace(/</g,'&lt;')
+      .replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+
+  function render(){
+    const c=chart(), s=slides();
+    if(!c || !s.length)return;
+
+    let box=document.getElementById('navamsaInfoSlideshow');
+    if(!box){
+      box=document.createElement('div');
+      box.id='navamsaInfoSlideshow';
+      c.appendChild(box);
+    }else if(box.parentElement!==c){
+      c.appendChild(box);
+    }
+
+    index=((index%s.length)+s.length)%s.length;
+    const slide=s[index];
+    const isPlanet=slide.id==='planets9';
+    const isThithi=slide.id==='thithi15';
+    const isNak=slide.id==='nakshatraOwners9';
+
+    let content='';
+    if(isThithi && slide.linkItems){
+      content=slide.linkItems.map(([name,url])=>
+        `<a class="navamsa-info-item" href="${esc(url)}" target="_blank" rel="noopener noreferrer">${esc(name)}</a>`
+      ).join('');
+    }else if(isNak && slide.ownerItems){
+      content=slide.ownerItems.map(([owner,naks])=>
+        `<div class="navamsa-info-item"><div><div class="navamsa-planet-name">${esc(owner)}</div><div>${esc(naks)}</div></div></div>`
+      ).join('');
+    }else{
+      content=(slide.items||[]).map(([name,text])=>{
+        if(isPlanet){
+          return `<div class="navamsa-info-item"><div><div class="navamsa-planet-name">${esc(name)}</div><div class="navamsa-planet-desc">${esc(text)}</div></div></div>`;
+        }
+        return `<div class="navamsa-info-item"><div><strong>${esc(name)}</strong> ${esc(text)}</div></div>`;
+      }).join('');
+    }
+box.innerHTML=
+      `<div class="navamsa-info-slide">
+        <div class="navamsa-info-title">${esc(slide.title)}</div>
+        <div class="navamsa-info-subtitle">${esc(slide.subtitle)}</div>
+        <div class="navamsa-info-grid">${content}</div>
+        <div class="navamsa-info-nav">
+          <button type="button" id="navamsaInfoPrev">‹</button>
+          <span>${index+1} / ${s.length}</span>
+          <button type="button" id="navamsaInfoNext">›</button>
+        </div>
+      </div>`;
+
+    document.getElementById('navamsaInfoPrev')?.addEventListener('click',()=>{
+      index=(index-1+s.length)%s.length;
+      render(); restart();
+    });
+    document.getElementById('navamsaInfoNext')?.addEventListener('click',()=>{
+      index=(index+1)%s.length;
+      render(); restart();
+    });
+  }
+
+  function restart(){
+    if(timer)clearInterval(timer);
+    timer=setInterval(()=>{
+      const s=slides();
+      if(!s.length || !chart())return;
+      index=(index+1)%s.length;
+      render();
+    },INTERVAL);
+  }
+
+  /*
+    drawNavamsaChart() currently does chart.innerHTML='' and rebuilds all
+    12 boxes. Wrap it so the information slideshow is inserted AFTER
+    every Navamsa redraw, exactly where the centre 'photo' area is.
+  */
+  function hook(){
+    if(typeof window.drawNavamsaChart!=='function'){
+      setTimeout(hook,250);
+      return;
+    }
+    if(window.__jpNavamsaInfoHooked)return;
+    const original=window.drawNavamsaChart;
+    window.drawNavamsaChart=function(){
+      original.apply(this,arguments);
+      setTimeout(()=>{
+        render();
+      },0);
+    };
+    window.__jpNavamsaInfoHooked=true;
+    render();
+    restart();
+  }
+
+  hook();
+})();
+</script>
+
+<script id="jp-matra-rasi-center-v4">
+(function(){
+  const sel=document.getElementById('analysisPreferenceSelect');
+  const chart=document.getElementById('rasiChart');
+  if(!sel||!chart)return;
+
+  const MAP={
+    mudakku:{button:'btnMudakku',box:'mudakkuPariharaInfoBox',title:'முடக்கு'},
+    'thithi-sunya':{button:'btnThithiSunya',box:'thithiSunyaCustomerBox',title:'திதி சூன்யம்'},
+    'yogi-avayogi':{button:'btnYogiAvayogi',box:'yogiAvayogiInfoBox',title:'யோகி — அவயோகி'},
+    vainasigam:{button:'btnVainasigam',box:'vainasigamInfoBox',title:'வைநாசிகம்'},
+    karana:{button:'btnKarana',box:'karanaInfoBox',title:'கரணம்'}
+  };
+  const keys=Object.keys(MAP);
+  let active='off';
+  let busy=false;
+
+  function oldSlide(){
+    return chart.querySelector('.rasi-info-slideshow');
+  }
+
+  function centre(){
+    let c=document.getElementById('rasiAnalysisCenter');
+    if(!c){
+      c=document.createElement('div');
+      c.id='rasiAnalysisCenter';
+      c.className='rasi-analysis-center';
+      c.innerHTML='<div class="rasi-analysis-inner"></div>';
+      chart.appendChild(c);
+    }
+    return c;
+  }
+
+  function clearCentre(){
+    document.getElementById('rasiAnalysisCenter')?.remove();
+    chart.classList.remove('jp-analysis-center-active');
+    const s=oldSlide();
+    if(s)s.style.display='';
+  }
+
+  // Use the EXISTING button state/function to switch a feature off.
+  // This avoids inventing a second calculation/highlight implementation.
+  function turnOff(k){
+    const b=document.getElementById(MAP[k].button);
+    if(!b)return;
+    try{
+      if(b.classList.contains('active')){
+        b.click();
+        return;
+      }
+      // Vainasigam and some older handlers may not expose a stop function,
+      // but their active class is set by their original toggle.
+      if(k==='vainasigam' && typeof vainasigamActive!=='undefined' && vainasigamActive){
+        if(typeof toggleVainasigam==='function')toggleVainasigam();
+      }
+    }catch(e){console.warn('turnOff',k,e)}
+  }
+
+  function turnOffAllExcept(k){
+    keys.forEach(x=>{if(x!==k)turnOff(x)});
+  }
+
+  // Move the REAL existing info box into the chart centre.
+  // Therefore nothing is duplicated above the chart.
+  function moveRealInfoBox(k){
+    const cfg=MAP[k];
+    const source=document.getElementById(cfg.box);
+    if(!source)return false;
+
+    const c=centre();
+    const inner=c.querySelector('.rasi-analysis-inner');
+
+    inner.innerHTML='';
+    const heading=document.createElement('div');
+    heading.className='rasi-analysis-heading';
+    heading.textContent=cfg.title;
+    inner.appendChild(heading);
+
+    // Move the actual existing box, not innerHTML copy.
+    // Its original clear/highlight function can therefore still find/remove it.
+    source.classList.add('rasi-analysis-moved-info');
+    source.style.display='';
+    source.style.margin='0';
+    source.style.maxWidth='100%';
+    source.style.width='100%';
+    source.style.boxSizing='border-box';
+    inner.appendChild(source);
+
+    const s=oldSlide();
+    if(s)s.style.display='none';
+
+    chart.classList.add('jp-analysis-center-active');
+    return true;
+  }
+
+  function show(k){
+    if(active==='off'){clearCentre();return;}
+    const cfg=MAP[k];
+
+    // The selected original function may create its box asynchronously.
+    if(!moveRealInfoBox(k)){
+      setTimeout(()=>moveRealInfoBox(k),40);
+      setTimeout(()=>moveRealInfoBox(k),150);
+    }
+  }
+
+  function setOff(){
+    busy=true;
+    keys.forEach(turnOff);
+    active='off';
+    sel.value='off';
+    sel.classList.remove('active');
+    clearCentre();
+    setTimeout(()=>busy=false,60);
+  }
+
+  function choose(k){
+    const cfg=MAP[k];
+    if(!cfg){setOff();return;}
+
+    busy=true;
+    turnOffAllExcept(k);
+
+    // Thithi Sunyam has its own capture-phase button handler which calls
+    // toggleCustomerThithiSunya(). Calling the real function directly avoids
+    // the capture handler cancelling the synthetic click.
+    try{
+      if(k==='thithi-sunya' && typeof applyCustomerThithiSunya==='function'){
+        applyCustomerThithiSunya();
+        document.getElementById('btnThithiSunya')?.classList.add('active');
+      }else if(k==='vainasigam' && typeof addVainasigamInfoBox==='function'){
+        // Vainasigam's original toggle creates the real info box.
+        if(typeof vainasigamActive!=='undefined' && !vainasigamActive){
+          vainasigamActive=true;
+          addVainasigamInfoBox();
+        }
+      }else{
+        const btn=document.getElementById(cfg.button);
+        if(btn && !btn.classList.contains('active')) btn.click();
+      }
+    }catch(err){
+      console.warn('Matra selection:',err);
+    }
+
+    active=k;
+    sel.value=k;
+    sel.classList.add('active');
+
+    // Move the SAME real information box into the Rasi chart centre.
+    setTimeout(()=>{
+      moveRealInfoBox(k);
+      busy=false;
+    },0);
+    setTimeout(()=>moveRealInfoBox(k),80);
+    setTimeout(()=>moveRealInfoBox(k),180);
+  }
+
+  sel.addEventListener('change',function(){
+    if(this.value==='off')setOff();
+    else choose(this.value);
+  });
+
+  /*
+    Do NOT observe document.body. That caused the previous Page Unresponsive
+    problem because rendering the centre itself changes the DOM.
+    Only restore after the existing Rasi chart redraw function completes.
+  */
+  const originalDraw=window.drawChartGrid;
+  if(typeof originalDraw==='function'){
+    window.drawChartGrid=function(){
+      const result=originalDraw.apply(this,arguments);
+      if(active!=='off'){
+        setTimeout(()=>moveRealInfoBox(active),0);
+        setTimeout(()=>moveRealInfoBox(active),80);
+      }
+      return result;
+    };
+  }
+
+  sel.value='off';
+  sel.classList.remove('active');
+})();
+</script>
 </body>
 </html>
