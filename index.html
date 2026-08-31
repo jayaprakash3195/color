@@ -3189,18 +3189,21 @@ body.dark #planetLagnaViewSelect.active{
   position:relative;
   min-height:0;
 }
-#navamsaChart .box.r01{grid-area:r01!important}
-#navamsaChart .box.r02{grid-area:r02!important}
-#navamsaChart .box.r03{grid-area:r03!important}
-#navamsaChart .box.r04{grid-area:r04!important}
-#navamsaChart .box.r05{grid-area:r05!important}
-#navamsaChart .box.r06{grid-area:r06!important}
-#navamsaChart .box.r07{grid-area:r07!important}
-#navamsaChart .box.r08{grid-area:r08!important}
-#navamsaChart .box.r09{grid-area:r09!important}
-#navamsaChart .box.r10{grid-area:r10!important}
-#navamsaChart .box.r11{grid-area:r11!important}
-#navamsaChart .box.r12{grid-area:r12!important}
+/* IMPORTANT: Navamsa uses the exact same South-Indian Rasi placement
+   as the main Rasi chart. The Rasi codes are canonical zodiac signs;
+   CSS areas determine their visual positions. */
+#navamsaChart .box.r01{grid-area:r11!important}
+#navamsaChart .box.r02{grid-area:r12!important}
+#navamsaChart .box.r03{grid-area:r01!important}
+#navamsaChart .box.r04{grid-area:r02!important}
+#navamsaChart .box.r05{grid-area:r03!important}
+#navamsaChart .box.r06{grid-area:r04!important}
+#navamsaChart .box.r07{grid-area:r05!important}
+#navamsaChart .box.r08{grid-area:r06!important}
+#navamsaChart .box.r09{grid-area:r07!important}
+#navamsaChart .box.r10{grid-area:r08!important}
+#navamsaChart .box.r11{grid-area:r09!important}
+#navamsaChart .box.r12{grid-area:r10!important}
 
 #navamsaInfoSlideshow{
   grid-area:photo !important;
@@ -3344,13 +3347,13 @@ body.dark #navamsaInfoSlideshow .navamsa-info-nav button{
   #navamsaChart{
     grid-template-columns:repeat(2,minmax(0,1fr)) !important;
     grid-template-areas:
+      "r11 r12"
       "r01 r02"
       "r03 r04"
       "r05 r06"
-      "photo photo"
       "r07 r08"
       "r09 r10"
-      "r11 r12" !important;
+      "photo photo" !important;
   }
   #navamsaInfoSlideshow{
     min-height:330px;
@@ -3428,6 +3431,914 @@ body.dark #rasiAnalysisCenter{
   #rasiAnalysisCenter .rasi-analysis-inner{padding:8px}
   #rasiAnalysisCenter .rasi-analysis-heading{font-size:15px}
 }
+</style>
+
+
+<style id="jp-hide-standalone-alp-button">
+  #blinkControls #btnALP{display:none!important}
+</style>
+
+<style id="jp-akshaya-alp-center-style">
+  #rasiChart.jp-alp-center-active #rasiBirthDetailsCenter{display:none!important}
+
+  #alpInfoBox.jp-alp-center-box{
+    grid-area:photo!important;
+    z-index:58!important;
+    width:auto!important;
+    min-width:0!important;
+    max-width:none!important;
+    margin:8px!important;
+    padding:12px!important;
+    box-sizing:border-box!important;
+    border:2px solid #7a1fa2!important;
+    border-radius:16px!important;
+    background:linear-gradient(145deg,rgba(255,255,255,.98),rgba(250,245,255,.98))!important;
+    box-shadow:0 8px 22px rgba(122,31,162,.16)!important;
+    color:#251238!important;
+    text-align:center!important;
+    overflow:auto!important;
+  }
+  .jp-alp-title{
+    font-size:19px;font-weight:950;color:#7a1fa2;margin-bottom:8px
+  }
+  .jp-alp-row{
+    display:flex;align-items:center;justify-content:center;gap:8px;width:100%;
+  }
+  .jp-alp-rasi-value{
+    flex:1;min-width:0;font-size:22px;font-weight:950;color:#312e81;
+    padding:7px 4px;overflow-wrap:anywhere
+  }
+  .jp-alp-pada-row{margin-top:7px}
+  .jp-alp-pada-content{flex:1;min-width:0}
+  .jp-alp-pada-value{
+    font-size:17px;font-weight:950;color:#be185d;
+    overflow-wrap:anywhere
+  }
+  .jp-alp-dates{
+    margin-top:4px;font-size:12px;font-weight:800;color:#475569
+  }
+  .jp-alp-center-box .alp-nav-btn{
+    min-width:38px!important;height:34px!important;padding:4px 9px!important;
+    font-size:18px!important;border-radius:9px!important
+  }
+  .jp-alp-center-box .alp-nav-disabled{opacity:.38!important}
+  #alpPlanetMeetingBox{
+    width:100%!important;max-width:none!important;margin:10px 0 0!important;
+    padding:7px!important;box-sizing:border-box!important;
+  }
+  #alpPlanetMeetingBox .alp-planet-meet-subtitle{display:none!important}
+  #alpPlanetMeetingBox .alp-planet-meet-title{
+    font-size:14px!important;margin-bottom:6px!important
+  }
+  #alpPlanetMeetingBox .alp-planet-meet-table{font-size:10.5px!important}
+  #alpPlanetMeetingBox .alp-planet-meet-table th,
+  #alpPlanetMeetingBox .alp-planet-meet-table td{padding:4px 3px!important}
+
+  /* Default Birth Details in Rasi centre */
+  #rasiBirthDetailsCenter{
+    grid-area:photo!important;z-index:55!important;
+    min-width:0;min-height:0;margin:7px;padding:10px;
+    box-sizing:border-box;overflow:auto;display:flex;
+    align-items:center;justify-content:center;
+    background:transparent;border:0;box-shadow:none;
+  }
+  #rasiBirthDetailsCenter .jp-birth-inner{
+    width:100%;box-sizing:border-box;padding:4px 10px;text-align:center
+  }
+  #rasiBirthDetailsCenter .jp-birth-name{
+    font-size:23px;font-weight:950;color:#be185d;
+    margin:0 0 8px;word-break:break-word
+  }
+  #rasiBirthDetailsCenter .jp-birth-basic{
+    display:flex;flex-direction:column;gap:3px;align-items:center;margin-bottom:8px
+  }
+  #rasiBirthDetailsCenter .jp-birth-basic-value{
+    display:block;font-size:14px;font-weight:900;line-height:1.3;color:#172554;
+    overflow-wrap:anywhere
+  }
+  #rasiBirthDetailsCenter .jp-birth-panchang-title{
+    font-size:16px;font-weight:950;color:#0369a1;margin:6px 0 7px
+  }
+  #rasiBirthDetailsCenter .jp-birth-panchang{
+    display:flex;flex-direction:column;gap:4px;align-items:center
+  }
+  #rasiBirthDetailsCenter .jp-birth-panchang-item{
+    width:100%;padding:1px 2px;background:transparent!important;
+    border:0!important;box-shadow:none!important;display:flex;
+    align-items:center;justify-content:center;text-align:center
+  }
+  #rasiBirthDetailsCenter .jp-bp-label,
+  #rasiBirthDetailsCenter .jp-bp-sub{display:none!important}
+  #rasiBirthDetailsCenter .jp-bp-value{
+    font-size:15px;line-height:1.35;font-weight:950;color:#172554;
+    overflow-wrap:anywhere
+  }
+  body.dark #rasiBirthDetailsCenter .jp-birth-basic-value,
+  body.dark #rasiBirthDetailsCenter .jp-bp-value{color:#e2e8f0}
+  body.dark #rasiBirthDetailsCenter .jp-birth-name{color:#f9a8d4}
+  body.dark #rasiBirthDetailsCenter .jp-birth-panchang-title{color:#7dd3fc}
+
+  @media(max-width:900px){
+    #alpInfoBox.jp-alp-center-box{
+      grid-area:1 / 1 / auto / -1!important;min-height:360px;margin:6px!important
+    }
+    #rasiBirthDetailsCenter{
+      grid-area:1 / 1 / auto / -1!important;min-height:360px;margin:6px 0
+    }
+  }
+</style>
+
+<style id="jp-minminippu-vimshottari-three-colors">
+/* =========================================================
+   ONE palette for ALL Minminippu:
+   Dasa    = --green1
+   Puthi   = --green2
+   Anthra  = --green3
+   Same colors are used on Pada highlights, Rasi names and dots.
+   ========================================================= */
+
+/* Dasa */
+.line.highlight-pada-dasa,
+#rasiChart .owner-rasi-dasa .rasi-name,
+#navamsaChart .owner-rasi-dasa .rasi-name{
+  background:var(--green1)!important;
+  color:#fff!important;
+}
+/* Puthi */
+.line.highlight-pada-puthi,
+#rasiChart .owner-rasi-puthi .rasi-name,
+#navamsaChart .owner-rasi-puthi .rasi-name{
+  background:var(--green2)!important;
+  color:#fff!important;
+}
+/* Anthra */
+.line.highlight-pada-anthara,
+#rasiChart .owner-rasi-anth .rasi-name,
+#navamsaChart .owner-rasi-anth .rasi-name{
+  background:var(--green3)!important;
+  color:#21572a!important;
+}
+
+#rasiChart .owner-rasi-dasa .rasi-name,
+#rasiChart .owner-rasi-puthi .rasi-name,
+#rasiChart .owner-rasi-anth .rasi-name,
+#navamsaChart .owner-rasi-dasa .rasi-name,
+#navamsaChart .owner-rasi-puthi .rasi-name,
+#navamsaChart .owner-rasi-anth .rasi-name{
+  padding:3px 8px!important;
+  border-radius:8px!important;
+  font-weight:950!important;
+}
+
+/* D/P/A dots use the same three colors — no common dark-green dot. */
+.pada-dot-dark.jp-dot-dasa{
+  background:var(--green1)!important;
+  border-color:var(--green1)!important;
+  box-shadow:0 0 7px var(--green1)!important;
+}
+.pada-dot-dark.jp-dot-puthi{
+  background:var(--green2)!important;
+  border-color:var(--green2)!important;
+  box-shadow:0 0 7px var(--green2)!important;
+}
+.pada-dot-dark.jp-dot-anth{
+  background:var(--green3)!important;
+  border-color:#21572a!important;
+  box-shadow:0 0 7px var(--green3)!important;
+}
+
+/* Keep the Vimshottari glow identity too. */
+#rasiChart .owner-rasi-dasa .rasi-name,
+#navamsaChart .owner-rasi-dasa .rasi-name{animation:glowDasa 1.8s ease-in-out infinite!important}
+#rasiChart .owner-rasi-puthi .rasi-name,
+#navamsaChart .owner-rasi-puthi .rasi-name{animation:glowPuthi 1.8s ease-in-out infinite!important}
+#rasiChart .owner-rasi-anth .rasi-name,
+#navamsaChart .owner-rasi-anth .rasi-name{animation:glowAnth 1.8s ease-in-out infinite!important}
+</style>
+
+<style id="jp-birth-center-extra-panchang-v1">
+  #rasiBirthDetailsCenter .jp-yogi-planet{
+    color:#16a34a !important;
+    font-weight:950 !important;
+  }
+  #rasiBirthDetailsCenter .jp-avayogi-planet{
+    color:#dc2626 !important;
+    font-weight:950 !important;
+  }
+  body.dark #rasiBirthDetailsCenter .jp-yogi-planet{
+    color:#4ade80 !important;
+  }
+  body.dark #rasiBirthDetailsCenter .jp-avayogi-planet{
+    color:#f87171 !important;
+  }
+</style>
+
+
+<style id="jp-jenma-akshaya-selector-style">
+  .lagna-mode-selector{
+    position:relative;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    width:min(390px,calc(100% - 24px));
+    padding:4px;
+    margin:10px auto 8px;
+    border:1.5px solid #3b82f6;
+    border-radius:14px;
+    background:rgba(59,130,246,.06);
+    box-shadow:0 2px 8px rgba(30,64,175,.08);
+    overflow:hidden;
+  }
+  .lagna-mode-slider{
+    position:absolute;
+    top:4px;bottom:4px;left:4px;
+    width:calc(50% - 4px);
+    border-radius:10px;
+    background:#175397;
+    box-shadow:0 3px 9px rgba(23,83,151,.25);
+    transform:translateX(0);
+    transition:transform .24s ease,background .24s ease;
+    pointer-events:none;
+    z-index:0;
+  }
+  .lagna-mode-selector.is-akshaya .lagna-mode-slider{
+    transform:translateX(100%);
+    background:#7a1fa2;
+  }
+  .lagna-mode-btn{
+    position:relative;
+    z-index:1;
+    border:0!important;
+    background:transparent!important;
+    color:#172554!important;
+    padding:9px 12px;
+    min-width:0;
+    border-radius:10px;
+    font-size:15px;
+    font-weight:950;
+    cursor:pointer;
+    box-shadow:none!important;
+  }
+  .lagna-mode-btn.active{color:#fff!important}
+  body.dark .lagna-mode-selector{
+    background:rgba(59,130,246,.10);
+    border-color:#60a5fa;
+  }
+  body.dark .lagna-mode-btn{color:#dbeafe!important}
+  body.dark .lagna-mode-btn.active{color:#fff!important}
+
+  @media(max-width:600px){
+    .lagna-mode-selector{width:min(360px,calc(100% - 16px))}
+    .lagna-mode-btn{font-size:14px;padding:8px 6px}
+  }
+</style>
+
+
+<style id="jp-dpa-master-colors-v2">
+/* =========================================================
+   D/P/A MASTER COLORS — same visual family everywhere
+   Dasa   = Blue
+   Puthi  = Green
+   Anthra = Orange
+   ========================================================= */
+:root{
+  --jp-dasa:#2563eb;
+  --jp-dasa-soft:#eaf2ff;
+  --jp-puthi:#10b981;
+  --jp-puthi-soft:#e9fff0;
+  --jp-anth:#f59e0b;
+  --jp-anth-soft:#fff3e6;
+}
+
+/* Normal Minminippu Pada highlight */
+.line.highlight-pada-dasa{
+  background:var(--jp-dasa)!important;
+  color:#fff!important;
+  animation:jpGlowDasa 1.8s ease-in-out infinite!important;
+}
+.line.highlight-pada-puthi{
+  background:var(--jp-puthi)!important;
+  color:#fff!important;
+  animation:jpGlowPuthi 1.8s ease-in-out infinite!important;
+}
+.line.highlight-pada-anthara{
+  background:var(--jp-anth)!important;
+  color:#382300!important;
+  animation:jpGlowAnth 1.8s ease-in-out infinite!important;
+}
+
+/* Rasi / Navamsa Rasi names */
+#rasiChart .owner-rasi-dasa .rasi-name,
+#navamsaChart .owner-rasi-dasa .rasi-name{
+  background:var(--jp-dasa)!important;color:#fff!important;
+  animation:jpGlowDasa 1.8s ease-in-out infinite!important;
+}
+#rasiChart .owner-rasi-puthi .rasi-name,
+#navamsaChart .owner-rasi-puthi .rasi-name{
+  background:var(--jp-puthi)!important;color:#fff!important;
+  animation:jpGlowPuthi 1.8s ease-in-out infinite!important;
+}
+#rasiChart .owner-rasi-anth .rasi-name,
+#navamsaChart .owner-rasi-anth .rasi-name{
+  background:var(--jp-anth)!important;color:#382300!important;
+  animation:jpGlowAnth 1.8s ease-in-out infinite!important;
+}
+
+/* Dot markers */
+.pada-dot-dark.jp-dot-dasa{
+  background:var(--jp-dasa)!important;border-color:#1d4ed8!important;
+  box-shadow:0 0 8px rgba(37,99,235,.55)!important;
+}
+.pada-dot-dark.jp-dot-puthi{
+  background:var(--jp-puthi)!important;border-color:#059669!important;
+  box-shadow:0 0 8px rgba(16,185,129,.55)!important;
+}
+.pada-dot-dark.jp-dot-anth{
+  background:var(--jp-anth)!important;border-color:#d97706!important;
+  box-shadow:0 0 8px rgba(245,158,11,.55)!important;
+}
+
+@keyframes jpGlowDasa{
+  0%,100%{box-shadow:0 0 0 0 rgba(37,99,235,.22)}
+  50%{box-shadow:0 0 14px 4px rgba(37,99,235,.48)}
+}
+@keyframes jpGlowPuthi{
+  0%,100%{box-shadow:0 0 0 0 rgba(16,185,129,.20)}
+  50%{box-shadow:0 0 14px 4px rgba(16,185,129,.45)}
+}
+@keyframes jpGlowAnth{
+  0%,100%{box-shadow:0 0 0 0 rgba(245,158,11,.20)}
+  50%{box-shadow:0 0 14px 4px rgba(245,158,11,.45)}
+}
+
+/* Dasa / Puthi / Anthra Pada split design */
+#currentSplits{
+  display:grid!important;
+  grid-template-columns:1fr!important;
+  gap:10px!important;
+}
+#currentSplits .split-block{
+  position:relative;
+  overflow:hidden;
+  padding:10px 12px!important;
+  border:1px solid var(--outline)!important;
+  border-left-width:5px!important;
+  border-radius:12px!important;
+  box-shadow:0 3px 10px rgba(15,23,42,.06)!important;
+}
+#currentSplits .split-dasa{border-left-color:var(--jp-dasa)!important;background:linear-gradient(90deg,var(--jp-dasa-soft),var(--card) 18%)!important}
+#currentSplits .split-puthi{border-left-color:var(--jp-puthi)!important;background:linear-gradient(90deg,var(--jp-puthi-soft),var(--card) 18%)!important}
+#currentSplits .split-anth{border-left-color:var(--jp-anth)!important;background:linear-gradient(90deg,var(--jp-anth-soft),var(--card) 18%)!important}
+
+#currentSplits .split-title{
+  display:inline-flex;
+  align-items:center;
+  gap:5px;
+  padding:4px 9px;
+  margin-bottom:5px!important;
+  border-radius:8px;
+  font-weight:950!important;
+}
+#currentSplits .split-dasa .split-title{background:var(--jp-dasa-soft)!important;color:#1d4ed8!important}
+#currentSplits .split-puthi .split-title{background:var(--jp-puthi-soft)!important;color:#047857!important}
+#currentSplits .split-anth .split-title{background:var(--jp-anth-soft)!important;color:#b45309!important}
+
+#currentSplits .pada-row{
+  border-bottom:1px dashed rgba(100,116,139,.22)!important;
+  padding:6px 8px!important;
+  border-radius:7px;
+  transition:background .15s,box-shadow .15s;
+}
+#currentSplits .pada-row.current-pada-row{
+  font-weight:900!important;
+}
+#currentSplits .split-dasa .current-pada-row{
+  background:var(--jp-dasa-soft)!important;
+  box-shadow:inset 3px 0 0 var(--jp-dasa);
+}
+#currentSplits .split-puthi .current-pada-row{
+  background:var(--jp-puthi-soft)!important;
+  box-shadow:inset 3px 0 0 var(--jp-puthi);
+}
+#currentSplits .split-anth .current-pada-row{
+  background:var(--jp-anth-soft)!important;
+  box-shadow:inset 3px 0 0 var(--jp-anth);
+}
+#currentSplits .current-pada-pct{
+  min-width:44px;
+  text-align:center;
+  padding:3px 7px;
+  border-radius:999px;
+  color:#fff!important;
+  font-size:.9em;
+}
+#currentSplits .split-dasa .current-pada-pct{background:var(--jp-dasa)!important}
+#currentSplits .split-puthi .current-pada-pct{background:var(--jp-puthi)!important}
+#currentSplits .split-anth .current-pada-pct{background:var(--jp-anth)!important;color:#382300!important}
+
+/* Selected tree / split accents use same D/P/A colors */
+.split-block.sel-dasa{outline:2px solid var(--jp-dasa)!important}
+.split-block.sel-puthi{outline:2px solid var(--jp-puthi)!important}
+.split-block.sel-anth{outline:2px solid var(--jp-anth)!important}
+
+body.dark #currentSplits .split-dasa{background:linear-gradient(90deg,rgba(37,99,235,.16),var(--card) 20%)!important}
+body.dark #currentSplits .split-puthi{background:linear-gradient(90deg,rgba(16,185,129,.14),var(--card) 20%)!important}
+body.dark #currentSplits .split-anth{background:linear-gradient(90deg,rgba(245,158,11,.14),var(--card) 20%)!important}
+</style>
+
+
+<style id="jp-pada-progress-and-simple-sandhippu-v1">
+/* =========================================================
+   CURRENT NAKSHATRA PADA — COLOR LENGTH = ACTUAL %
+   ========================================================= */
+#currentSplits .pada-row.current-pada-row{
+  position:relative!important;
+  overflow:hidden!important;
+  isolation:isolate;
+  background:transparent!important;
+}
+#currentSplits .pada-row.current-pada-row::before{
+  content:"";
+  position:absolute;
+  z-index:-1;
+  inset:0 auto 0 0;
+  width:var(--jp-pada-progress,0%);
+  border-radius:7px;
+  transition:width .35s ease;
+  opacity:.18;
+}
+#currentSplits .split-dasa .pada-row.current-pada-row::before{
+  background:var(--jp-dasa)!important;
+}
+#currentSplits .split-puthi .pada-row.current-pada-row::before{
+  background:var(--jp-puthi)!important;
+}
+#currentSplits .split-anth .pada-row.current-pada-row::before{
+  background:var(--jp-anth)!important;
+}
+#currentSplits .split-dasa .current-pada-row,
+#currentSplits .split-puthi .current-pada-row,
+#currentSplits .split-anth .current-pada-row{
+  box-shadow:inset 3px 0 0 currentColor!important;
+}
+
+/* =========================================================
+   DASA / PUTHI SANDHIPPU — SIMPLE COLOR CARD FORMAT
+   Keep all calculations/data; change only presentation.
+   ========================================================= */
+#dasaPlanetMeetings .ddm-card,
+#puthiPlanetMeetings .pdm-card{
+  padding:10px!important;
+  border:0!important;
+  background:transparent!important;
+  box-shadow:none!important;
+}
+
+/* Headings */
+#dasaPlanetMeetings .ddm-head,
+#puthiPlanetMeetings .pdm-head{
+  padding:9px 12px!important;
+  border-radius:11px!important;
+  margin-bottom:9px!important;
+}
+#dasaPlanetMeetings .ddm-head{
+  background:linear-gradient(90deg,#dbeafe,#eef6ff)!important;
+  border-left:5px solid var(--jp-dasa)!important;
+}
+#puthiPlanetMeetings .pdm-head{
+  background:linear-gradient(90deg,#d1fae5,#effdf7)!important;
+  border-left:5px solid var(--jp-puthi)!important;
+}
+#dasaPlanetMeetings .ddm-head strong{color:#1d4ed8!important;font-size:15px!important}
+#puthiPlanetMeetings .pdm-head strong{color:#047857!important;font-size:15px!important}
+#dasaPlanetMeetings .ddm-note,
+#puthiPlanetMeetings .pdm-note{
+  font-size:11px!important;
+  opacity:.78;
+}
+
+/* Turn tables into clean row cards on ALL screen sizes */
+#dasaPlanetMeetings .ddm-table thead,
+#puthiPlanetMeetings .pdm-table thead{
+  display:none!important;
+}
+#dasaPlanetMeetings .ddm-table,
+#dasaPlanetMeetings .ddm-table tbody,
+#puthiPlanetMeetings .pdm-table,
+#puthiPlanetMeetings .pdm-table tbody{
+  display:block!important;
+  width:100%!important;
+}
+#dasaPlanetMeetings .ddm-table tr,
+#puthiPlanetMeetings .pdm-table tr{
+  display:grid!important;
+  grid-template-columns:minmax(135px,.8fr) minmax(180px,1.15fr) minmax(115px,.7fr) minmax(105px,.65fr) minmax(105px,.65fr) minmax(150px,.9fr);
+  align-items:center;
+  gap:5px 8px;
+  width:100%!important;
+  margin:0 0 7px!important;
+  padding:7px 9px!important;
+  border-radius:10px!important;
+  border:1px solid var(--outline)!important;
+  box-shadow:0 2px 7px rgba(15,23,42,.045)!important;
+}
+#dasaPlanetMeetings .ddm-table tr{
+  background:linear-gradient(90deg,rgba(37,99,235,.08),var(--card) 28%)!important;
+  border-left:4px solid var(--jp-dasa)!important;
+}
+#puthiPlanetMeetings .pdm-table tr{
+  background:linear-gradient(90deg,rgba(16,185,129,.08),var(--card) 28%)!important;
+  border-left:4px solid var(--jp-puthi)!important;
+}
+
+#dasaPlanetMeetings .ddm-table td,
+#puthiPlanetMeetings .pdm-table td{
+  display:block!important;
+  width:auto!important;
+  border:0!important;
+  padding:3px 4px!important;
+  font-size:12px!important;
+  min-width:0;
+  overflow-wrap:anywhere;
+}
+#dasaPlanetMeetings .ddm-table td::before,
+#puthiPlanetMeetings .pdm-table td::before{
+  display:none!important;
+}
+
+/* Important values become small colored chips */
+#dasaPlanetMeetings .ddm-planet{
+  color:#1d4ed8!important;
+  font-weight:950!important;
+}
+#puthiPlanetMeetings .pdm-planet{
+  color:#047857!important;
+  font-weight:950!important;
+}
+#dasaPlanetMeetings .ddm-star,
+#puthiPlanetMeetings td:nth-child(2){
+  color:#7e22ce!important;
+  font-weight:850!important;
+}
+#dasaPlanetMeetings .ddm-meet:last-child,
+#puthiPlanetMeetings .pdm-meet:last-child{
+  display:inline-block!important;
+  justify-self:start;
+  padding:4px 8px!important;
+  border-radius:999px!important;
+  background:#fff3e6!important;
+  color:#b45309!important;
+  font-weight:950!important;
+}
+#dasaPlanetMeetings .ddm-table td:nth-child(5),
+#puthiPlanetMeetings .pdm-table td:nth-child(5){
+  color:#be185d!important;
+  font-weight:900!important;
+}
+
+/* Puthi Dasa selector: compact colored chips */
+#puthiPlanetMeetings .pdm-controls{
+  gap:5px!important;
+  margin:7px 0 9px!important;
+}
+#puthiPlanetMeetings .pdm-dasa-btn{
+  padding:5px 9px!important;
+  border-radius:999px!important;
+  font-size:11px!important;
+  background:#f5f3ff!important;
+  border-color:#c4b5fd!important;
+  color:#6d28d9!important;
+}
+#puthiPlanetMeetings .pdm-dasa-btn.current{
+  background:#d1fae5!important;
+  color:#047857!important;
+  border-color:#10b981!important;
+}
+#puthiPlanetMeetings .pdm-dasa-btn.active{
+  background:#7c3aed!important;
+  color:#fff!important;
+  border-color:#6d28d9!important;
+}
+
+/* Dark mode */
+body.dark #dasaPlanetMeetings .ddm-head{
+  background:linear-gradient(90deg,rgba(37,99,235,.24),rgba(37,99,235,.06))!important;
+}
+body.dark #puthiPlanetMeetings .pdm-head{
+  background:linear-gradient(90deg,rgba(16,185,129,.22),rgba(16,185,129,.05))!important;
+}
+body.dark #dasaPlanetMeetings .ddm-table tr{
+  background:linear-gradient(90deg,rgba(37,99,235,.14),var(--card) 32%)!important;
+}
+body.dark #puthiPlanetMeetings .pdm-table tr{
+  background:linear-gradient(90deg,rgba(16,185,129,.13),var(--card) 32%)!important;
+}
+
+/* Responsive: two-column mini cards, then one-column on very small screens */
+@media(max-width:1050px){
+  #dasaPlanetMeetings .ddm-table tr,
+  #puthiPlanetMeetings .pdm-table tr{
+    grid-template-columns:repeat(3,minmax(0,1fr))!important;
+  }
+}
+@media(max-width:700px){
+  #dasaPlanetMeetings .ddm-table tr,
+  #puthiPlanetMeetings .pdm-table tr{
+    grid-template-columns:1fr 1fr!important;
+  }
+}
+</style>
+
+
+<style id="jp-research-sliders-v1">
+  #btnDasaMeeting,#btnPuthiMeeting,
+  #btnDBABirth,#btnDBACurrent,#btnDBAKotcharam,
+  #btnBirthPlanetBhava,#btnCurrentPlanetBhava{
+    display:none!important;
+  }
+  .jp-research-controls{
+    margin:12px 0 16px;
+    display:grid;
+    grid-template-columns:repeat(3,minmax(0,1fr));
+    gap:10px;
+  }
+  .jp-segment-wrap{
+    border:1px solid rgba(99,102,241,.18);
+    border-radius:14px;
+    padding:8px;
+    background:var(--card);
+    box-shadow:0 3px 11px rgba(15,23,42,.05);
+  }
+  .jp-segment-label{
+    font-weight:950;
+    font-size:12px;
+    text-align:center;
+    margin:0 0 6px;
+    color:var(--muted);
+  }
+  .jp-segment{
+    position:relative;
+    display:grid;
+    padding:3px;
+    border:1px solid #93c5fd;
+    border-radius:11px;
+    background:rgba(219,234,254,.35);
+    overflow:hidden;
+  }
+  .jp-segment-2{grid-template-columns:repeat(2,1fr)}
+  .jp-segment-3{grid-template-columns:repeat(3,1fr)}
+  .jp-segment-slider{
+    position:absolute;
+    top:3px;bottom:3px;left:3px;
+    border-radius:8px;
+    background:#175397;
+    box-shadow:0 2px 7px rgba(23,83,151,.25);
+    transition:transform .23s ease,width .23s ease,background .23s ease;
+    z-index:0;
+  }
+  .jp-segment-2 .jp-segment-slider{width:calc(50% - 3px)}
+  .jp-segment-3 .jp-segment-slider{width:calc(33.333% - 2px)}
+  .jp-segment-2.pos-1 .jp-segment-slider{transform:translateX(100%)}
+  .jp-segment-3.pos-1 .jp-segment-slider{transform:translateX(100%)}
+  .jp-segment-3.pos-2 .jp-segment-slider{transform:translateX(200%)}
+  #sandhippuSegment.pos-1 .jp-segment-slider{background:#10b981}
+  #kpSegment.pos-1 .jp-segment-slider{background:#0d9488}
+  #kpSegment.pos-2 .jp-segment-slider{background:#7c3aed}
+  #bhavaRelationSegment.pos-1 .jp-segment-slider{background:#0891b2}
+  .jp-seg-btn{
+    position:relative;z-index:1;
+    border:0!important;background:transparent!important;
+    color:#172554!important;
+    padding:7px 6px;
+    min-width:0;
+    font-size:12px;
+    font-weight:950;
+    border-radius:8px;
+    cursor:pointer;
+    box-shadow:none!important;
+  }
+  .jp-seg-btn.active{color:#fff!important}
+  body.dark .jp-seg-btn{color:#dbeafe!important}
+  body.dark .jp-seg-btn.active{color:#fff!important}
+  body.dark .jp-segment-wrap{background:var(--card)}
+  @media(max-width:1000px){
+    .jp-research-controls{grid-template-columns:1fr}
+  }
+</style>
+
+
+<style id="jp-three-research-tables-layout-v1">
+  #jpResearchModeControls{
+    display:grid!important;
+    grid-template-columns:1fr!important;
+    gap:14px!important;
+  }
+  #jpResearchModeControls .jp-segment-wrap{
+    width:100%;
+    box-sizing:border-box;
+  }
+  .jp-research-table-slot{
+    width:100%;
+    margin-top:9px;
+    min-height:0;
+    overflow-x:auto;
+  }
+
+  /* The real existing output cards are mounted directly under their selector. */
+  #sandhippuTableSlot #dasaPlanetMeetings,
+  #sandhippuTableSlot #puthiPlanetMeetings,
+  #kpTableSlot #dasaTablesCard,
+  #bhavaRelationTableSlot #currentPlanetBhavaTableBox{
+    width:100%!important;
+    max-width:none!important;
+    margin:0!important;
+    box-sizing:border-box!important;
+  }
+
+  /* Do not collapse one research output just because another research group is used. */
+  #jpResearchModeControls #dasaTablesCard,
+  #jpResearchModeControls #currentPlanetBhavaTableBox{
+    position:relative!important;
+  }
+</style>
+
+
+<style id="jp-compact-top-research-controls-v2">
+  #jpResearchModeControls{
+    display:flex!important;
+    flex-direction:column!important;
+    align-items:center!important;
+    gap:13px!important;
+    margin:12px 0 14px!important;
+  }
+  #jpResearchModeControls .jp-segment-wrap{
+    width:100%!important;
+    padding:8px 10px 10px!important;
+    box-sizing:border-box!important;
+  }
+  #jpResearchModeControls .jp-segment-label{
+    margin-bottom:5px!important;
+    text-align:center!important;
+  }
+  #jpResearchModeControls .jp-segment{
+    width:min(390px,calc(100% - 12px))!important;
+    margin:0 auto!important;
+    box-sizing:border-box!important;
+  }
+  #jpResearchModeControls .jp-research-table-slot{
+    width:100%!important;
+    margin:9px 0 0!important;
+  }
+
+  /* Dasa Sandhippu has an old static header + a generated header.
+     Keep only the generated header, so it is shown once. */
+  #dasaPlanetMeetings > .ddm-head{
+    display:none!important;
+  }
+  #puthiPlanetMeetings > .pdm-head{
+    display:none!important;
+  }
+
+  /* Current Pada: default light D/P/A color with a small moving sweep.
+     This is independent from Minminippu. */
+  #currentSplits .pada-row.current-pada-row{
+    position:relative!important;
+    overflow:hidden!important;
+    isolation:isolate;
+  }
+  #currentSplits .pada-row.current-pada-row::after{
+    content:"";
+    position:absolute;
+    z-index:-1;
+    top:0;
+    bottom:0;
+    left:-28%;
+    width:28%;
+    border-radius:8px;
+    opacity:.32;
+    animation:jpRunningPadaSweep 2.2s ease-in-out infinite;
+    pointer-events:none;
+  }
+  #currentSplits .split-dasa .pada-row.current-pada-row{
+    background:rgba(37,99,235,.09)!important;
+  }
+  #currentSplits .split-puthi .pada-row.current-pada-row{
+    background:rgba(16,185,129,.09)!important;
+  }
+  #currentSplits .split-anth .pada-row.current-pada-row{
+    background:rgba(245,158,11,.10)!important;
+  }
+  #currentSplits .split-dasa .pada-row.current-pada-row::after{
+    background:linear-gradient(90deg,transparent,rgba(37,99,235,.42),transparent)!important;
+  }
+  #currentSplits .split-puthi .pada-row.current-pada-row::after{
+    background:linear-gradient(90deg,transparent,rgba(16,185,129,.42),transparent)!important;
+  }
+  #currentSplits .split-anth .pada-row.current-pada-row::after{
+    background:linear-gradient(90deg,transparent,rgba(245,158,11,.46),transparent)!important;
+  }
+  @keyframes jpRunningPadaSweep{
+    0%{left:-30%}
+    50%{left:102%}
+    100%{left:-30%}
+  }
+
+  @media(max-width:600px){
+    #jpResearchModeControls .jp-segment{
+      width:min(360px,calc(100% - 6px))!important;
+    }
+  }
+</style>
+
+
+<style id="jp-rasi-info-persistent-current-pada-v1">
+  .jp-rasi-heading{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:12px;
+    flex-wrap:wrap;
+    margin:8px 0 3px;
+    font-size:18px;
+    font-weight:900;
+  }
+  #rasiLagnaInfo{
+    display:inline-flex;
+    align-items:center;
+    padding:5px 10px;
+    border:1.5px solid #2563eb;
+    border-radius:999px;
+    color:#1d4ed8;
+    font-size:13px;
+    font-weight:900;
+    background:rgba(219,234,254,.55);
+  }
+
+  /* Keep each of the three research result areas visible even when other
+     unrelated buttons are clicked. Only the selected sub-view inside each
+     slider may change. */
+  #sandhippuTableSlot,
+  #kpTableSlot,
+  #bhavaRelationTableSlot{
+    display:block!important;
+    visibility:visible!important;
+  }
+  #sandhippuTableSlot #dasaPlanetMeetings,
+  #sandhippuTableSlot #puthiPlanetMeetings,
+  #kpTableSlot #dasaTablesCard,
+  #bhavaRelationTableSlot #currentPlanetBhavaTableBox{
+    visibility:visible!important;
+  }
+
+  /* Dasa / Puthi / Anthra lord name colors */
+  #currentSplits .split-dasa .jp-split-lord{color:var(--jp-dasa)!important;font-weight:950}
+  #currentSplits .split-puthi .jp-split-lord{color:var(--jp-puthi)!important;font-weight:950}
+  #currentSplits .split-anth .jp-split-lord{color:#c56a00!important;font-weight:950}
+
+  /* Default current Nakshatra Pada highlight inside the Rasi chart.
+     This is NOT Minminippu and stays on by default. */
+  #rasiChart .line.jp-current-dasa-pada{
+    background:linear-gradient(90deg,
+      rgba(37,99,235,.08),
+      rgba(37,99,235,.25),
+      rgba(37,99,235,.08))!important;
+    background-size:220% 100%!important;
+    animation:jpChartPadaRunBlue 2.2s linear infinite!important;
+  }
+  #rasiChart .line.jp-current-puthi-pada{
+    background:linear-gradient(90deg,
+      rgba(16,185,129,.08),
+      rgba(16,185,129,.25),
+      rgba(16,185,129,.08))!important;
+    background-size:220% 100%!important;
+    animation:jpChartPadaRunGreen 2.2s linear infinite!important;
+  }
+  #rasiChart .line.jp-current-anth-pada{
+    background:linear-gradient(90deg,
+      rgba(245,158,11,.10),
+      rgba(245,158,11,.28),
+      rgba(245,158,11,.10))!important;
+    background-size:220% 100%!important;
+    animation:jpChartPadaRunOrange 2.2s linear infinite!important;
+  }
+
+  @keyframes jpChartPadaRunBlue{
+    0%{background-position:110% 0}
+    100%{background-position:-110% 0}
+  }
+  @keyframes jpChartPadaRunGreen{
+    0%{background-position:110% 0}
+    100%{background-position:-110% 0}
+  }
+  @keyframes jpChartPadaRunOrange{
+    0%{background-position:110% 0}
+    100%{background-position:-110% 0}
+  }
+
+  body.dark #rasiLagnaInfo{
+    background:rgba(37,99,235,.12);
+    color:#93c5fd;
+    border-color:#60a5fa;
+  }
 </style>
 
 </head>
@@ -3933,6 +4844,50 @@ body.dark #rasiAnalysisCenter{
     </select>
   </div>
 
+
+<section id="jpResearchModeControls" class="jp-research-controls">
+  <div class="jp-segment-wrap">
+    <div class="jp-segment-label">சந்திப்பு</div>
+    <div id="sandhippuSegment" class="jp-segment jp-segment-2 pos-0">
+      <span class="jp-segment-slider"></span>
+      <button type="button" class="jp-seg-btn active" data-mode="dasa">தசை சந்திப்பு</button>
+      <button type="button" class="jp-seg-btn" data-mode="puthi">புக்தி சந்திப்பு</button>
+    </div>
+    <div id="sandhippuTableSlot" class="jp-research-table-slot"></div>
+  </div>
+
+  <div class="jp-segment-wrap">
+    <div class="jp-segment-label">KP</div>
+    <div id="kpSegment" class="jp-segment jp-segment-3 pos-0">
+      <span class="jp-segment-slider"></span>
+      <button type="button" class="jp-seg-btn active" data-mode="birth">KP பிறப்பு</button>
+      <button type="button" class="jp-seg-btn" data-mode="current">KP தற்போது</button>
+      <button type="button" class="jp-seg-btn" data-mode="kotcharam">KP கொச்சாரம்</button>
+    </div>
+    <div id="kpTableSlot" class="jp-research-table-slot"></div>
+  </div>
+
+  <div class="jp-segment-wrap">
+    <div class="jp-segment-label">கிரக பாவக தொடர்புகள்</div>
+    <div id="bhavaRelationSegment" class="jp-segment jp-segment-2 pos-0">
+      <span class="jp-segment-slider"></span>
+      <button type="button" class="jp-seg-btn active" data-mode="birth">பிறப்பு</button>
+      <button type="button" class="jp-seg-btn" data-mode="current">கொச்சாரம்</button>
+    </div>
+    <div id="bhavaRelationTableSlot" class="jp-research-table-slot"></div>
+  </div>
+</section>
+
+<div id="lagnaModeSelector" class="lagna-mode-selector is-jenma" role="group" aria-label="லக்னம் தேர்வு">
+  <span class="lagna-mode-slider" aria-hidden="true"></span>
+  <button type="button" id="btnJenmaLagnam" class="lagna-mode-btn active" aria-pressed="true">ஜென்ம லக்னம்</button>
+  <button type="button" id="btnAkshayaLagnamTop" class="lagna-mode-btn" aria-pressed="false">அக்ஷய லக்னம்</button>
+</div>
+
+<div class="rasi-heading jp-rasi-heading">
+  <b>ராசி (D-1)</b>
+  <span id="rasiLagnaInfo">—</span>
+</div>
 <div class="south-chart" id="rasiChart"></div>
 
 <div class="navamsa-section" id="navamsaSection">
@@ -3942,6 +4897,8 @@ body.dark #rasiAnalysisCenter{
   </div>
   <div class="south-chart navamsa-chart" id="navamsaChart"></div>
 </div>
+
+
 
 
 
@@ -4106,6 +5063,25 @@ function highlightWholeRasi(signId, cls){
   const box = boxForSignId(signId);
   if (box) box.classList.add(cls);
 }
+
+/* Minminippu title highlighting must target the requested chart.
+   document.querySelector('.box...') always finds the Rasi chart first,
+   which is why Navamsa Rasi names were not getting highlighted. */
+function jpModeClass(mode){
+  return mode==='dasa' ? 'owner-rasi-dasa'
+       : mode==='puthi' ? 'owner-rasi-puthi'
+       : 'owner-rasi-anth';
+}
+function jpHighlightRasiNameInChart(chartId, signId, mode){
+  if(!signId) return;
+  const idx=RASIS.findIndex(r=>r.id===signId);
+  if(idx<0) return;
+  const chart=document.getElementById(chartId);
+  const box=chart?.querySelector(`.box.${RASIS[idx].code}`);
+  if(!box) return;
+  box.classList.add(jpModeClass(mode));
+}
+
 
 /* ===== Mudakku concept (birth Sun position only) =====
    User-defined mapping:
@@ -4978,10 +5954,11 @@ function isPlanetRetrograde(obj){
 
 function planetChartLabel(apiKey, obj, useBirthRetrograde=false){
   const shortName = planetShort2FromApiKey(apiKey);
+  // Birth chart: use the explicitly parsed/saved birth retrograde flag.
+  // Current/Kotcharam: read the current API object's retrograde flag.
   const retro = useBirthRetrograde
-    ? (birthPlanetRetrograde[apiKey] === true || isPlanetRetrograde(obj))
+    ? (birthPlanetRetrograde?.[apiKey] === true)
     : isPlanetRetrograde(obj);
-  // Retrograde planets are shown as: (ராகு)
   return retro ? `(${shortName})` : shortName;
 }
 
@@ -5073,6 +6050,51 @@ function placeCurrentPlanetsOnChart(planets){
   }catch(e){}
 }
 
+
+/* =========================================================
+   JP CURRENT PLANET SHARED CACHE
+   One API result per கணிப்பு தேதி/time is reused by:
+   - current planets in chart
+   - KP கொச்சாரம்
+   - கொச்சார கிரக பாவக தொடர்புகள்
+   - கொச்சாரம் / Panchangam
+   It also survives page refresh in localStorage.
+   ========================================================= */
+const JP_CURRENT_CACHE_KEY='jp_current_planet_cache_v1';
+const jpCurrentPlanetMemoryCache = new Map();
+
+function jpCurrentCacheSignature(value){
+  const lat=(typeof selectedLat==='number' && Number.isFinite(selectedLat)) ? Number(selectedLat).toFixed(5) : '0';
+  const lon=(typeof selectedLon==='number' && Number.isFinite(selectedLon)) ? Number(selectedLon).toFixed(5) : '0';
+  return `${String(value||'')}|${lat}|${lon}|lahiri|geocentric`;
+}
+function jpReadPersistentCurrentCache(sig){
+  try{
+    const all=JSON.parse(localStorage.getItem(JP_CURRENT_CACHE_KEY)||'{}');
+    return all?.[sig] || null;
+  }catch(e){ return null; }
+}
+function jpWritePersistentCurrentCache(sig,value,output){
+  try{
+    const all=JSON.parse(localStorage.getItem(JP_CURRENT_CACHE_KEY)||'{}');
+    all[sig]={value,output,savedAt:Date.now()};
+    // Keep only the latest 12 calculation-date results.
+    const entries=Object.entries(all).sort((a,b)=>(b[1]?.savedAt||0)-(a[1]?.savedAt||0)).slice(0,12);
+    localStorage.setItem(JP_CURRENT_CACHE_KEY,JSON.stringify(Object.fromEntries(entries)));
+  }catch(e){}
+}
+function jpApplySharedCurrentPlanetData(output,value){
+  if(!output)return null;
+  currentPlanetsForChart=output;
+  currentPlanetsCalcDate=value;
+  currentPlanetDegrees={};
+  CURRENT_PLANET_KEYS.forEach(key=>{
+    const deg=Number(output?.[key]?.fullDegree);
+    if(Number.isFinite(deg))currentPlanetDegrees[key]=deg;
+  });
+  return output;
+}
+
 async function fetchCurrentPlanetsForCalculationDate(){
   const value = caldate.value;
   if(!value) return null;
@@ -5082,6 +6104,18 @@ async function fetchCurrentPlanetsForCalculationDate(){
   if(currentPlanetsForChart && currentPlanetsCalcDate === value){
     placeCurrentPlanetsOnChart(currentPlanetsForChart);
     drawNavamsaChart(); renderCurrentPlanetsCard();
+    return currentPlanetsForChart;
+  }
+
+  const cacheSig=jpCurrentCacheSignature(value);
+  const memCached=jpCurrentPlanetMemoryCache.get(cacheSig);
+  const savedCached=memCached || jpReadPersistentCurrentCache(cacheSig);
+  if(savedCached?.output){
+    jpCurrentPlanetMemoryCache.set(cacheSig,savedCached);
+    jpApplySharedCurrentPlanetData(savedCached.output,value);
+    placeCurrentPlanetsOnChart(currentPlanetsForChart);
+    drawNavamsaChart();
+    renderCurrentPlanetsCard();
     return currentPlanetsForChart;
   }
 
@@ -5131,16 +6165,10 @@ async function fetchCurrentPlanetsForCalculationDate(){
     const data = await res.json();
     if(!data.output) throw new Error('Current planet data missing');
 
-    currentPlanetsForChart = data.output;
-    currentPlanetsCalcDate = value;
-    currentPlanetDegrees = {};
-
-    CURRENT_PLANET_KEYS.forEach(key=>{
-      const deg = Number(data.output?.[key]?.fullDegree);
-      if(Number.isFinite(deg)){
-        currentPlanetDegrees[key] = deg;
-      }
-    });
+    jpApplySharedCurrentPlanetData(data.output,value);
+    const cacheRecord={value,output:data.output,savedAt:Date.now()};
+    jpCurrentPlanetMemoryCache.set(cacheSig,cacheRecord);
+    jpWritePersistentCurrentCache(cacheSig,value,data.output);
 
     placeCurrentPlanetsOnChart(currentPlanetsForChart);
     drawNavamsaChart();
@@ -5964,10 +6992,34 @@ function alpSetCalculationDate(date){
   alpPadaView=null;
 
   if(typeof run==='function'){
-    Promise.resolve(run()).catch(
-      err=>console.warn('ALP navigation run:',err)
-    );
+    Promise.resolve(run())
+      .then(()=>{
+        if(typeof alpActive!=='undefined' && alpActive){
+          try{
+            const fresh=getALPState();
+            if(fresh){
+              applyALPBhavaRotation(fresh);
+              applyALPHighlight();
+            }
+          }catch(e){console.warn('ALP Bhava refresh:',e)}
+        }
+      })
+      .catch(err=>console.warn('ALP navigation run:',err));
   }
+
+  /* Some chart wrappers rebuild once more immediately after run().
+     Re-apply ALP Bhava 1..12 after those redraws too. */
+  [0,40,120].forEach(ms=>setTimeout(()=>{
+    try{
+      if(typeof alpActive!=='undefined' && alpActive){
+        const fresh=getALPState();
+        if(fresh){
+          applyALPBhavaRotation(fresh);
+          if(typeof addALPInfoBox==='function') addALPInfoBox(fresh);
+        }
+      }
+    }catch(e){}
+  },ms));
 }
 
 function alpEnsureNavigationViews(state){
@@ -6702,272 +7754,98 @@ function renderALPPlanetMeetingTable(state){
 }
 
 function addALPInfoBox(state){
-  const old=document.getElementById('alpInfoBox');
-  if(old) old.remove();
+  document.getElementById('alpInfoBox')?.remove();
+  document.getElementById('alpPlanetMeetingBox')?.remove();
   if(!state) return;
 
-  /*
-    The calculated ALP state is authoritative.
-    If the chart says Avittam 3, the Rasi card must be Kumbam.
-    Never display a stale Rasi from an earlier navigation state.
-  */
   alpRasiView=null;
   alpPadaView=null;
   alpEnsureNavigationViews(state);
 
-  const box=document.createElement('div');
-  box.id='alpInfoBox';
-  box.className='alp-info-box';
-
-  const birthNakIndex=Math.floor((state.birthPada-1)/4);
-  const birthNakId=NAKS[birthNakIndex]?.id||null;
-  const birthNakName=birthNakId
-    ? nameNakById(birthNakId)
-    : '—';
-
-  const birthPada=((state.birthPada-1)%4)+1;
-  const currentNavPada=Number(alpPadaView?.pada);
-  const currentName=
-    Number.isFinite(currentNavPada) && currentNavPada>=1 && currentNavPada<=108
-      ? alpPadaName(currentNavPada)
-      : (nameNakById(state.nakId||'')||'—');
-  const calcDate=formatDateUI(getALPCalculationDate());
-
-  const nav=getALPNavamsaPosition(state);
-
-  const navRasiName=
-    nav?.navRasiIdx!=null
-      ? (
-          RASIS[nav.navRasiIdx]?.name?.[LANG] ||
-          RASIS[nav.navRasiIdx]?.name?.ta ||
-          '—'
-        )
-      : '—';
-
-  const navNakName=
-    nav?.d9NakId
-      ? nameNakById(nav.d9NakId)
-      : '—';
-
   const rasiPeriod=alpRasiView;
   const padaPeriod=alpPadaView;
 
-  /*
-    ALP Rasi navigation has 13 DISPLAY states:
+  const box=document.createElement('div');
+  box.id='alpInfoBox';
+  box.className='alp-info-box jp-alp-center-box';
 
-      1. Birth-Lagna Rasi (Bhava 1)
-      2. through 12. the other 11 Rasis/Bhavas
-      13. Final Birth-Lagna Rasi balance
-
-    The final Birth-Lagna balance is kept separate from the
-    normal 12 Bhavas. No Bhava calculation is changed.
-  */
-  let rasiPrevDisabled=true;
-  let rasiNextDisabled=true;
-
-  const navState=getALPState();
-
-  if(rasiPeriod && navState){
-    const isFinalLagnaBalance=
-      rasiPeriod.occurrence==='final' ||
-      (rasiPeriod.endAge>=120-1e-10 &&
-       rasiPeriod.index===Math.floor(
-         (((Number(navState.birthLagnaDeg)%360)+360)%360)/30
-       ));
-
-    const isFirstLagnaRasi=
-      rasiPeriod.occurrence==='birth' ||
-      (rasiPeriod.startAge<=1e-10);
-
-    rasiPrevDisabled=isFirstLagnaRasi;
-    rasiNextDisabled=isFinalLagnaBalance;
+  let rasiPrevDisabled=true, rasiNextDisabled=true;
+  if(rasiPeriod && state){
+    const birthRasi=Math.floor((((Number(state.birthLagnaDeg)%360)+360)%360)/30);
+    const isFirst=(rasiPeriod.occurrence==='birth'||rasiPeriod.startAge<=1e-10);
+    const isLast=(rasiPeriod.occurrence==='final' ||
+      (rasiPeriod.endAge>=120-1e-10 && rasiPeriod.index===birthRasi));
+    rasiPrevDisabled=isFirst;
+    rasiNextDisabled=isLast;
   }
 
-  const rasiIsFinalLagnaBalance=
-    rasiPeriod &&
-    (rasiPeriod.occurrence==='final' ||
-     rasiPeriod.endAge>=120-1e-10);
-
-
   box.innerHTML=`
-    <div class="alp-title">
-      ALP — வயது அடிப்படையிலான லக்ன முன்னேற்றம்
-    </div>
+    <div class="jp-alp-title">அக்ஷய லக்னம்</div>
 
-    <div>
-      பிறப்பு லக்ன பாதம்:
-      <strong>${birthNakName} ${birthPada}</strong>
-    </div>
-
-    <div>
-      கணிப்புக்கான தேதி:
-      <strong>${calcDate}</strong>
-    </div>
-
-    <div>
-      வயது:
-      <strong>${formatALPAge(state.ageYears)}</strong>
-    </div>
-
-    <div class="alp-period-row">
-
-      <button
+    <div class="jp-alp-row">
+      <button type="button"
         class="btn navbtn alp-nav-btn ${rasiPrevDisabled?'alp-nav-disabled':''}"
-        data-alp-period-nav="rasi"
-        data-dir="-1"
-        ${rasiPrevDisabled?'disabled':''}
-        title="முந்தைய ALP ராசி"
-      >◀</button>
+        data-alp-period-nav="rasi" data-dir="-1"
+        ${rasiPrevDisabled?'disabled':''}>◀</button>
 
-      <div class="alp-period-content">
-
-        <div class="alp-period-title">
-          ALP ராசி
-        </div>
-
-        <div class="alp-period-value">
-          ${alpRasiName(rasiPeriod?.index)}
-        </div>
-
-        ${rasiIsFinalLagnaBalance ? `
-          <div style="margin-top:6px;padding:6px 10px;border:1px solid var(--outline);border-radius:8px;background:var(--card);font-weight:800;color:var(--accent);">
-            லக்ன பாவம் — ALP மீதமுள்ள 9 பாதங்கள்
-          </div>
-        ` : ''}
-
-        <div class="alp-period-dates">
-          முதல் நட்சத்திர பாதம்:
-          <strong>${alpPadaName(rasiPeriod?.firstPada)}</strong>
-          <br>
-          தொடக்கம்:
-          <strong>${alpFormatPeriodDate(rasiPeriod?.start)}</strong>
-        </div>
-
-        <div class="alp-period-dates">
-          ஒன்பதாவது நட்சத்திர பாதம்:
-          <strong>${alpPadaName(rasiPeriod?.lastPada)}</strong>
-          <br>
-          முடிவு:
-          <strong>${alpFormatPeriodDate(rasiPeriod?.end)}</strong>
-        </div>
-
+      <div class="jp-alp-rasi-value">
+        ${escALPText(alpRasiName(rasiPeriod?.index))}
       </div>
 
-      <button
+      <button type="button"
         class="btn navbtn alp-nav-btn ${rasiNextDisabled?'alp-nav-disabled':''}"
-        data-alp-period-nav="rasi"
-        data-dir="+1"
-        ${rasiNextDisabled?'disabled':''}
-        title="அடுத்த ALP ராசி"
-      >▶</button>
-
+        data-alp-period-nav="rasi" data-dir="+1"
+        ${rasiNextDisabled?'disabled':''}>▶</button>
     </div>
 
-    <div class="alp-period-row">
-
-      <button
+    <div class="jp-alp-row jp-alp-pada-row">
+      <button type="button"
         class="btn navbtn alp-nav-btn"
-        data-alp-period-nav="nakshatra"
-        data-dir="-1"
-        title="முந்தைய ALP நட்சத்திர பாதம்"
-      >◀</button>
+        data-alp-period-nav="nakshatra" data-dir="-1">◀</button>
 
-      <div class="alp-period-content">
-
-        <div class="alp-period-title">
-          ALP நட்சத்திர பாதம்
+      <div class="jp-alp-pada-content">
+        <div class="jp-alp-pada-value">
+          ${escALPText(alpPadaName(padaPeriod?.pada))}
         </div>
-
-        <div class="alp-period-value">
-          ${alpPadaName(padaPeriod?.pada)}
-        </div>
-
-        <div class="alp-period-dates">
-          நட்சத்திரம்:
-          <strong>${alpNakName(padaPeriod?.nakIndex)}</strong>
-          &nbsp; • &nbsp;
-          ராசி:
-          <strong>${alpRasiName(padaPeriod?.rasiIndex)}</strong>
-        </div>
-
-        <div class="alp-period-dates">
-          தொடக்கம்:
-          <strong>${alpFormatPeriodDate(padaPeriod?.start)}</strong>
+        <div class="jp-alp-dates">
+          ${escALPText(alpFormatPeriodDate(padaPeriod?.start))}
           &nbsp; → &nbsp;
-          முடிவு:
-          <strong>${alpFormatPeriodDate(padaPeriod?.end)}</strong>
+          ${escALPText(alpFormatPeriodDate(padaPeriod?.end))}
         </div>
-
       </div>
 
-      <button
+      <button type="button"
         class="btn navbtn alp-nav-btn"
-        data-alp-period-nav="nakshatra"
-        data-dir="+1"
-        title="அடுத்த ALP நட்சத்திர பாதம்"
-      >▶</button>
-
-    </div>
-
-    <div>
-      தற்போதைய ALP நட்சத்திர பாதம்:
-      <strong>${currentName}</strong>
-    </div>
-
-    <div>
-      தற்போதைய ALP ராசி:
-      <strong>
-        ${state.rasi?.name?.[LANG] ||
-          state.rasi?.name?.ta ||
-          '—'}
-      </strong>
-    </div>
-
-    <div>
-      Navamsa ALP லக்னம்:
-      <strong>
-        ${navRasiName} • ${navNakName}
-        ${nav?.d9NakPada||'—'}
-      </strong>
-    </div>
-
-    <div>
-      Navamsa ALP பிரிவு:
-      <strong>${nav?.navSubPada||'—'} / 9</strong>
-    </div>
-
-    <div>
-      <small>
-        ALP நட்சத்திர பாதம் மாறும்போது ராசியும் அதற்கேற்ப மாறும்
-        &nbsp;•&nbsp;
-        நட்சத்திரம் தொடங்கிய தேதியிலிருந்து 2-ஆம் நாள் கணிப்புத் தேதி
-        &nbsp;•&nbsp;
-        1 ALP பாதம் ≈ ${state.padaDays.toFixed(1)} நாட்கள்
-        &nbsp;•&nbsp;
-        1 Navamsa பிரிவு ≈
-        ${nav?.navPadaDays?.toFixed(1)||'—'} நாட்கள்
-      </small>
+        data-alp-period-nav="nakshatra" data-dir="+1">▶</button>
     </div>
   `;
 
-  const bhavam=document.getElementById('bhavaChooser');
-
-  if(bhavam&&bhavam.parentNode){
-    bhavam.insertAdjacentElement('afterend',box);
+  /* Put the ALP box in the Rasi chart centre. */
+  const chart=document.getElementById('rasiChart');
+  if(chart){
+    chart.appendChild(box);
+    chart.classList.add('jp-alp-center-active');
   }else{
-    const chart=document.getElementById('rasiChart');
-    if(chart?.parentNode){
-      chart.parentNode.insertBefore(box,chart);
-    }
+    const bhavam=document.getElementById('bhavaChooser');
+    if(bhavam?.parentNode) bhavam.insertAdjacentElement('afterend',box);
   }
 
-  /* Separate ALP planet-meeting concept (Rasi only). */
+  /* Existing ALP planet-meeting calculation is retained and shown inside
+     the same centre box. */
   renderALPPlanetMeetingTable(state);
+  const meeting=document.getElementById('alpPlanetMeetingBox');
+  if(meeting){
+    box.appendChild(meeting);
+  }
 
-  /* Buttons are now in the DOM, so bind them directly. */
   bindALPNavigationButtons();
 }
 
+function escALPText(v){
+  return String(v??'—').replace(/[&<>"']/g,m=>({
+    '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
+  }[m]));
+}
 
 /* =========================================================
    ALP PERIOD NAVIGATION BUTTONS
@@ -7253,6 +8131,7 @@ function applyALPHighlight(){
 function stopALP(){
   alpActive=false;
   clearALPHighlight();
+  document.getElementById('rasiChart')?.classList.remove('jp-alp-center-active');
   document.getElementById('btnALP')?.classList.remove('active');
 
   // Return Bhava 1..12 to the original birth-Lagna order.
@@ -7697,7 +8576,7 @@ document.getElementById('btnYogiAvayogi')?.addEventListener('click',toggleYogiAv
 /* ===== Rasi grid (bilingual, exact matching) ===== */
 let mode="current"; let padaDomList=[];
 // Minminippu is OFF by default. Current DBA green highlights are shown only when the user selects a minminippu mode.
-let CURRENT_DBA_HIGHLIGHT_ENABLED = false;
+window.window.CURRENT_DBA_HIGHLIGHT_ENABLED = false;
 
 /* ===== NAVAMSA D-9 — exact-degree method confirmed from user's examples =====
    D9 is calculated from the exact degree inside the birth Rasi.
@@ -7803,21 +8682,17 @@ function navGetLine(navRasiIdx,d9Longitude){
   const chart=document.getElementById('navamsaChart');
   if(!chart) return null;
 
-  const rasiStart=navRasiIdx*30;
-  const within=((d9Longitude-rasiStart)%30+30)%30;
+  const rIdx=Number(navRasiIdx);
+  const lon=Number(d9Longitude);
+  if(!Number.isInteger(rIdx)||rIdx<0||rIdx>11||!Number.isFinite(lon)) return null;
 
-  // Find the normal Rasi-chart Nakshatra/Pada line containing this
-  // exact D9 longitude.
-  const globalPada=Math.min(108,Math.floor((d9Longitude)/(360/108))+1);
-  const rasiLines=RASI_GRID[navRasiIdx]||[];
+  // d9Longitude is the FINAL Navamsa longitude.
+  // Each Navamsa Rasi has 9 exact 3°20' cells.
+  // Directly select the cell inside the FINAL D9 Rasi.
+  const within=((lon-(rIdx*30))%30+30)%30;
+  const cell=Math.min(8,Math.floor(within/NAVAMSA_SIZE_DEG));
 
-  const rasiStartPada=Math.floor(rasiStart/(360/108))+1;
-  const localLine=globalPada-rasiStartPada;
-
-  if(localLine<0||localLine>=rasiLines.length) return null;
-
-  const canonical=navamsaPadaDomList[navRasiIdx*9+localLine+1];
-  return canonical||null;
+  return navamsaPadaDomList[(rIdx*9)+cell+1] || null;
 }
 
 function clearNavamsaPlanets(){
@@ -7831,7 +8706,10 @@ function clearNavamsaPlanets(){
 function appendNavamsaPlanet(key,obj,isBirth){
   if(!obj||obj.fullDegree==null) return;
 
-  const pos=getExactNavamsaPosition(obj.fullDegree);
+  const pos=getExactNavamsaPosition(Number(obj.fullDegree));
+  if(!pos || !Number.isInteger(pos.navRasiIdx)) return;
+
+  // FINAL D9 Rasi placement — never use the birth Rasi index here.
   const line=navGetLine(pos.navRasiIdx,pos.d9Longitude);
   if(!line) return;
 
@@ -8315,7 +9193,7 @@ function findPadaIndexById(nakId,padaNum){
 }
 function showCurrentDasaPadaHighlight(){
   clearGreenHighlights();
-  if (!CURRENT_DBA_HIGHLIGHT_ENABLED) return;
+  if (!window.CURRENT_DBA_HIGHLIGHT_ENABLED) return;
   if(!vimData||!vimCurrentPath) return;
 
   const now=caldate.value? new Date(caldate.value): new Date();
@@ -8635,7 +9513,7 @@ function renderCurrentSplits(md,pt,at){
     const cur=getCurrentPada(b.per,now);
 
     const card=document.createElement('div');
-    card.className='card split-block';
+    card.className='card split-block split-'+b.key;
     if(activeSplit===b.key){
       if(b.key==='dasa') card.classList.add('sel-dasa');
       if(b.key==='puthi') card.classList.add('sel-puthi');
@@ -8644,15 +9522,21 @@ function renderCurrentSplits(md,pt,at){
 
     const t=document.createElement('div');
     t.className='split-title';
-    t.innerHTML=`${b.title} — <span class="pct">${overall}%</span>`;
+    const lordName=b.per?.lordKey ? namePlanet(b.per.lordKey) : '—';
+    t.innerHTML=`<span class="jp-split-lord">${b.title}: ${lordName}</span> — <span class="pct">${overall}%</span>`;
     card.appendChild(t);
 
     splits.forEach(s=>{
       const row=document.createElement('div');
-      row.className='pada-row';
+      const isCurrentPada=(cur.pada===s.pada);
+      row.className='pada-row'+(isCurrentPada?' current-pada-row':'');
       const nakName = nameNakByIdx(s.nakIdx);
-      const right = (cur.pada===s.pada)
-        ? `<span class="pct">${pctOfRange(now,s.start,s.end)}%</span>`
+      const padaPct=isCurrentPada ? pctOfRange(now,s.start,s.end) : 0;
+      if(isCurrentPada){
+        row.style.setProperty('--jp-pada-progress',`${Math.max(0,Math.min(100,Number(padaPct)||0))}%`);
+      }
+      const right = isCurrentPada
+        ? `<span class="pct current-pada-pct">${padaPct}%</span>`
         : `<span class="muted">—</span>`;
       row.innerHTML=`<span>${nakName} — ${P} ${s.pada} <span class="muted">(${formatDateUI(s.start)} - ${formatDateUI(s.end)})</span></span>${right}`;
       card.appendChild(row);
@@ -9102,6 +9986,315 @@ function placePlanetsOnChart(planets){
 }
 function getMoonPadaIndex(d,m,s){ const degree=Number(d)+Number(m)/60+Number(s)/3600; const NAK=13+20/60; const P=NAK/4; return Math.floor((degree%360)/P)+1; }
 function placeMoonSymbolToPada(globalPada){ document.querySelectorAll('.moon-pada-marker').forEach(e=>e.remove()); const el=padaDomList[globalPada]; if(el){ el.insertAdjacentHTML('beforeend', `<span class="moon-pada-marker" style="margin-left:5px;">🌙</span>`); } }
+
+
+
+/* =========================================================
+   NEW JATHAGAM — கணக்கிட்டு சேமி
+   Uses the same extended-planet API flow already used by
+   Kotcharam. After the API response, the existing run()
+   function renders the complete birth Jathagam.
+   ========================================================= */
+(function(){
+  const btn=document.getElementById('btnApi');
+  if(!btn || btn.dataset.jpBirthApiBound==='1') return;
+  btn.dataset.jpBirthApiBound='1';
+
+  btn.addEventListener('click', async ()=>{
+    const name=(document.getElementById('profileName')?.value||'').trim();
+    const dob=(document.getElementById('dob_api')?.value||'').trim();
+    const tob=(document.getElementById('tob_api')?.value||'').trim();
+    const place=(document.getElementById('placeInput')?.value||'').trim();
+
+    if(!name){
+      alert(LANG==='ta'?'ஜாதகர் பெயரை உள்ளிடவும்.':'Enter the Jathagar name.');
+      document.getElementById('profileName')?.focus();
+      return;
+    }
+    if(!dob || !tob || !place){
+      alert(LANG==='ta'
+        ?'பிறந்த தேதி, பிறந்த நேரம், பிறந்த இடம் அனைத்தையும் உள்ளிடவும்.'
+        :'Enter date, time and place of birth.');
+      return;
+    }
+
+    // IMPORTANT: run() uses the manual DOB field (dob_), so it must
+    // be populated from the API DOB before run() is called.
+    const set=(id,v)=>{
+      const el=document.getElementById(id);
+      if(el) el.value=(v ?? '');
+    };
+    set('dob',dob);
+
+    const [year,month,day]=dob.split('-').map(Number);
+    const [hours=0,minutes=0]=tob.split(':').map(Number);
+
+    if(!year || !month || !day){
+      alert(LANG==='ta'?'பிறந்த தேதியை சரிபார்க்கவும்.':'Check the date of birth.');
+      return;
+    }
+
+    // Use the selected place coordinates. If the user typed a place
+    // without selecting a suggestion, use the existing location lookup
+    // as a fallback before making the birth API request.
+    let lat=(typeof selectedLat==='number' && isFinite(selectedLat)) ? selectedLat : null;
+    let lon=(typeof selectedLon==='number' && isFinite(selectedLon)) ? selectedLon : null;
+
+    if(lat===null || lon===null){
+      try{
+        const results=await fetchPlaceSuggestions(place);
+        if(Array.isArray(results) && results.length){
+          const exact=results[0];
+          if(Number.isFinite(Number(exact.lat)) && Number.isFinite(Number(exact.lon))){
+            lat=Number(exact.lat);
+            lon=Number(exact.lon);
+            selectedLat=lat;
+            selectedLon=lon;
+          }
+        }
+      }catch(e){}
+    }
+
+    if(lat===null) lat=0;
+    if(lon===null) lon=0;
+
+    const payload={
+      year,month,date:day,
+      hours,minutes,seconds:0,
+      latitude:lat,longitude:lon,timezone:5.5,
+      settings:{
+        observation_point:'geocentric',
+        ayanamsha:'lahiri',
+        language:'en'
+      }
+    };
+
+    const old=btn.textContent;
+    btn.disabled=true;
+    btn.textContent=LANG==='ta'?'கணக்கிடுகிறது…':'Calculating…';
+
+    try{
+      // Clear only the CURRENT/Kotcharam cache. Birth calculation is separate.
+      currentPlanetsForChart=null;
+      currentPlanetDegrees={};
+      currentPlanetsCalcDate='';
+      currentPlanetsEnabled=false;
+      try{ clearCurrentPlanetsFromChart(); }catch(e){}
+
+      const res=await fetch(
+        'https://json.freeastrologyapi.com/planets/extended',
+        {
+          method:'POST',
+          headers:{
+            'Content-Type':'application/json',
+            'x-api-key':FREE_ASTRO_API_KEY
+          },
+          body:JSON.stringify(payload)
+        }
+      );
+
+      if(!res.ok) throw new Error(`API ${res.status}`);
+
+      const data=await res.json();
+      const output=data?.output;
+      if(!output || !output.Sun || !output.Moon){
+        throw new Error('Birth planet data missing');
+      }
+
+      // Keep the complete API result because the chart, Navamsa,
+      // Panchangam and planet table read this object.
+      savedPlanetsForChart=output;
+
+      // Internal degree map used by several existing tables/functions.
+      planetDegrees={};
+      birthPlanetRetrograde={};
+
+      const keys=['Sun','Moon','Mercury','Venus','Mars','Jupiter','Saturn','Rahu','Ketu'];
+      keys.forEach(k=>{
+        const obj=output?.[k];
+        const deg=Number(obj?.fullDegree);
+        if(Number.isFinite(deg)){
+          planetDegrees[k]=deg;
+          // IMPORTANT: API may return "true"/"false" as STRINGS.
+          // Boolean("false") is true, so never use !!value here.
+          birthPlanetRetrograde[k]=isPlanetRetrograde(obj);
+        }
+      });
+
+      // Copy Moon and Lagna into the fields consumed by run().
+      const moonFull=Number(output?.Moon?.fullDegree);
+      if(!Number.isFinite(moonFull)) throw new Error('Moon degree missing');
+
+      const dms=(value)=>{
+        let v=((Number(value)%360)+360)%360;
+        let d=Math.floor(v);
+        let mf=(v-d)*60;
+        let m=Math.floor(mf);
+        let s=Math.round((mf-m)*60);
+        if(s>=60){s=0;m++;}
+        if(m>=60){m=0;d++;}
+        if(d>=360)d=0;
+        return {d,m,s};
+      };
+
+      const md=dms(moonFull);
+      set('moon_deg',md.d);
+      set('moon_min',md.m);
+      set('moon_sec',md.s);
+
+      const ascObj=output?.Ascendant || output?.Lagna || output?.ascendant;
+      const ascFull=Number(
+        ascObj?.fullDegree ??
+        ascObj?.degree ??
+        output?.Ascendant?.longitude
+      );
+
+      if(Number.isFinite(ascFull)){
+        const ad=dms(ascFull);
+        set('lagna_deg',ad.d);
+        set('lagna_min',ad.m);
+        set('lagna_sec',ad.s);
+      }
+
+      // Fresh Jathagam uses the birth date/time as the initial
+      // calculation date. The user can change it later.
+      set('caldate',`${dob}T${tob}`);
+
+      // IMPORTANT:
+      // The birth Panchang renderer reads birthPanchangData.tithi/yoga.
+      // The extended API gives us Sun + Moon degrees, so populate
+      // birthPanchangData FIRST using the existing local calculator.
+      // This is NOT another API request.
+      try{
+        if(typeof fetchBirthTithiAndYoga==='function'){
+          await fetchBirthTithiAndYoga({
+            year,month,date:day,hours,minutes,seconds:0,
+            latitude:lat,longitude:lon
+          });
+        }else{
+          // Safe fallback if the helper is unavailable.
+          const sunDeg=Number(output?.Sun?.fullDegree);
+          const moonDeg=Number(output?.Moon?.fullDegree);
+          if(Number.isFinite(sunDeg) && Number.isFinite(moonDeg)){
+            const elong=((moonDeg-sunDeg)%360+360)%360;
+            const ti=Math.floor(elong/12);
+            const yn=((sunDeg+moonDeg)%360+360)%360;
+            const yi=Math.floor(yn/(360/27));
+            birthPanchangData={
+              tithi:{
+                number:ti+1,
+                name:'',
+                paksha:ti<15?'shukla':'krishna',
+                left_precentage:((12-(elong%12))/12)*100,
+                elapsed_percentage:((elong%12)/12)*100
+              },
+              yoga:{
+                number:yi+1,
+                name:''
+              },
+              source:'local-from-birth-planets'
+            };
+          }
+          if(typeof renderBirthPanchang==='function') renderBirthPanchang();
+        }
+      }catch(e){
+        console.warn('Birth Panchang calculation:',e);
+      }
+
+      try{
+        if(typeof renderBirthPanchang==='function') renderBirthPanchang();
+      }catch(e){ console.warn('Birth Panchang render:',e); }
+
+      try{
+        if(typeof ensurePlanetButtons==='function') ensurePlanetButtons();
+      }catch(e){}
+
+      // Existing chart engine: this is the single place that builds
+      // Rasi, Navamsa, DBA and all connected displays.
+      await run();
+
+      try{
+        if(typeof buildPlanetsTable==='function') buildPlanetsTable(savedPlanetsForChart);
+      }catch(e){}
+
+      // Save exactly the payload shape already expected by
+      // jp_applyPayload(), including API fields and birth planets.
+      const profilePayload=(
+        typeof jp_buildPayload==='function'
+          ? jp_buildPayload()
+          : {
+              version:1,
+              at:new Date().toISOString(),
+              gender:document.getElementById('genderSelect')?.value||'male',
+              inputs:{
+                dob,
+                moon:{deg:md.d,min:md.m,sec:md.s},
+                lagna:{
+                  deg:Number(document.getElementById('lagna_deg')?.value)||0,
+                  min:Number(document.getElementById('lagna_min')?.value)||0,
+                  sec:Number(document.getElementById('lagna_sec')?.value)||0
+                },
+                gender:document.getElementById('genderSelect')?.value||'male'
+              },
+              api:{dob_api:dob,tob_api:tob,place,lat,lon},
+              planetDegrees,
+              birthPlanetRetrograde
+            }
+      );
+
+      // jp_buildPayload reads the now-populated fields, so add the
+      // full API result for reliable chart restoration.
+      profilePayload.api=profilePayload.api||{};
+      profilePayload.api.dob_api=dob;
+      profilePayload.api.tob_api=tob;
+      profilePayload.api.place=place;
+      profilePayload.api.lat=lat;
+      profilePayload.api.lon=lon;
+      profilePayload.planetDegrees=planetDegrees;
+      profilePayload.birthPlanetRetrograde=birthPlanetRetrograde;
+
+      const map=jp_loadProfiles();
+      map[name]=profilePayload;
+      jp_saveProfiles(map);
+      try{ jp_refreshProfileList(); }catch(e){}
+
+      // Cloud save is optional; local save must not fail because
+      // the user is not signed in.
+      try{
+        if(window.__jpAuth?.currentUser &&
+           typeof jp_cloudSaveProfile==='function'){
+          await jp_cloudSaveProfile(name,profilePayload);
+        }
+      }catch(e){ console.warn('Cloud profile save:',e); }
+
+      set('profileName',name);
+
+      // Make sure default Minminippu remains OFF after a new Jathagam.
+      try{
+        window.CURRENT_DBA_HIGHLIGHT_ENABLED=false;
+        clearGreenHighlights?.();
+      }catch(e){}
+
+      // Final chart refresh without another API request.
+      try{
+        drawChartGrid();
+        if(savedPlanetsForChart) placePlanetsOnChart(savedPlanetsForChart);
+        renderAll(new Date(`${dob}T${tob}`));
+      }catch(e){ console.warn('Final Jathagam render:',e); }
+
+      alert(LANG==='ta'?'ஜாதகம் தயாராகிவிட்டது.':'Jathagam is ready.');
+    }catch(err){
+      console.error('New Jathagam calculation failed:',err);
+      alert(
+        (LANG==='ta'?'ஜாதகம் கணக்கிட முடியவில்லை: ':'Jathagam calculation failed: ')
+        +(err?.message||err)
+      );
+    }finally{
+      btn.disabled=false;
+      btn.textContent=old || LABELS[LANG].calc;
+    }
+  });
+})();
 
 /* ===== Run & Save ===== */
 btnRun.addEventListener('click', async ()=>{ await run(); });
@@ -9585,13 +10778,13 @@ function clearPadaDots(){
   document.querySelectorAll('.pada-dot-dark').forEach(el=>el.remove());
 }
 
-function addDotToCellByNakPada(nakId,pada){
+function addDotToCellByNakPada(nakId,pada,mode){
   const idx = findPadaIndexById(nakId, pada);
   if(idx<0) return;
   const cell = padaDomList[idx];
   if(!cell) return;
   const dot = document.createElement('span');
-  dot.className = 'pada-dot-dark';
+  dot.className = 'pada-dot-dark' + (mode ? ' jp-dot-'+mode : '');
   cell.appendChild(dot);
 }
 
@@ -9684,7 +10877,11 @@ function addDotsForMode(mode){
   const pair = RASI_GRID[sIdx][sub];                   // [nakId, pada]
   if(!pair) return;
 
-  addDotToCellByNakPada(pair[0], pair[1]);             // draw the dark green dot
+  // Highlight the Rasi NAME itself using the same Vimshottari D/P/A color.
+  jpHighlightRasiNameInChart('rasiChart', signId, mode);
+
+  // Dot uses the same D/P/A color instead of one common dark-green color.
+  addDotToCellByNakPada(pair[0], pair[1], mode);
 }
 /* ---------- Navamsa mapping (planet set -> rasi for pada1..4) ---------- */
 const NAVAMSA_GROUPS = {
@@ -9725,8 +10922,9 @@ function addNavamsaDotForMode(mode){
   const signId = navamsaSignFor(per.lordKey, cp.pada); // map via sets above
   if(!signId) return;
 
-  // Rasi title (glow) in that mode color
-  highlightRasiTitleByMode(mode, signId);
+  // Highlight the Rasi NAME inside NAVAMSA itself.
+  // Previously highlightWholeRasi() selected the main Rasi chart first.
+  jpHighlightRasiNameInChart('navamsaChart', signId, mode);
 
   // Dot position = which of the 9 cells in this sign, by time within the pada-window
   const sIdx = signIndexById(signId);
@@ -9734,7 +10932,15 @@ function addNavamsaDotForMode(mode){
 
   const sub  = subIndex9(now, cp.from, cp.to);         // 0..8 equally split
   const pair = RASI_GRID[sIdx][sub];                   // [nakId, pada]
-  if(pair) addDotToCellByNakPada(pair[0], pair[1]);
+  if(pair){
+    // Navamsa has its own DOM list; add the dot directly to the D9 cell.
+    const line=navamsaPadaDomList[(sIdx*9)+sub+1];
+    if(line){
+      const dot=document.createElement('span');
+      dot.className='pada-dot-dark jp-dot-'+mode;
+      line.appendChild(dot);
+    }
+  }
 }
 /* Create the Navamsa Rasi button next to the Rasi-name sequence button */
 (function addNavamsaButton(){
@@ -10690,9 +11896,10 @@ document.getElementById('bhavaChooser')?.addEventListener('click', (ev)=>{
     const lordCanon = normalizePlanetKey(lordKey) || lordKey;
     const lord = lordCanon ? planetLabelByLang(lordCanon) : '';
     const n = nameNakLocalized(nakId);
-    if (!nakId || !pada) return `— ${P} ${pada||'–'}${lord?` (${lord})`:''}`;
-    const left = n ? `${n} — ${P} ${pada}` : `— ${P} ${pada}`;
-    return `${left}${lord?` (${lord})`:''}`;
+    const starPada = nakId && pada
+      ? `${n || '—'} — ${P} ${pada}`
+      : `— ${P} ${pada||'–'}`;
+    return lord ? `${lord} (${starPada})` : starPada;
   }
 
   // --- Ensure section (two tables) exists ---
@@ -10903,9 +12110,9 @@ document.getElementById('bhavaChooser')?.addEventListener('click', (ev)=>{
     (document.getElementById('hdrCurrentDBA')||{}).textContent = T.titleNow   || 'Now — Dasa / Bhukti / Antara';
     const hdrMap = {
       th2Planet:(T.planet||'Planet'), th2DegBirth:(T.degBirth||'Birth Degree'),
-      th2Dasa:(S.dasa||'Dasa'),       th2Puthi:(S.puthi||'Bhukti'), th2Anth:(S.anth||'Antara'),
+      th2Dasa:'Star Lord',            th2Puthi:'Sub Lord',          th2Anth:'Sub-Sub Lord',
       th3Planet:(T.planet||'Planet'), th3DegNow:(T.degNow||'Current Degree'),
-      th3Dasa:(S.dasa||'Dasa'),       th3Puthi:(S.puthi||'Bhukti'), th3Anth:(S.anth||'Antara')
+      th3Dasa:'Star Lord',            th3Puthi:'Sub Lord',          th3Anth:'Sub-Sub Lord'
     };
     Object.keys(hdrMap).forEach(id=>{ const el=document.getElementById(id); if(el) el.textContent=hdrMap[id]; });
 
@@ -11065,7 +12272,7 @@ document.getElementById('bhavaChooser')?.addEventListener('click', (ev)=>{
       const calEl = document.getElementById('caldate') || document.getElementById('summaryCal');
       const when = calEl?.value ? new Date(calEl.value) : new Date();
 
-      title.textContent = 'கொச்சாரத்தில் — தசை / புக்தி / அந்தரம்';
+      title.textContent = 'கொச்சாரத்தில் — Star Lord / Sub Lord / Sub-Sub Lord';
       body.innerHTML='';
       let any=false;
 
@@ -11080,9 +12287,9 @@ document.getElementById('bhavaChooser')?.addEventListener('click', (ev)=>{
           <tr>
             <td data-label="கிரகம்">${planetLabelByLang(key)}</td>
             <td data-label="கொச்சார அளவு">${d.d}° ${d.m}′ ${d.s}″</td>
-            <td data-label="தசை">${x.dasa.txt}</td>
-            <td data-label="புக்தி">${x.puthi.txt}</td>
-            <td data-label="அந்தரம்">${x.anth.txt}</td>
+            <td data-label="Star Lord">${x.dasa.txt}</td>
+            <td data-label="Sub Lord">${x.puthi.txt}</td>
+            <td data-label="Sub-Sub Lord">${x.anth.txt}</td>
           </tr>`);
       });
 
@@ -12220,6 +13427,14 @@ document.addEventListener('click', ()=>{
     alpSetNavigationCalculationDate(
       target.start
     );
+    setTimeout(()=>{
+      try{
+        if(alpActive){
+          const fresh=getALPState();
+          if(fresh) applyALPBhavaRotation(fresh);
+        }
+      }catch(e){}
+    },80);
   };
 
   /*
@@ -12280,6 +13495,14 @@ document.addEventListener('click', ()=>{
     alpSetNavigationCalculationDate(
       period.start
     );
+    setTimeout(()=>{
+      try{
+        if(alpActive){
+          const fresh=getALPState();
+          if(fresh) applyALPBhavaRotation(fresh);
+        }
+      }catch(e){}
+    },80);
   };
 
   /*
@@ -12417,7 +13640,6 @@ document.addEventListener('click', ()=>{
   const ids=[
     'currentPlanetsInfoBox','currentPlanetBhavaTableBox','alpInfoBox','mudakkuPariharaInfoBox',
     'karanaInfoBox','vainasigamInfoBox','yogiAvayogiInfoBox',
-    'dasaPlanetMeetings','puthiPlanetMeetings','dasaTablesCard',
     'thithiSunyaCustomerBox','todayPanchangCard'
   ];
   function hideOthers(except){
@@ -12430,7 +13652,7 @@ document.addEventListener('click', ()=>{
   window.jpHideOtherFeatureInfo=hideOthers;
 
   document.addEventListener('click',function(ev){
-    const b=ev.target.closest('#btnALP,#btnDasaMeeting,#btnPuthiMeeting,#btnYogiAvayogi,#btnKarana,#btnVainasigam,#btnDBABirth,#btnDBACurrent,#btnDBAKotcharam,#btnThithiSunya,#btnMudakku');
+    const b=ev.target.closest('#btnALP,#btnYogiAvayogi,#btnKarana,#btnVainasigam,#btnThithiSunya,#btnMudakku');
     if(!b)return;
     const map={
       btnALP:'alpInfoBox',
@@ -13272,12 +14494,12 @@ document.getElementById('caldate')?.addEventListener('change',()=>{
     const v=sel.value;
     stopAll();
     if(v==='off'){
-      CURRENT_DBA_HIGHLIGHT_ENABLED = false;
+      window.CURRENT_DBA_HIGHLIGHT_ENABLED = false;
       clearGreenHighlights();
       sel.classList.remove('active');
       return;
     }
-    CURRENT_DBA_HIGHLIGHT_ENABLED = true;
+    window.CURRENT_DBA_HIGHLIGHT_ENABLED = true;
     if(v==='dasa'||v==='puthi'||v==='anthra'){
       const b=document.getElementById(modes[v]);
       if(b)b.click();
@@ -13290,7 +14512,7 @@ document.getElementById('caldate')?.addEventListener('change',()=>{
   });
   sel.value='off';
   sel.classList.remove('active');
-  CURRENT_DBA_HIGHLIGHT_ENABLED = false;
+  window.CURRENT_DBA_HIGHLIGHT_ENABLED = false;
   clearGreenHighlights();
 })();
 </script>
@@ -13314,6 +14536,14 @@ document.getElementById('caldate')?.addEventListener('change',()=>{
     try{
       if(typeof stopMudakku==='function') stopMudakku();
     }catch(e){}
+    try{
+      if(kLastWasAksaya() && typeof stopALP==='function') stopALP();
+    }catch(e){}
+  }
+
+  function kLastWasAksaya(){
+    return document.getElementById('alpInfoBox')!==null ||
+           document.getElementById('rasiChart')?.classList.contains('jp-alp-center-active');
   }
 
   function turnOff(){
@@ -13705,6 +14935,7 @@ box.innerHTML=
   // Therefore nothing is duplicated above the chart.
   function moveRealInfoBox(k){
     const cfg=MAP[k];
+
     const source=document.getElementById(cfg.box);
     if(!source)return false;
 
@@ -13752,7 +14983,21 @@ box.innerHTML=
     sel.value='off';
     sel.classList.remove('active');
     clearCentre();
-    setTimeout(()=>busy=false,60);
+    document.getElementById('alpInfoBox')?.remove();
+    document.getElementById('alpPlanetMeetingBox')?.remove();
+    chart.classList.remove('jp-alp-center-active');
+
+    // Restore the default Jathagam details after "அணை".
+    setTimeout(()=>{
+      try{
+        if(typeof window.jpRenderDefaultBirthDetails==='function'){
+          window.jpRenderDefaultBirthDetails();
+        }else if(typeof drawChartGrid==='function'){
+          drawChartGrid();
+        }
+      }catch(e){}
+      busy=false;
+    },60);
   }
 
   function choose(k){
@@ -13822,5 +15067,929 @@ box.innerHTML=
   sel.classList.remove('active');
 })();
 </script>
+
+<script id="jp-default-birth-details-rasi-controller-v3">
+(function(){
+  const chart=document.getElementById('rasiChart');
+  if(!chart||window.__jpDefaultBirthDetailsV3)return;
+  window.__jpDefaultBirthDetailsV3=true;
+  const $=id=>document.getElementById(id);
+
+  function esc(v){
+    return String(v??'—').replace(/[&<>"']/g,m=>({
+      '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
+    }[m]));
+  }
+  function val(id,f=''){
+    const e=$(id);return e&&String(e.value||e.textContent||'').trim()||f;
+  }
+  function dateText(v){
+    const p=String(v||'').split('-');
+    return p.length===3?`${p[2]}/${p[1]}/${p[0]}`:(v||'—');
+  }
+  function timeText(v){
+    const p=String(v||'').split(':');
+    return p.length>=2?`${p[0].padStart(2,'0')}:${p[1].padStart(2,'0')}`:(v||'—');
+  }
+  const tithiNames=[
+    'சுக்ல பிரதமை','சுக்ல துவிதியை','சுக்ல திரிதியை','சுக்ல சதுர்த்தி','சுக்ல பஞ்சமி',
+    'சுக்ல சஷ்டி','சுக்ல சப்தமி','சுக்ல அஷ்டமி','சுக்ல நவமி','சுக்ல தசமி',
+    'சுக்ல ஏகாதசி','சுக்ல துவாதசி','சுக்ல திரயோதசி','சுக்ல சதுர்த்தசி','பௌர்ணமி',
+    'கிருஷ்ண பிரதமை','கிருஷ்ண துவிதியை','கிருஷ்ண திரிதியை','கிருஷ்ண சதுர்த்தி','கிருஷ்ண பஞ்சமி',
+    'கிருஷ்ண சஷ்டி','கிருஷ்ண சப்தமி','கிருஷ்ண அஷ்டமி','கிருஷ்ண நவமி','கிருஷ்ண தசமி',
+    'கிருஷ்ண ஏகாதசி','கிருஷ்ண துவாதசி','கிருஷ்ண திரயோதசி','கிருஷ்ண சதுர்த்தசி','அமாவாசை'
+  ];
+  const yogaNames=['விஷ்கம்பம்','ப்ரீதி','ஆயுஷ்மான்','சௌபாக்யம்','சோபனம்','அதிகண்டம்','சுகர்மம்',
+    'த்ருதி','சூலம்','கண்டம்','விருத்தி','த்ருவம்','வியாகாதம்','ஹர்ஷணம்','வஜ்ரம்','சித்தி',
+    'வ்யதீபாதம்','வரீயான்','பரிகம்','சிவம்','சித்தம்','சாத்யம்','சுபம்','சுக்லம்',
+    'பிரம்மம்','இந்திரம்','வைத்ருதி'];
+
+  function localFallback(){
+    const sun=Number(window.savedPlanetsForChart?.Sun?.fullDegree);
+    const moon=Number(window.savedPlanetsForChart?.Moon?.fullDegree);
+    if(!Number.isFinite(sun)||!Number.isFinite(moon))return {};
+    const norm=x=>((x%360)+360)%360;
+    const elong=norm(moon-sun);
+    const ti=Math.min(29,Math.floor(elong/12));
+    const yi=Math.min(26,Math.floor(norm(sun+moon)/(360/27)));
+    let nak='—',pada='—';
+    try{
+      const n=getNakPadaFromDegree(moon);
+      nak=(typeof nameNakById==='function'?nameNakById(n.nakId):n.name)||'—';
+      pada=n.pada||'—';
+    }catch(e){}
+    let kar='—';
+    try{
+      const k=getBirthKaranaFromTithi?.({
+        number:ti+1,
+        paksha:ti<15?'shukla':'krishna',
+        elapsed_percentage:((elong%12)/12)*100
+      });
+      kar=typeof k==='string'?k:(k?.first||k?.second||k?.name||'—');
+      if(k && typeof k==='object'){
+        const elapsed=(elong%12);
+        kar=elapsed<6?(k.first||kar):(k.second||kar);
+      }
+    }catch(e){}
+    return {
+      thithi:tithiNames[ti]||'—',
+      nak:nak==='—'?'—':`${nak} — ${pada}ம் பாதம்`,
+      yoga:yogaNames[yi]||'—',karana:kar
+    };
+  }
+
+  function existing(id,fallback){
+    const e=$(id),x=e?String(e.textContent||'').trim():'';
+    return x&&x!=='—'&&!/தகவல் கிடைக்கவில்லை/.test(x)?x:fallback;
+  }
+
+  function tamilRasiNameById(id){
+    try{
+      const idx=RASIS.findIndex(r=>r.id===id);
+      return idx>=0 ? (RASIS[idx]?.name?.ta || RASIS[idx]?.name?.[LANG] || '—') : '—';
+    }catch(e){ return '—'; }
+  }
+
+  function currentBirthTithiNumber(){
+    try{
+      const n=Number(typeof birthPanchangData!=='undefined' ? birthPanchangData?.tithi?.number : NaN);
+      return Number.isFinite(n) ? n : null;
+    }catch(e){ return null; }
+  }
+
+  function birthTithiDisplay(fallback){
+    const n=currentBirthTithiNumber();
+    let name=fallback||'—';
+    if(n && n>=1 && n<=30) name=tithiNames[n-1]||name;
+
+    let rasis=[];
+    try{
+      const groups=(typeof THITHI_SUNYA_GROUPS!=='undefined' && n)
+        ? THITHI_SUNYA_GROUPS[n] : null;
+      if(Array.isArray(groups)){
+        const ids=[...new Set(groups.flat())];
+        rasis=ids.map(tamilRasiNameById).filter(x=>x&&x!=='—');
+      }
+    }catch(e){}
+
+    return rasis.length ? `${name} (${rasis.join(', ')})` : name;
+  }
+
+  function nakLordPlanetTa(nakId){
+    try{
+      const idx=NAK_INDEX_BY_ID?.[nakId];
+      const lord=(idx!=null && NAKS?.[idx]) ? NAKS[idx].lord : null;
+      if(!lord) return '—';
+      return PLANET_NAME?.ta?.[lord] || lord;
+    }catch(e){ return '—'; }
+  }
+
+  function birthYogaDisplay(fallback){
+    let n=null;
+    try{
+      n=Number(typeof birthPanchangData!=='undefined' ? birthPanchangData?.yoga?.number : NaN);
+      if(!Number.isFinite(n)) n=null;
+    }catch(e){}
+
+    let yogaName=fallback||'—';
+    try{
+      const raw=typeof birthPanchangData!=='undefined' ? birthPanchangData?.yoga?.name : null;
+      if(raw && typeof YOGA_TA!=='undefined') yogaName=YOGA_TA[raw] || yogaName;
+    }catch(e){}
+
+    // Requested display style: "வியதீபாத நாம யோகம்"
+    const base=String(yogaName||'—').replace(/ம்$/,'');
+    let yogi='—', avayogi='—';
+    try{
+      const rule=(typeof YOGI_AVAYOGI_RULES!=='undefined' && n)
+        ? YOGI_AVAYOGI_RULES[n] : null;
+      if(rule){
+        yogi=nakLordPlanetTa(rule.yogi);
+        avayogi=nakLordPlanetTa(rule.avayogi);
+      }
+    }catch(e){}
+
+    const planets=(yogi!=='—'||avayogi!=='—')
+      ? ` (<span class="jp-yogi-planet">${esc(yogi)}</span>, <span class="jp-avayogi-planet">${esc(avayogi)}</span>)`
+      : '';
+
+    return `${esc(base)} நாம யோகம்${planets}`;
+  }
+
+  function birthKaranaDisplay(fallback){
+    let karana=fallback||'—';
+    let key=karana;
+    try{
+      if(typeof normalizeKaranaName==='function') key=normalizeKaranaName(karana);
+    }catch(e){}
+
+    let planet='—';
+    try{
+      const rule=(typeof KARANA_PARIKARA_RULES!=='undefined') ? KARANA_PARIKARA_RULES[key] : null;
+      if(rule?.planet) planet=rule.planet;
+    }catch(e){}
+
+    const name=String(key||karana||'—');
+    return planet!=='—' ? `${name} கரணம் (${planet})` : `${name} கரணம்`;
+  }
+
+  function render(){
+    if(document.getElementById('alpInfoBox'))return;
+    const s=$('analysisPreferenceSelect');
+    if(s&&s.value&&s.value!=='off')return;
+
+    const dob=val('dob_api')||val('dob');
+    const tob=val('tob_api');
+    const pob=val('placeInput','—');
+    const d=new Date(`${dob||''}T${tob||'00:00'}`);
+    const days=['ஞாயிற்றுக்கிழமை','திங்கட்கிழமை','செவ்வாய்க்கிழமை','புதன்கிழமை','வியாழக்கிழமை','வெள்ளிக்கிழமை','சனிக்கிழமை'];
+    const p=localFallback();
+
+    let c=$('rasiBirthDetailsCenter');
+    if(!c){c=document.createElement('div');c.id='rasiBirthDetailsCenter';chart.appendChild(c);}
+
+    const nak=existing('birthNakshatraName','');
+    const nakSub=existing('birthNakshatraDetails','');
+    const nakFinal=nak
+      ? `${nak}${nakSub&&/பாதம்/.test(nakSub)?' — '+nakSub:''}`
+      : (p.nak||'—');
+
+    c.innerHTML=`
+      <div class="jp-birth-inner">
+        <div class="jp-birth-name">${esc(val('profileName','ஜாதகர்'))}</div>
+        <div class="jp-birth-basic">
+          <span class="jp-birth-basic-value">${esc(dateText(dob))}</span>
+          <span class="jp-birth-basic-value">${esc(timeText(tob))}</span>
+          <span class="jp-birth-basic-value">${esc(pob)}</span>
+        </div>
+        <div class="jp-birth-panchang">
+          <div class="jp-birth-panchang-item"><span class="jp-bp-value">${esc(Number.isNaN(d.getTime())?'—':days[d.getDay()])}</span></div>
+          <div class="jp-birth-panchang-item"><span class="jp-bp-value">${esc(nakFinal)}</span></div>
+          <div class="jp-birth-panchang-item"><span class="jp-bp-value">${esc(birthTithiDisplay(existing('birthTithiName',p.thithi||'—')))}</span></div>
+          <div class="jp-birth-panchang-item"><span class="jp-bp-value">${birthYogaDisplay(existing('birthYogaName',p.yoga||'—'))}</span></div>
+          <div class="jp-birth-panchang-item"><span class="jp-bp-value">${esc(birthKaranaDisplay(existing('birthKaranaName',p.karana||'—')))}</span></div>
+        </div>
+      </div>`;
+  }
+
+  window.jpRenderDefaultBirthDetails=render;
+
+  function schedule(){requestAnimationFrame(()=>setTimeout(render,0));}
+
+  const oldDraw=window.drawChartGrid;
+  if(typeof oldDraw==='function'&&!window.__jpDefaultBirthDrawHook){
+    window.drawChartGrid=function(){
+      const r=oldDraw.apply(this,arguments);
+      if(!document.getElementById('alpInfoBox'))schedule();
+      return r;
+    };
+    window.__jpDefaultBirthDrawHook=true;
+  }
+
+  const oldRun=window.run;
+  if(typeof oldRun==='function'&&!window.__jpDefaultBirthRunHook){
+    window.run=async function(){
+      const r=await oldRun.apply(this,arguments);
+      if(!document.getElementById('alpInfoBox'))schedule();
+      return r;
+    };
+    window.__jpDefaultBirthRunHook=true;
+  }
+
+  const oldApply=window.jp_applyPayload;
+  if(typeof oldApply==='function'&&!window.__jpDefaultBirthApplyHook){
+    window.jp_applyPayload=function(payload){
+      const r=oldApply.apply(this,arguments);
+      setTimeout(schedule,40);
+      setTimeout(schedule,250);
+      return r;
+    };
+    window.__jpDefaultBirthApplyHook=true;
+  }
+
+  $('analysisPreferenceSelect')?.addEventListener('change',()=>{
+    if($('analysisPreferenceSelect').value==='off'){
+      document.getElementById('alpInfoBox')?.remove();
+      document.getElementById('rasiChart')?.classList.remove('jp-alp-center-active');
+      schedule();
+    }else{
+      document.getElementById('rasiBirthDetailsCenter')?.remove();
+    }
+  });
+
+  schedule();
+})();
+</script>
+
+<script id="jp-jenma-akshaya-lagna-selector-v1">
+(function(){
+  if(window.__jpJenmaAkshayaSelectorV1)return;
+  window.__jpJenmaAkshayaSelectorV1=true;
+
+  const jenma=document.getElementById('btnJenmaLagnam');
+  const akshaya=document.getElementById('btnAkshayaLagnamTop');
+  const analysis=document.getElementById('analysisPreferenceSelect');
+  const chart=document.getElementById('rasiChart');
+  if(!jenma||!akshaya||!chart)return;
+
+  let mode='jenma';
+
+  function setButtonState(next){
+    mode=next;
+    const isJenma=next==='jenma';
+    const selector=document.getElementById('lagnaModeSelector');
+    jenma.classList.toggle('active',isJenma);
+    akshaya.classList.toggle('active',!isJenma);
+    selector?.classList.toggle('is-jenma',isJenma);
+    selector?.classList.toggle('is-akshaya',!isJenma);
+    jenma.setAttribute('aria-pressed',String(isJenma));
+    akshaya.setAttribute('aria-pressed',String(!isJenma));
+  }
+
+  function turnOtherAnalysisOff(){
+    if(!analysis)return;
+    if(analysis.value!=='off'){
+      analysis.value='off';
+      analysis.dispatchEvent(new Event('change',{bubbles:true}));
+    }
+  }
+
+  function showJenma(){
+    turnOtherAnalysisOff();
+
+    try{
+      if(typeof stopALP==='function')stopALP();
+      else if(typeof alpActive!=='undefined')alpActive=false;
+    }catch(e){console.warn('Stop Akshaya Lagna:',e)}
+
+    document.getElementById('alpInfoBox')?.remove();
+    document.getElementById('alpPlanetMeetingBox')?.remove();
+    document.getElementById('rasiAnalysisCenter')?.remove();
+    chart.classList.remove('jp-alp-center-active','jp-analysis-center-active');
+
+    setButtonState('jenma');
+
+    // Restore the ordinary birth/Jenma Lagna chart arrangement and details.
+    try{
+      if(typeof restoreBirthBhavaRotation==='function')restoreBirthBhavaRotation();
+    }catch(e){}
+
+    setTimeout(()=>{
+      try{
+        if(typeof window.jpRenderDefaultBirthDetails==='function'){
+          window.jpRenderDefaultBirthDetails();
+        }else if(typeof drawChartGrid==='function'){
+          drawChartGrid();
+          if(typeof run==='function')run();
+        }
+      }catch(e){console.warn('Jenma Lagna restore:',e)}
+    },30);
+  }
+
+  function showAkshaya(){
+    // Akshaya Lagna is independent from "மற்ற செயல்கள்".
+    // Clear any active Matra selection first so the Rasi centre is free.
+    turnOtherAnalysisOff();
+
+    document.getElementById('rasiAnalysisCenter')?.remove();
+    document.getElementById('rasiBirthDetailsCenter')?.remove();
+    chart.classList.remove('jp-analysis-center-active');
+
+    setButtonState('akshaya');
+
+    try{
+      if(typeof alpActive!=='undefined')alpActive=true;
+
+      if(typeof applyALPHighlight==='function'){
+        applyALPHighlight();
+      }else{
+        const legacy=document.getElementById('btnALP');
+        if(legacy && !legacy.classList.contains('active'))legacy.click();
+      }
+    }catch(e){
+      console.warn('Akshaya Lagna:',e);
+    }
+
+    // addALPInfoBox() places the compact Akshaya Lagna box and
+    // ALP meeting planets inside the Rasi chart.
+    setTimeout(()=>{
+      if(!document.getElementById('alpInfoBox') && typeof applyALPHighlight==='function'){
+        try{applyALPHighlight();}catch(e){}
+      }
+    },80);
+  }
+
+  jenma.addEventListener('click',showJenma);
+  akshaya.addEventListener('click',showAkshaya);
+
+  // If a "மற்ற செயல்கள்" item is chosen while Akshaya is open,
+  // return the top selector to Jenma first, then let that analysis display.
+  analysis?.addEventListener('change',function(){
+    if(this.value!=='off' && mode==='akshaya'){
+      try{
+        if(typeof stopALP==='function')stopALP();
+      }catch(e){}
+      document.getElementById('alpInfoBox')?.remove();
+      document.getElementById('alpPlanetMeetingBox')?.remove();
+      chart.classList.remove('jp-alp-center-active');
+      setButtonState('jenma');
+    }
+  });
+
+  // Default on every page load = Jenma Lagnam.
+  setButtonState('jenma');
+})();
+</script>
+
+
+<script id="jp-dba-lord-labels-v1">
+(function(){
+  function applyDBALordLabels(){
+    const ids={
+      th2Dasa:'Star Lord',th2Puthi:'Sub Lord',th2Anth:'Sub-Sub Lord',
+      th3Dasa:'Star Lord',th3Puthi:'Sub Lord',th3Anth:'Sub-Sub Lord'
+    };
+    Object.entries(ids).forEach(([id,text])=>{
+      const el=document.getElementById(id);
+      if(el)el.textContent=text;
+    });
+
+    const kt=document.getElementById('tblKotcharamDBA');
+    if(kt){
+      const th=kt.querySelectorAll('thead th');
+      if(th[2])th[2].textContent='Star Lord';
+      if(th[3])th[3].textContent='Sub Lord';
+      if(th[4])th[4].textContent='Sub-Sub Lord';
+    }
+  }
+  document.addEventListener('DOMContentLoaded',applyDBALordLabels);
+  document.addEventListener('click',e=>{
+    if(e.target.closest('#btnDBABirth,#btnDBACurrent,#btnDBAKotcharam')){
+      setTimeout(applyDBALordLabels,0);
+      setTimeout(applyDBALordLabels,120);
+    }
+  },true);
+})();
+</script>
+
+
+<script id="jp-research-sliders-controller-v1">
+(function(){
+  if(window.__jpResearchSlidersV1)return;
+  window.__jpResearchSlidersV1=true;
+
+  function setSegment(seg,index){
+    if(!seg)return;
+    seg.classList.remove('pos-0','pos-1','pos-2');
+    seg.classList.add('pos-'+index);
+    seg.querySelectorAll('.jp-seg-btn').forEach((b,i)=>b.classList.toggle('active',i===index));
+  }
+
+  async function ensureCurrentDataAndChart(){
+    const cal=document.getElementById('caldate');
+    if(!cal?.value)return null;
+
+    // Keep current planets visible in chart whenever a current/Kotcharam
+    // research view uses them.
+    try{
+      if(typeof currentPlanetsEnabled!=='undefined')currentPlanetsEnabled=true;
+    }catch(e){}
+
+    if(typeof fetchCurrentPlanetsForCalculationDate==='function'){
+      const out=await fetchCurrentPlanetsForCalculationDate();
+      try{ updateCurrentPlanetsToggleUI?.(); }catch(e){}
+      return out;
+    }
+    return null;
+  }
+
+  /* ---------- Dasa / Puthi Sandhippu ---------- */
+  const sand=document.getElementById('sandhippuSegment');
+  sand?.querySelectorAll('.jp-seg-btn').forEach((btn,i)=>{
+    btn.addEventListener('click',()=>{
+      setSegment(sand,i);
+      const d=document.getElementById('dasaPlanetMeetings');
+      const p=document.getElementById('puthiPlanetMeetings');
+
+      if(i===0){
+        if(p)p.style.display='none';
+        if(d)d.style.display='block';
+        try{window.renderDasaPlanetMeetings?.();}catch(e){}
+      }else{
+        if(d)d.style.display='none';
+        if(p)p.style.display='block';
+        // Reuse original Puthi button once so it selects the current Dasa
+        // and renders the same established calculation.
+        const old=document.getElementById('btnPuthiMeeting');
+        try{
+          if(old)old.click();
+          if(p)p.style.display='block';
+          window.renderPuthiPlanetMeetings?.();
+        }catch(e){}
+      }
+    });
+  });
+
+  /* ---------- KP Birth / Current / Kotcharam ---------- */
+  const kp=document.getElementById('kpSegment');
+  kp?.querySelectorAll('.jp-seg-btn').forEach((btn,i)=>{
+    btn.addEventListener('click',async()=>{
+      setSegment(kp,i);
+      const birth=document.getElementById('btnDBABirth');
+      const current=document.getElementById('btnDBACurrent');
+      const kot=document.getElementById('btnDBAKotcharam');
+
+      try{
+        if(i===0){
+          if(!birth?.classList.contains('active'))birth?.click();
+        }else if(i===1){
+          if(!current?.classList.contains('active'))current?.click();
+        }else{
+          await ensureCurrentDataAndChart();
+          if(!kot?.classList.contains('active'))kot?.click();
+        }
+      }catch(e){console.warn('KP selector:',e)}
+    });
+  });
+
+  /* ---------- Birth / Kotcharam Bhava Thodarbugal ---------- */
+  const bh=document.getElementById('bhavaRelationSegment');
+  bh?.querySelectorAll('.jp-seg-btn').forEach((btn,i)=>{
+    btn.addEventListener('click',async()=>{
+      setSegment(bh,i);
+      try{
+        if(i===0){
+          if(typeof openCPBHMode==='function'){
+            if(typeof CPBH_MODE!=='undefined' && CPBH_MODE==='birth'){
+              renderCurrentPlanetBhavaTable?.();
+            }else openCPBHMode('birth');
+          }
+        }else{
+          await ensureCurrentDataAndChart();
+          if(typeof openCPBHMode==='function'){
+            if(typeof CPBH_MODE!=='undefined' && CPBH_MODE==='current'){
+              renderCurrentPlanetBhavaTable?.();
+            }else openCPBHMode('current');
+          }
+        }
+      }catch(e){console.warn('Bhava selector:',e)}
+    });
+  });
+
+  /* Default requested states after the whole application is ready:
+     Dasa Sandhippu visible, KP Birth selected, Birth Bhava selected. */
+  function bootDefaults(){
+    setSegment(sand,0);
+    setSegment(kp,0);
+    setSegment(bh,0);
+
+    const d=document.getElementById('dasaPlanetMeetings');
+    const p=document.getElementById('puthiPlanetMeetings');
+    if(d){
+      d.style.display='block';
+      try{window.renderDasaPlanetMeetings?.();}catch(e){}
+    }
+    if(p)p.style.display='none';
+
+    const birth=document.getElementById('btnDBABirth');
+    if(birth && !birth.classList.contains('active')){
+      try{birth.click();}catch(e){}
+    }
+
+    try{
+      if(typeof openCPBHMode==='function' && (typeof CPBH_MODE==='undefined'||CPBH_MODE!=='birth')){
+        openCPBHMode('birth');
+      }
+    }catch(e){}
+  }
+
+  if(document.readyState==='loading'){
+    document.addEventListener('DOMContentLoaded',()=>setTimeout(bootDefaults,250));
+  }else{
+    setTimeout(bootDefaults,250);
+  }
+})();
+</script>
+
+
+<script id="jp-three-research-tables-controller-v1">
+(function(){
+  if(window.__jpThreeResearchTablesV1)return;
+  window.__jpThreeResearchTablesV1=true;
+
+  const sand=document.getElementById('sandhippuSegment');
+  const kp=document.getElementById('kpSegment');
+  const bh=document.getElementById('bhavaRelationSegment');
+
+  const sandSlot=document.getElementById('sandhippuTableSlot');
+  const kpSlot=document.getElementById('kpTableSlot');
+  const bhSlot=document.getElementById('bhavaRelationTableSlot');
+
+  function setSegment(seg,index){
+    if(!seg)return;
+    seg.classList.remove('pos-0','pos-1','pos-2');
+    seg.classList.add('pos-'+index);
+    seg.querySelectorAll('.jp-seg-btn').forEach((b,i)=>b.classList.toggle('active',i===index));
+  }
+
+  function mountSandhippu(){
+    const d=document.getElementById('dasaPlanetMeetings');
+    const p=document.getElementById('puthiPlanetMeetings');
+    if(d&&sandSlot&&d.parentNode!==sandSlot)sandSlot.appendChild(d);
+    if(p&&sandSlot&&p.parentNode!==sandSlot)sandSlot.appendChild(p);
+  }
+  function mountKP(){
+    const card=document.getElementById('dasaTablesCard');
+    if(card&&kpSlot&&card.parentNode!==kpSlot)kpSlot.appendChild(card);
+  }
+  function mountBhava(){
+    const box=document.getElementById('currentPlanetBhavaTableBox');
+    if(box&&bhSlot&&box.parentNode!==bhSlot)bhSlot.appendChild(box);
+  }
+  function mountAll(){
+    mountSandhippu();
+    mountKP();
+    mountBhava();
+  }
+
+  async function ensureCurrentData(){
+    try{
+      if(typeof currentPlanetsEnabled!=='undefined')currentPlanetsEnabled=true;
+      if(typeof fetchCurrentPlanetsForCalculationDate==='function'){
+        return await fetchCurrentPlanetsForCalculationDate();
+      }
+    }catch(e){console.warn('Shared current data:',e)}
+    return null;
+  }
+
+  function showSandhippu(index){
+    setSegment(sand,index);
+    mountSandhippu();
+    const d=document.getElementById('dasaPlanetMeetings');
+    const p=document.getElementById('puthiPlanetMeetings');
+
+    if(index===0){
+      if(d)d.style.display='block';
+      if(p)p.style.display='none';
+      try{window.renderDasaPlanetMeetings?.();}catch(e){}
+    }else{
+      if(d)d.style.display='none';
+      if(p)p.style.display='block';
+      try{
+        // renderPuthiPlanetMeetings exists in the current file.
+        window.renderPuthiPlanetMeetings?.();
+      }catch(e){}
+    }
+    setTimeout(mountSandhippu,20);
+  }
+
+  function showKPBirth(){
+    setSegment(kp,0);
+    const b=document.getElementById('btnDBABirth');
+    const card=document.getElementById('dasaTablesCard');
+    try{
+      // Use the existing DBA renderer only; the old button remains hidden.
+      if(b&&!b.classList.contains('active'))b.click();
+    }catch(e){}
+    setTimeout(()=>{
+      mountKP();
+      if(card)card.style.display='block';
+      const bt=document.getElementById('hdrBirthDBA');
+      const tb=document.getElementById('tblBirthDBA');
+      const ct=document.getElementById('hdrCurrentDBA');
+      const tc=document.getElementById('tblCurrentDBA');
+      const kt=document.getElementById('hdrKotcharamDBA');
+      const tk=document.getElementById('tblKotcharamDBA');
+      if(bt)bt.style.display='';
+      if(tb)tb.style.display='';
+      if(ct)ct.style.display='none';
+      if(tc)tc.style.display='none';
+      if(kt)kt.style.display='none';
+      if(tk)tk.style.display='none';
+    },20);
+  }
+
+  function showKPCurrent(){
+    setSegment(kp,1);
+    const b=document.getElementById('btnDBACurrent');
+    try{if(b&&!b.classList.contains('active'))b.click();}catch(e){}
+    setTimeout(()=>{
+      mountKP();
+      document.getElementById('dasaTablesCard')?.style.setProperty('display','block');
+    },20);
+  }
+
+  async function showKPKotcharam(){
+    setSegment(kp,2);
+    await ensureCurrentData();
+    const b=document.getElementById('btnDBAKotcharam');
+    try{if(b&&!b.classList.contains('active'))b.click();}catch(e){}
+    setTimeout(()=>{
+      mountKP();
+      document.getElementById('dasaTablesCard')?.style.setProperty('display','block');
+    },30);
+  }
+
+  function showBirthBhava(){
+    setSegment(bh,0);
+    try{
+      if(typeof CPBH_MODE!=='undefined' && CPBH_MODE==='birth'){
+        renderCurrentPlanetBhavaTable?.();
+      }else{
+        openCPBHMode?.('birth');
+      }
+    }catch(e){}
+    setTimeout(()=>{
+      mountBhava();
+      const box=document.getElementById('currentPlanetBhavaTableBox');
+      if(box)box.style.display='block';
+    },20);
+  }
+
+  async function showCurrentBhava(){
+    setSegment(bh,1);
+    await ensureCurrentData();
+    try{
+      if(typeof CPBH_MODE!=='undefined' && CPBH_MODE==='current'){
+        renderCurrentPlanetBhavaTable?.();
+      }else{
+        openCPBHMode?.('current');
+      }
+    }catch(e){}
+    setTimeout(()=>{
+      mountBhava();
+      const box=document.getElementById('currentPlanetBhavaTableBox');
+      if(box)box.style.display='block';
+    },25);
+  }
+
+  sand?.querySelectorAll('.jp-seg-btn').forEach((b,i)=>{
+    b.addEventListener('click',e=>{
+      e.preventDefault();
+      e.stopImmediatePropagation();
+      showSandhippu(i);
+    },true);
+  });
+
+  kp?.querySelectorAll('.jp-seg-btn').forEach((b,i)=>{
+    b.addEventListener('click',async e=>{
+      e.preventDefault();
+      e.stopImmediatePropagation();
+      if(i===0)showKPBirth();
+      else if(i===1)showKPCurrent();
+      else await showKPKotcharam();
+    },true);
+  });
+
+  bh?.querySelectorAll('.jp-seg-btn').forEach((b,i)=>{
+    b.addEventListener('click',async e=>{
+      e.preventDefault();
+      e.stopImmediatePropagation();
+      if(i===0)showBirthBhava();
+      else await showCurrentBhava();
+    },true);
+  });
+
+  function defaults(){
+    // ALL THREE tables are visible together by default.
+    showSandhippu(0);
+    showKPBirth();
+    showBirthBhava();
+
+    // Existing delayed placement code may move a real card elsewhere.
+    // Put each one back under its own segmented selector afterward.
+    [80,250,600,1200].forEach(ms=>setTimeout(mountAll,ms));
+  }
+
+  if(document.readyState==='loading'){
+    document.addEventListener('DOMContentLoaded',()=>setTimeout(defaults,350));
+  }else{
+    setTimeout(defaults,350);
+  }
+
+  window.jpMountResearchTables=mountAll;
+})();
+</script>
+
+
+<script id="jp-top-research-remount-v1">
+(function(){
+  if(window.__jpTopResearchRemountV1)return;
+  window.__jpTopResearchRemountV1=true;
+
+  function remount(){
+    try{window.jpMountResearchTables?.();}catch(e){}
+  }
+
+  const oldDraw=window.drawChartGrid;
+  if(typeof oldDraw==='function'){
+    window.drawChartGrid=function(){
+      const r=oldDraw.apply(this,arguments);
+      setTimeout(remount,20);
+      return r;
+    };
+  }
+
+  const oldRun=window.run;
+  if(typeof oldRun==='function'){
+    window.run=function(){
+      const r=oldRun.apply(this,arguments);
+      Promise.resolve(r).finally(()=>setTimeout(remount,30));
+      return r;
+    };
+  }
+
+  window.addEventListener('load',()=>{
+    [50,250,700].forEach(ms=>setTimeout(remount,ms));
+  });
+})();
+</script>
+
+
+<script id="jp-rasi-info-current-pada-controller-v1">
+(function(){
+  if(window.__jpRasiInfoCurrentPadaV1)return;
+  window.__jpRasiInfoCurrentPadaV1=true;
+
+  function norm360(x){return ((Number(x)%360)+360)%360}
+
+  function updateRasiLagnaInfo(){
+    const info=document.getElementById('rasiLagnaInfo');
+    if(!info)return;
+
+    let deg=null;
+    try{
+      const asc=savedPlanetsForChart?.Ascendant || savedPlanetsForChart?.Lagna || savedPlanetsForChart?.ascendant;
+      deg=Number(asc?.fullDegree);
+    }catch(e){}
+
+    if(!Number.isFinite(deg)){
+      const d=Number(document.getElementById('lagna_deg')?.value);
+      const m=Number(document.getElementById('lagna_min')?.value);
+      const s=Number(document.getElementById('lagna_sec')?.value);
+      if(Number.isFinite(d))deg=d+(Number.isFinite(m)?m:0)/60+(Number.isFinite(s)?s:0)/3600;
+    }
+    if(!Number.isFinite(deg)){info.textContent='—';return;}
+
+    deg=norm360(deg);
+    const rIdx=Math.floor(deg/30);
+    const within=deg-rIdx*30;
+    const d=Math.floor(within);
+    const min=Math.floor((within-d)*60);
+    let nak='—',pada='—';
+    try{
+      const np=getNakPadaFromDegree(deg);
+      nak=nameNakById(np.nakId)||'—';
+      pada=np.pada||'—';
+    }catch(e){}
+    const r=RASIS?.[rIdx];
+
+    info.textContent=(typeof LANG!=='undefined'&&LANG==='ta')
+      ? `ராசி லக்னம்: ${r?.name?.ta||'—'} • பாவம் 1 • ${nak} ${pada} • ${d}° ${min}′`
+      : `Rasi Lagna: ${r?.name?.en||'—'} • Bhava 1 • ${nak} ${pada} • ${d}° ${min}′`;
+  }
+
+  function clearDefaultCurrentPada(){
+    document.querySelectorAll(
+      '#rasiChart .jp-current-dasa-pada,'+
+      '#rasiChart .jp-current-puthi-pada,'+
+      '#rasiChart .jp-current-anth-pada'
+    ).forEach(el=>el.classList.remove(
+      'jp-current-dasa-pada','jp-current-puthi-pada','jp-current-anth-pada'
+    ));
+  }
+
+  function addCurrentClass(period,cls,now){
+    if(!period)return;
+    try{
+      const p=getCurrentPada(period,now);
+      if(!p?.nakId||!p?.pada)return;
+      const idx=findPadaIndexById(p.nakId,p.pada);
+      if(idx>0&&padaDomList?.[idx])padaDomList[idx].classList.add(cls);
+    }catch(e){}
+  }
+
+  function applyDefaultCurrentPada(){
+    clearDefaultCurrentPada();
+    if(typeof vimData==='undefined'||!Array.isArray(vimData)||!vimData.length||!vimCurrentPath)return;
+
+    const now=document.getElementById('caldate')?.value
+      ? new Date(document.getElementById('caldate').value)
+      : new Date();
+
+    const md=vimData?.[vimCurrentPath.dasa];
+    const pt=md?.puthis?.[vimCurrentPath.puthi];
+    const at=pt?.antharas?.[vimCurrentPath.anth];
+
+    addCurrentClass(md,'jp-current-dasa-pada',now);
+    addCurrentClass(pt,'jp-current-puthi-pada',now);
+    addCurrentClass(at,'jp-current-anth-pada',now);
+  }
+
+  function keepResearchTables(){
+    try{window.jpMountResearchTables?.();}catch(e){}
+
+    const sandSlot=document.getElementById('sandhippuTableSlot');
+    const kpSlot=document.getElementById('kpTableSlot');
+    const bhSlot=document.getElementById('bhavaRelationTableSlot');
+
+    if(sandSlot)sandSlot.style.display='block';
+    if(kpSlot)kpSlot.style.display='block';
+    if(bhSlot)bhSlot.style.display='block';
+
+    const kpCard=document.getElementById('dasaTablesCard');
+    const bhCard=document.getElementById('currentPlanetBhavaTableBox');
+
+    // If a research card was hidden by another legacy control, restore its
+    // currently selected view rather than collapsing the whole section.
+    if(kpCard && kpCard.parentNode===kpSlot)kpCard.style.display='block';
+    if(bhCard && bhCard.parentNode===bhSlot)bhCard.style.display='block';
+  }
+
+  function refresh(){
+    updateRasiLagnaInfo();
+    applyDefaultCurrentPada();
+    keepResearchTables();
+  }
+
+  document.addEventListener('click',()=>{
+    [20,120].forEach(ms=>setTimeout(keepResearchTables,ms));
+  },true);
+
+  document.getElementById('caldate')?.addEventListener('change',()=>{
+    [30,150,500].forEach(ms=>setTimeout(refresh,ms));
+  });
+
+  const oldDraw=window.drawChartGrid;
+  if(typeof oldDraw==='function'){
+    window.drawChartGrid=function(){
+      const r=oldDraw.apply(this,arguments);
+      setTimeout(refresh,20);
+      return r;
+    };
+  }
+
+  const oldRun=window.run;
+  if(typeof oldRun==='function'){
+    window.run=function(){
+      const r=oldRun.apply(this,arguments);
+      Promise.resolve(r).finally(()=>{
+        [20,120].forEach(ms=>setTimeout(refresh,ms));
+      });
+      return r;
+    };
+  }
+
+  window.jpRefreshDefaultCurrentPada=applyDefaultCurrentPada;
+  window.jpRefreshRasiLagnaInfo=updateRasiLagnaInfo;
+
+  if(document.readyState==='loading'){
+    document.addEventListener('DOMContentLoaded',()=>[100,400,900].forEach(ms=>setTimeout(refresh,ms)));
+  }else{
+    [100,400,900].forEach(ms=>setTimeout(refresh,ms));
+  }
+})();
+</script>
+
 </body>
 </html>
