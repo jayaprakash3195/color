@@ -5785,6 +5785,98 @@ body.dark #rasiBirthDetailsCenter .jp-birth-karana-owner{color:#4ade80!important
 }
 </style>
 
+
+<style id="jp-kp-two-line-mobile-bhava-fix-v1">
+  /* ===== KP TABLE ONLY =====
+     Star/Sub/Sub-Sub column:
+     line 1 = lord planet
+     line 2 = Nakshatra + Pada
+  */
+  #tblBirthDBA td:nth-child(3) .jp-kp-lord,
+  #tblBirthDBA td:nth-child(4) .jp-kp-lord,
+  #tblBirthDBA td:nth-child(5) .jp-kp-lord,
+  #tblCurrentDBA td:nth-child(3) .jp-kp-lord,
+  #tblCurrentDBA td:nth-child(4) .jp-kp-lord,
+  #tblCurrentDBA td:nth-child(5) .jp-kp-lord,
+  #tblKotcharamDBA td:nth-child(3) .jp-kp-lord,
+  #tblKotcharamDBA td:nth-child(4) .jp-kp-lord,
+  #tblKotcharamDBA td:nth-child(5) .jp-kp-lord{
+    display:block!important;
+    line-height:1.25!important;
+    margin-bottom:2px!important;
+  }
+
+  #tblBirthDBA .jp-kp-nakpada,
+  #tblCurrentDBA .jp-kp-nakpada,
+  #tblKotcharamDBA .jp-kp-nakpada{
+    display:block!important;
+    line-height:1.25!important;
+    color:var(--ink)!important;
+    font-weight:650!important;
+  }
+
+  /* ===== MOBILE: கிரக பாவ தொடர்புகள் ONLY =====
+     Keep it in its research section below the selector.
+     Prevent old mobile rules from relocating/hiding it above the chart.
+  */
+  @media (max-width:900px){
+    #bhavaRelationTableSlot{
+      display:block!important;
+      width:100%!important;
+      max-width:100%!important;
+      overflow-x:auto!important;
+      position:relative!important;
+      visibility:visible!important;
+      opacity:1!important;
+      height:auto!important;
+      min-height:1px!important;
+    }
+
+    #bhavaRelationTableSlot #currentPlanetBhavaTableBox{
+      display:block!important;
+      position:relative!important;
+      inset:auto!important;
+      top:auto!important;
+      right:auto!important;
+      bottom:auto!important;
+      left:auto!important;
+      transform:none!important;
+      width:100%!important;
+      max-width:none!important;
+      height:auto!important;
+      min-height:1px!important;
+      margin:0!important;
+      visibility:visible!important;
+      opacity:1!important;
+      overflow:visible!important;
+      z-index:auto!important;
+    }
+
+    #bhavaRelationTableSlot #currentPlanetBhavaTable{
+      display:table!important;
+      width:100%!important;
+      min-width:760px!important;
+      table-layout:auto!important;
+      visibility:visible!important;
+      opacity:1!important;
+    }
+
+    #bhavaRelationTableSlot #currentPlanetBhavaTable thead{
+      display:table-header-group!important;
+    }
+    #bhavaRelationTableSlot #currentPlanetBhavaTable tbody{
+      display:table-row-group!important;
+    }
+    #bhavaRelationTableSlot #currentPlanetBhavaTable tr{
+      display:table-row!important;
+    }
+    #bhavaRelationTableSlot #currentPlanetBhavaTable th,
+    #bhavaRelationTableSlot #currentPlanetBhavaTable td{
+      display:table-cell!important;
+    }
+  }
+</style>
+
 </head>
 <body>
 
@@ -18678,6 +18770,57 @@ box.innerHTML=
     }
   },true);
   document.addEventListener('DOMContentLoaded',()=>setTimeout(apply,500));
+})();
+</script>
+
+
+<script id="jp-mobile-bhava-research-slot-fix-v1">
+(function(){
+  if(window.__jpMobileBhavaResearchSlotFixV1)return;
+  window.__jpMobileBhavaResearchSlotFixV1=true;
+
+  function isMobile(){
+    return window.matchMedia && window.matchMedia('(max-width:900px)').matches;
+  }
+
+  function mountBhavaResearch(){
+    if(!isMobile())return;
+    const slot=document.getElementById('bhavaRelationTableSlot');
+    const box=document.getElementById('currentPlanetBhavaTableBox');
+    if(!slot||!box)return;
+
+    if(box.parentNode!==slot) slot.appendChild(box);
+
+    // Respect the research selector: if a Bhava mode is selected,
+    // keep the table visible in this slot.
+    const seg=document.getElementById('bhavaRelationSegment');
+    const hasActive=!!seg?.querySelector('.jp-seg-btn.active');
+    if(hasActive){
+      box.style.display='block';
+      box.style.visibility='visible';
+    }
+  }
+
+  function refresh(){
+    [0,30,120,350].forEach(ms=>setTimeout(mountBhavaResearch,ms));
+  }
+
+  document.addEventListener('click',function(e){
+    if(e.target.closest('#bhavaRelationSegment .jp-seg-btn')){
+      refresh();
+    }
+  },true);
+
+  document.addEventListener('DOMContentLoaded',refresh);
+  window.addEventListener('load',refresh);
+  window.addEventListener('resize',refresh);
+
+  // Existing app redraws/remounts outputs after Calculate / profile open.
+  document.addEventListener('click',function(e){
+    if(e.target.closest('#btnRun,#btnCalculate,#btnLoadProfile,.jp-profile-open-item')){
+      setTimeout(refresh,80);
+    }
+  },true);
 })();
 </script>
 
