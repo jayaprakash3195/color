@@ -1820,6 +1820,215 @@ body.dark .list li:hover{background:#151e29;}
 body.dark .pada-row{border-bottom-color:#263442;}
 body.dark th, body.dark td{border-color:#2b3642;}
 body.dark thead th{background:var(--table-head);}
+
+
+/* ===== JP colorful DOB / Time inputs — visual-only upgrade =====
+   Existing ids and canonical values remain unchanged:
+   dob_api = YYYY-MM-DD, tob_api = HH:MM. */
+.jp-birth-input-row{
+  gap:14px;
+}
+.jp-birth-input-field > label{
+  font-weight:800;
+  letter-spacing:.1px;
+}
+.jp-birth-input-shell{
+  position:relative;
+  display:flex;
+  align-items:center;
+  min-height:48px;
+  border:1.5px solid transparent;
+  border-radius:14px;
+  padding:2px 58px 2px 44px;
+  background:
+    linear-gradient(var(--card),var(--card)) padding-box,
+    linear-gradient(115deg,#2563eb,#7c3aed,#ec4899,#f59e0b) border-box;
+  box-shadow:0 5px 14px rgba(37,99,235,.10);
+  transition:transform .16s ease,box-shadow .16s ease,filter .16s ease;
+  overflow:hidden;
+}
+.jp-dob-field .jp-birth-input-shell{
+  background:
+    linear-gradient(var(--card),var(--card)) padding-box,
+    linear-gradient(115deg,#0ea5e9,#2563eb,#7c3aed) border-box;
+}
+.jp-tob-field .jp-birth-input-shell{
+  background:
+    linear-gradient(var(--card),var(--card)) padding-box,
+    linear-gradient(115deg,#f97316,#ec4899,#7c3aed) border-box;
+}
+.jp-birth-input-shell:focus-within{
+  transform:translateY(-1px);
+  box-shadow:0 8px 20px rgba(37,99,235,.18),0 0 0 3px rgba(59,130,246,.10);
+}
+.jp-birth-input-icon{
+  position:absolute;
+  left:13px;
+  top:50%;
+  transform:translateY(-50%);
+  width:24px;
+  height:24px;
+  display:grid;
+  place-items:center;
+  font-size:18px;
+  line-height:1;
+  filter:saturate(1.12);
+  pointer-events:none;
+}
+.jp-birth-pretty-input{
+  width:100% !important;
+  min-width:0;
+  height:42px;
+  padding:7px 4px !important;
+  border:0 !important;
+  outline:0 !important;
+  border-radius:0 !important;
+  background:transparent !important;
+  color:var(--ink) !important;
+  font-size:16px;
+  font-weight:800;
+  letter-spacing:.7px;
+  font-variant-numeric:tabular-nums;
+  box-shadow:none !important;
+}
+.jp-birth-pretty-input::placeholder{
+  color:var(--muted);
+  opacity:.68;
+  font-weight:700;
+  letter-spacing:.5px;
+}
+.jp-birth-input-hint{
+  position:absolute;
+  right:10px;
+  top:50%;
+  transform:translateY(-50%);
+  padding:4px 7px;
+  border-radius:999px;
+  font-size:9px;
+  font-weight:900;
+  letter-spacing:.8px;
+  color:#1d4ed8;
+  background:#dbeafe;
+  border:1px solid #bfdbfe;
+  pointer-events:none;
+}
+.jp-tob-field .jp-birth-input-hint{
+  color:#be185d;
+  background:#fce7f3;
+  border-color:#fbcfe8;
+}
+.jp-birth-pretty-input.jp-input-invalid{
+  color:#b91c1c !important;
+}
+.jp-birth-input-shell:has(.jp-input-invalid){
+  background:
+    linear-gradient(var(--card),var(--card)) padding-box,
+    linear-gradient(115deg,#dc2626,#f97316) border-box;
+  box-shadow:0 0 0 3px rgba(220,38,38,.08);
+}
+body.dark .jp-birth-input-shell{
+  box-shadow:0 6px 16px rgba(0,0,0,.28);
+}
+body.dark .jp-birth-input-hint{
+  color:#93c5fd;
+  background:#102a4c;
+  border-color:#1d4ed8;
+}
+body.dark .jp-tob-field .jp-birth-input-hint{
+  color:#f9a8d4;
+  background:#3a132d;
+  border-color:#9d174d;
+}
+@media(max-width:900px){
+  .jp-birth-input-shell{min-height:46px;padding-right:54px;}
+  .jp-birth-pretty-input{font-size:15px;}
+}
+
+/* Friendly display fields keep the original calculation inputs hidden. */
+.jp-canonical-input{display:none !important;}
+.jp-time-shell{padding-right:8px !important;}
+.jp-time-shell .jp-time-entry{padding-right:6px !important;}
+.jp-ampm-select{
+  flex:0 0 auto; width:72px; height:34px; padding:4px 7px !important;
+  border:1px solid rgba(236,72,153,.35) !important; border-radius:9px !important;
+  background:linear-gradient(135deg,#fff1f2,#fce7f3) !important;
+  color:#9d174d !important; font-weight:900; cursor:pointer; outline:none;
+}
+body.dark .jp-ampm-select{background:#351329 !important;color:#f9a8d4 !important;border-color:#831843 !important;}
+
+/* Simple matching name/location inputs. */
+.jp-simple-input-shell{
+  position:relative; display:flex; align-items:center; min-height:46px; padding:2px 10px 2px 43px;
+  border:1.5px solid transparent; border-radius:13px;
+  background:linear-gradient(var(--card),var(--card)) padding-box,linear-gradient(115deg,#14b8a6,#3b82f6,#8b5cf6) border-box;
+  box-shadow:0 4px 12px rgba(59,130,246,.08); transition:.16s ease;
+}
+.jp-location-shell{background:linear-gradient(var(--card),var(--card)) padding-box,linear-gradient(115deg,#10b981,#06b6d4,#3b82f6) border-box;}
+.jp-simple-input-shell:focus-within{transform:translateY(-1px);box-shadow:0 7px 18px rgba(59,130,246,.16),0 0 0 3px rgba(59,130,246,.09);}
+.jp-simple-input-icon{position:absolute;left:12px;top:50%;transform:translateY(-50%);font-size:19px;width:24px;text-align:center;pointer-events:none;}
+.jp-simple-input-shell input{width:100% !important;height:40px;padding:7px 4px !important;border:0 !important;outline:0 !important;background:transparent !important;color:var(--ink) !important;font-weight:750;box-shadow:none !important;}
+
+/* Gender with a small male/female cartoon avatar. */
+.jp-gender-shell{
+  display:flex;align-items:center;gap:9px;min-height:46px;padding:5px 9px;
+  border:1.5px solid transparent;border-radius:13px;
+  background:linear-gradient(var(--card),var(--card)) padding-box,linear-gradient(115deg,#2563eb,#8b5cf6,#ec4899) border-box;
+}
+.jp-gender-avatar{width:32px;height:32px;display:grid;place-items:center;border-radius:50%;font-size:21px;background:#e0ecff;border:1px solid #bfdbfe;}
+.jp-gender-shell.is-female .jp-gender-avatar{background:#fce7f3;border-color:#fbcfe8;}
+.jp-gender-shell select{flex:1;border:0 !important;outline:0 !important;background:transparent !important;font-weight:850;padding:6px 4px !important;}
+.jp-gender-mini-label{font-size:9px;font-weight:950;letter-spacing:.8px;padding:4px 7px;border-radius:999px;background:#dbeafe;color:#1d4ed8;border:1px solid #bfdbfe;}
+.jp-gender-shell.is-female .jp-gender-mini-label{background:#fce7f3;color:#be185d;border-color:#fbcfe8;}
+body.dark .jp-gender-avatar{background:#102a4c;border-color:#1d4ed8;}
+body.dark .jp-gender-shell.is-female .jp-gender-avatar{background:#3a132d;border-color:#9d174d;}
+
+/* Calculation date: DD/MM/YYYY + HH:MM + AM/PM, while #caldate stays canonical. */
+.jp-calc-input-shell{
+  display:flex;align-items:center;gap:7px;min-height:48px;padding:4px 8px;
+  border:2px solid transparent;border-radius:14px;
+  background:linear-gradient(var(--card),var(--card)) padding-box,linear-gradient(115deg,#f59e0b,#ef4444,#8b5cf6,#2563eb) border-box;
+  box-shadow:0 5px 14px rgba(245,158,11,.10);transition:.16s ease;
+}
+.jp-calc-input-shell:focus-within{transform:translateY(-1px);box-shadow:0 8px 20px rgba(124,58,237,.16),0 0 0 3px rgba(245,158,11,.10);}
+.jp-calc-input-icon,.jp-calc-clock{font-size:18px;flex:0 0 auto;}
+.jp-calc-date-entry,.jp-calc-time-entry{height:38px;border:0 !important;outline:0 !important;background:transparent !important;color:var(--ink) !important;font-weight:850;font-variant-numeric:tabular-nums;box-shadow:none !important;}
+.jp-calc-date-entry{width:112px !important;}.jp-calc-time-entry{width:60px !important;}
+.jp-calc-divider{width:1px;height:26px;background:var(--outline);flex:0 0 auto;}
+.jp-calc-ampm{width:68px;}
+.jp-display-invalid{color:#b91c1c !important;}
+@media(max-width:700px){.jp-calc-input-shell{flex-wrap:wrap}.jp-calc-date-entry{width:105px !important;}}
+
+/* v3: cleaner input details requested by user. */
+.jp-birth-input-shell{padding-right:10px !important;}
+.jp-person-icon{color:#2563eb;display:grid;place-items:center;}
+.jp-person-icon svg{width:23px;height:23px;display:block;}
+.jp-gender-avatar.jp-person-icon svg{width:24px;height:24px;}
+.jp-person-icon.female{color:#db2777;}
+.jp-gender-shell.is-female .jp-gender-avatar{color:#db2777;}
+.jp-gender-shell:not(.is-female) .jp-gender-avatar{color:#2563eb;}
+
+/* Friendly calculation-date control shown in the current summary. */
+.jp-summary-calc-shell{
+  display:inline-flex;align-items:center;gap:6px;min-height:40px;padding:3px 7px;
+  border:1.5px solid transparent;border-radius:11px;
+  background:linear-gradient(var(--card),var(--card)) padding-box,
+             linear-gradient(110deg,#2563eb,#7c3aed,#ec4899,#f59e0b) border-box;
+  box-shadow:0 3px 10px rgba(59,130,246,.10);
+}
+.jp-summary-calc-shell:focus-within{box-shadow:0 5px 15px rgba(124,58,237,.16),0 0 0 3px rgba(124,58,237,.08);}
+.jp-summary-cal-icon,.jp-summary-clock-icon{font-size:15px;line-height:1;flex:0 0 auto;}
+.jp-summary-date-entry,.jp-summary-time-entry{
+  border:0!important;outline:0!important;background:transparent!important;color:var(--ink)!important;
+  height:32px;padding:3px!important;font-weight:850;font-size:14px;font-variant-numeric:tabular-nums;box-shadow:none!important;
+}
+.jp-summary-date-entry{width:94px!important}.jp-summary-time-entry{width:50px!important}
+.jp-summary-sep{width:1px;height:22px;background:var(--outline);flex:0 0 auto;}
+.jp-summary-ampm{
+  width:58px;height:30px;padding:2px 5px!important;border:1px solid #c4b5fd!important;border-radius:8px!important;
+  background:linear-gradient(135deg,#eef2ff,#f5f3ff)!important;color:#5b21b6!important;font-weight:900;
+}
+body.dark .jp-summary-ampm{background:#21183d!important;color:#c4b5fd!important;border-color:#6d28d9!important;}
+@media(max-width:700px){.jp-summary-calc-shell{flex-wrap:wrap}.jp-summary-date-entry{width:90px!important}}
 </style>
 
 <style id="desktopOnlyFix">
@@ -5877,6 +6086,84 @@ body.dark #rasiBirthDetailsCenter .jp-birth-karana-owner{color:#4ade80!important
   }
 </style>
 
+<style id="jp-remove-empty-legacy-strip-v5">
+/* The old button toolbar is now only a hidden command source for the new dropdown UI.
+   Do not leave its empty bordered strip visible. Programmatic .click() still works. */
+#blinkControls{display:none!important;margin:0!important;padding:0!important;border:0!important;min-height:0!important;height:0!important;}
+
+/* Degree is now shown inside its matching Dasa/Puthi/Anthara summary row. */
+#current .jp-summary-degree{
+  display:inline-block;
+  margin-left:7px;
+  font-weight:850;
+  font-size:.92em;
+  white-space:nowrap;
+  color:#334155;
+}
+body.dark #current .jp-summary-degree{color:#cbd5e1;}
+#current .jp-summary-dasa .jp-summary-degree{color:#1d4ed8;}
+#current .jp-summary-puthi .jp-summary-degree{color:#047857;}
+#current .jp-summary-anth .jp-summary-degree{color:#b45309;}
+body.dark #current .jp-summary-dasa .jp-summary-degree{color:#93c5fd;}
+body.dark #current .jp-summary-puthi .jp-summary-degree{color:#6ee7b7;}
+body.dark #current .jp-summary-anth .jp-summary-degree{color:#fbbf24;}
+</style>
+
+
+<style id="jp-primary-controls-vertical-v4">
+/* Requested: remove the standalone current Dasa/Puthi/Anthara degree strip. */
+#dasaDegreeRow{display:none!important;}
+
+/* All four primary chart selectors use the same Bhavam-style layout:
+   heading above, full-width selector below. */
+#jpPrimaryChartControls > #planetLagnaPreferenceAboveChart,
+#jpPrimaryChartControls > #bhavaChooser,
+#jpPrimaryChartControls > #blinkPreferenceAboveChart,
+#jpPrimaryChartControls > #analysisPreferenceAboveChart{
+  flex-direction:column!important;
+  align-items:stretch!important;
+  justify-content:flex-start!important;
+  gap:7px!important;
+  padding:9px 10px!important;
+}
+
+#jpPrimaryChartControls #planetLagnaPreferenceAboveChart .planet-lagna-preference-label,
+#jpPrimaryChartControls #bhavaChooser > strong,
+#jpPrimaryChartControls #blinkPreferenceAboveChart .blink-preference-label,
+#jpPrimaryChartControls #analysisPreferenceAboveChart .analysis-preference-label{
+  display:block!important;
+  width:100%!important;
+  margin:0!important;
+  text-align:center!important;
+  white-space:normal!important;
+  line-height:1.25!important;
+  font-weight:900!important;
+}
+
+#jpPrimaryChartControls #planetLagnaViewSelect,
+#jpPrimaryChartControls #bhavaViewSelect,
+#jpPrimaryChartControls #blinkViewSelect,
+#jpPrimaryChartControls #analysisPreferenceSelect{
+  display:block!important;
+  width:100%!important;
+  min-width:0!important;
+  max-width:none!important;
+  min-height:44px!important;
+  margin:0!important;
+  padding-left:12px!important;
+  padding-right:34px!important;
+  box-sizing:border-box!important;
+  text-overflow:ellipsis!important;
+}
+
+/* Give the long Tamil choices more room on normal desktop screens. */
+@media (min-width:1101px){
+  #jpPrimaryChartControls{
+    grid-template-columns:repeat(4,minmax(0,1fr))!important;
+  }
+}
+</style>
+
 </head>
 <body>
 
@@ -6017,9 +6304,12 @@ body.dark #rasiBirthDetailsCenter .jp-birth-karana-owner{color:#4ade80!important
   <section class="form" id="apiFormWrap">
     <!-- FIRST ROW: ஜாதகர் பெயர் + profile controls -->
     <div class="row profile-near-birth" id="jathagarProfileRow">
-      <div class="field jathagar-name-field">
+      <div class="field jathagar-name-field jp-simple-field">
         <label for="profileName">ஜாதகர் பெயர்</label>
-        <input id="profileName" type="text" placeholder="ஜாதகர் பெயர்" autocomplete="name" />
+        <div class="jp-simple-input-shell jp-name-shell">
+          <span class="jp-simple-input-icon jp-person-icon male" id="jpNameAvatar" aria-hidden="true"><svg viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="10" r="6" fill="currentColor" opacity=".95"/><path d="M6.5 28c.8-7.2 4.5-11 9.5-11s8.7 3.8 9.5 11" fill="currentColor" opacity=".95"/><path d="M10 8.5c1.2-4 10.2-4.3 12 0-2.3-1-4.3-1.6-6.2-1.5-2 .1-3.8.6-5.8 1.5z" fill="currentColor"/></svg></span>
+          <input id="profileName" type="text" placeholder="ஜாதகர் பெயர்" autocomplete="name" />
+        </div>
       </div>
       <div class="field profile-actions-field">
         <label>&nbsp;</label>
@@ -6029,23 +6319,42 @@ body.dark #rasiBirthDetailsCenter .jp-birth-karana-owner{color:#4ade80!important
       </div>
     </div>
 
-    <!-- SECOND ROW: பிறந்த தேதி + பிறந்த நேரம் -->
-    <div class="row">
-      <div class="field">
-        <label id="lblDobApi">பிறந்த தேதி</label>
-        <input type="date" id="dob_api" />
+    <!-- SECOND ROW: பிறந்த தேதி + பிறந்த நேரம் (friendly display, canonical values kept hidden) -->
+    <div class="row jp-birth-input-row">
+      <div class="field jp-birth-input-field jp-dob-field">
+        <label id="lblDobApi" for="dob_api_display">பிறந்த தேதி</label>
+        <input type="date" id="dob_api" class="jp-canonical-input" tabindex="-1" aria-hidden="true" />
+        <div class="jp-birth-input-shell">
+          <span class="jp-birth-input-icon" aria-hidden="true">📅</span>
+          <input type="text" id="dob_api_display" class="jp-birth-pretty-input"
+                 inputmode="numeric" autocomplete="off" maxlength="10"
+                 placeholder="DD/MM/YYYY" aria-label="பிறந்த தேதி DD/MM/YYYY" />
+        </div>
       </div>
-      <div class="field">
-        <label id="lblTobApi">பிறந்த நேரம்</label>
-        <input type="time" id="tob_api" />
+      <div class="field jp-birth-input-field jp-tob-field">
+        <label id="lblTobApi" for="tob_api_display">பிறந்த நேரம்</label>
+        <input type="time" id="tob_api" class="jp-canonical-input" tabindex="-1" aria-hidden="true" />
+        <div class="jp-birth-input-shell jp-time-shell">
+          <span class="jp-birth-input-icon" aria-hidden="true">⏰</span>
+          <input type="text" id="tob_api_display" class="jp-birth-pretty-input jp-time-entry"
+                 inputmode="numeric" autocomplete="off" maxlength="5"
+                 placeholder="HH:MM" aria-label="பிறந்த நேரம் HH:MM" />
+          <select id="tob_api_ampm" class="jp-ampm-select" aria-label="AM or PM">
+            <option value="AM">AM</option>
+            <option value="PM">PM</option>
+          </select>
+        </div>
       </div>
     </div>
     
     <!-- THIRD ROW: பிறந்த இடம் + Calculate and Save -->
     <div class="row">
-      <div class="field pos-relative">
-        <label id="lblPlace">பிறந்த இடம்</label>
-        <input type="text" id="placeInput" placeholder="தொடங்குங்கள்..." autocomplete="off" />
+      <div class="field pos-relative jp-simple-field">
+        <label id="lblPlace" for="placeInput">பிறந்த இடம்</label>
+        <div class="jp-simple-input-shell jp-location-shell">
+          <span class="jp-simple-input-icon" aria-hidden="true">📍</span>
+          <input type="text" id="placeInput" placeholder="தொடங்குங்கள்..." autocomplete="off" />
+        </div>
         <div id="suggestions-box"></div>
       </div>
       <div class="field">
@@ -6055,12 +6364,15 @@ body.dark #rasiBirthDetailsCenter .jp-birth-karana-owner{color:#4ade80!important
     </div>
 
 <div class="row" id="genderRow">
-  <div class="field">
-    <label>Gender</label>
-    <select id="genderSelect">
-      <option value="male">Male</option>
-      <option value="female">Female</option>
-    </select>
+  <div class="field jp-gender-field">
+    <label for="genderSelect">Gender</label>
+    <div class="jp-gender-shell">
+      <span class="jp-gender-avatar jp-person-icon male" id="jpGenderAvatar" aria-hidden="true"><svg viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="10" r="6" fill="currentColor" opacity=".95"/><path d="M6.5 28c.8-7.2 4.5-11 9.5-11s8.7 3.8 9.5 11" fill="currentColor" opacity=".95"/><path d="M10 8.5c1.2-4 10.2-4.3 12 0-2.3-1-4.3-1.6-6.2-1.5-2 .1-3.8.6-5.8 1.5z" fill="currentColor"/></svg></span>
+      <select id="genderSelect">
+        <option value="male" selected>Male</option>
+        <option value="female">Female</option>
+      </select>
+    </div>
   </div>
 </div>
 
@@ -6106,8 +6418,19 @@ body.dark #rasiBirthDetailsCenter .jp-birth-karana-owner{color:#4ade80!important
   <div class="form" id="manualBox2">
     <div class="row">
       <div class="field">
-        <label id="lblCalcDate">கணிப்புக்கான தேதி</label>
-        <input type="datetime-local" id="caldate" />
+        <label id="lblCalcDate" for="caldate_date_display">கணிப்புக்கான தேதி</label>
+        <input type="datetime-local" id="caldate" class="jp-canonical-input" tabindex="-1" aria-hidden="true" />
+        <div class="jp-calc-input-shell">
+          <span class="jp-calc-input-icon" aria-hidden="true">🗓️</span>
+          <input type="text" id="caldate_date_display" class="jp-calc-date-entry" inputmode="numeric" maxlength="10" placeholder="DD/MM/YYYY" aria-label="கணிப்பு தேதி DD/MM/YYYY" />
+          <span class="jp-calc-divider"></span>
+          <span class="jp-calc-clock" aria-hidden="true">🕒</span>
+          <input type="text" id="caldate_time_display" class="jp-calc-time-entry" inputmode="numeric" maxlength="5" placeholder="HH:MM" aria-label="கணிப்பு நேரம் HH:MM" />
+          <select id="caldate_ampm" class="jp-ampm-select jp-calc-ampm" aria-label="AM or PM">
+            <option value="AM">AM</option>
+            <option value="PM">PM</option>
+          </select>
+        </div>
       </div>
       <div class="field">
         <label>&nbsp;</label>
@@ -6308,18 +6631,7 @@ body.dark #rasiBirthDetailsCenter .jp-birth-karana-owner{color:#4ade80!important
   <!-- Rasi chart -->
   
 
-<div id="dasaDegreeRow" class="info-row" style="display:flex;justify-content:flex-start;gap:8px;align-items:center;margin:6px 0 8px;">
-  <span id="dasaDegreeLabel">தசை டிகிரி (இப்போது):</span>
-  <strong id="dasaDegreeValue">--</strong>
-
-  <span class="sep">•</span>
-  <span id="puthiDegreeLabel">புக்தி டிகிரி:</span>
-  <strong id="puthiDegreeValue">--</strong>
-
-  <span class="sep">•</span>
-  <span id="anthDegreeLabel">அந்தரம் டிகிரி:</span>
-  <strong id="anthDegreeValue">--</strong>
-</div>
+<!-- standalone Dasa/Puthi/Anthara degree row removed; degrees are shown inside current DBA rows -->
 
 <section id="dasaPlanetMeetings" class="ddm-card" style="display:none;">
   <div class="ddm-head">
@@ -11013,6 +11325,27 @@ function getDasaPercentage(period,now){ if(!period||!period.start||!period.end) 
 function renderSummary(md, mdPada, pt, ptPada, at, atPada){
   const P = LABELS[LANG].pada;
 
+  /* Keep the degree calculation exactly on the same selected calculation date/time.
+     This only changes where the already-existing Dasa/Puthi/Anthara degree is displayed. */
+  function summaryDegree(mode){
+    try{
+      const now = caldate?.value ? new Date(caldate.value) : new Date();
+      const dobVal = document.getElementById('dob')?.value || document.getElementById('dob_api')?.value || '';
+      const dobDate = dobVal ? new Date(dobVal) : null;
+      const moonDeg = (Number(document.getElementById('moon_deg')?.value)||0)
+                    + (Number(document.getElementById('moon_min')?.value)||0)/60
+                    + (Number(document.getElementById('moon_sec')?.value)||0)/3600;
+      if(!dobDate || Number.isNaN(dobDate.getTime()) || !Number.isFinite(moonDeg)) return '';
+
+      let v=null;
+      if(mode==='dasa' && typeof window.dasaDegreeNow==='function') v=window.dasaDegreeNow(moonDeg,dobDate,now);
+      if(mode==='puthi' && typeof window.puthiDegreeNow==='function') v=window.puthiDegreeNow(moonDeg,dobDate,now);
+      if(mode==='anth' && typeof window.anthDegreeNow==='function') v=window.anthDegreeNow(moonDeg,dobDate,now);
+      if(v==null || !Number.isFinite(Number(v))) return '';
+      return (typeof window.toDMS==='function') ? window.toDMS(Number(v)) : `${Number(v).toFixed(4)}°`;
+    }catch(e){ return ''; }
+  }
+
   function row(mode, title, per, padaObj, colorClass){
     if(!per) return '';
     const nk   = padaObj?.nakId ? nameNakById(padaObj.nakId) : '-';
@@ -11021,12 +11354,17 @@ function renderSummary(md, mdPada, pt, ptPada, at, atPada){
     const to   = padaObj?.to   ? formatDateUI(padaObj.to)   : '';
     const range = (from && to) ? `<span class="muted">(${from} - ${to})</span>` : '';
     const lord = per?.lordKey ? namePlanet(per.lordKey) : '—';
+    const deg = summaryDegree(mode);
+    const degreeLabel = LANG==='ta'
+      ? (mode==='dasa' ? 'தசை டிகிரி' : mode==='puthi' ? 'புக்தி டிகிரி' : 'அந்தரம் டிகிரி')
+      : (mode==='dasa' ? 'Dasa degree' : mode==='puthi' ? 'Puthi degree' : 'Anthara degree');
+    const degreeHtml = deg ? `<span class="jp-summary-degree">• ${degreeLabel}: ${deg}</span>` : '';
     return `
       <div class="navline jp-summary-${mode}" style="display:flex;align-items:center;gap:15px;margin:6px 0;">
         <button class="btn navbtn" data-mode="${mode}" data-dir="-1">◀</button>
         <div class="jp-summary-period" style="flex:1 1 auto">
           <b class="jp-summary-title ${colorClass}">${title}: ${lord}</b>
-          <span class="jp-summary-nak">${nk} (${P} ${pd}) ${range}</span>
+          <span class="jp-summary-nak">${nk} (${P} ${pd}) ${range}${degreeHtml}</span>
         </div>
         <button class="btn navbtn" data-mode="${mode}" data-dir="+1">▶</button>
       </div>
@@ -11049,8 +11387,16 @@ function renderSummary(md, mdPada, pt, ptPada, at, atPada){
   <button class="btn navbtn" data-reset="now">
     ${LANG==='ta' ? 'இன்றைய தேதிக்கு மீட்டமை' : 'Reset to Today'}
   </button>
-  <label class="jp-summary-calc-label" for="summaryCal">${chipLabel}:</label>
-  <input id="summaryCal" type="datetime-local" value="${(caldate?.value) || (function(){ const _d = new Date(); _d.setMinutes(_d.getMinutes() - _d.getTimezoneOffset()); return _d.toISOString().slice(0,16); })()}" style="padding:6px 8px;border:1px solid var(--outline);border-radius:8px;background:var(--card);color:var(--ink)" />
+  <label class="jp-summary-calc-label" for="summaryCalDate">${chipLabel}:</label>
+  <input id="summaryCal" type="hidden" value="${(caldate?.value) || (function(){ const _d = new Date(); _d.setMinutes(_d.getMinutes() - _d.getTimezoneOffset()); return _d.toISOString().slice(0,16); })()}" />
+  <div class="jp-summary-calc-shell">
+    <span class="jp-summary-cal-icon" aria-hidden="true">📅</span>
+    <input id="summaryCalDate" class="jp-summary-date-entry" type="text" inputmode="numeric" maxlength="10" placeholder="DD/MM/YYYY" aria-label="${chipLabel} DD/MM/YYYY" />
+    <span class="jp-summary-sep"></span>
+    <span class="jp-summary-clock-icon" aria-hidden="true">⏰</span>
+    <input id="summaryCalTime" class="jp-summary-time-entry" type="text" inputmode="numeric" maxlength="5" placeholder="HH:MM" aria-label="HH:MM" />
+    <select id="summaryCalAmPm" class="jp-summary-ampm" aria-label="AM or PM"><option value="AM">AM</option><option value="PM">PM</option></select>
+  </div>
   <button class="btn navbtn" data-calc="summary">${LANG==='ta' ? 'கணக்கிடு' : 'Calculate'}</button>
 </div>
   `;
@@ -18824,5 +19170,207 @@ box.innerHTML=
 })();
 </script>
 
+
+
+<script id="jp-pretty-birth-inputs-v2">
+(function(){
+  if(window.__jpPrettyBirthInputsV2)return;
+  window.__jpPrettyBirthInputsV2=true;
+
+  const dob=document.getElementById('dob_api');
+  const dobView=document.getElementById('dob_api_display');
+  const tob=document.getElementById('tob_api');
+  const tobView=document.getElementById('tob_api_display');
+  const tobAmPm=document.getElementById('tob_api_ampm');
+  const cal=document.getElementById('caldate');
+  const calDateView=document.getElementById('caldate_date_display');
+  const calTimeView=document.getElementById('caldate_time_display');
+  const calAmPm=document.getElementById('caldate_ampm');
+  const gender=document.getElementById('genderSelect');
+  const genderAvatar=document.getElementById('jpGenderAvatar');
+  const nameAvatar=document.getElementById('jpNameAvatar');
+
+  function validYmd(v){
+    if(!/^\d{4}-\d{2}-\d{2}$/.test(v))return false;
+    const [y,m,d]=v.split('-').map(Number), dt=new Date(y,m-1,d);
+    return dt.getFullYear()===y&&dt.getMonth()===m-1&&dt.getDate()===d;
+  }
+  function validHm24(v){
+    if(!/^\d{2}:\d{2}$/.test(v))return false;
+    const [h,m]=v.split(':').map(Number); return h>=0&&h<=23&&m>=0&&m<=59;
+  }
+  function displayDateFromCanonical(v){
+    if(!validYmd(v))return '';
+    const [y,m,d]=v.split('-'); return `${d}/${m}/${y}`;
+  }
+  function canonicalDateFromDisplay(v){
+    if(!/^\d{2}\/\d{2}\/\d{4}$/.test(v))return '';
+    const [d,m,y]=v.split('/').map(Number), dt=new Date(y,m-1,d);
+    if(dt.getFullYear()!==y||dt.getMonth()!==m-1||dt.getDate()!==d)return '';
+    return `${String(y).padStart(4,'0')}-${String(m).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+  }
+  function displayTimeFrom24(v){
+    if(!validHm24(v))return {time:'',ampm:'AM'};
+    let [h,m]=v.split(':').map(Number); const ampm=h>=12?'PM':'AM';
+    h=h%12||12; return {time:`${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}`,ampm};
+  }
+  function canonicalTimeFrom12(v,ampm){
+    if(!/^\d{2}:\d{2}$/.test(v))return '';
+    let [h,m]=v.split(':').map(Number);
+    if(h<1||h>12||m<0||m>59)return '';
+    if(ampm==='AM')h=(h===12?0:h); else h=(h===12?12:h+12);
+    return `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}`;
+  }
+  function formatDateTyping(el){
+    let raw=el.value.replace(/\D/g,'').slice(0,8);
+    if(raw.length>2)raw=raw.slice(0,2)+'/'+raw.slice(2);
+    if(raw.length>5)raw=raw.slice(0,5)+'/'+raw.slice(5);
+    el.value=raw;
+  }
+  function formatTimeTyping(el){
+    let raw=el.value.replace(/\D/g,'').slice(0,4);
+    if(raw.length>2)raw=raw.slice(0,2)+':'+raw.slice(2);
+    el.value=raw;
+  }
+  function dispatchCanonical(el){
+    if(!el)return;
+    el.dispatchEvent(new Event('input',{bubbles:true}));
+    el.dispatchEvent(new Event('change',{bubbles:true}));
+  }
+  function mark(el,ok){ if(el)el.classList.toggle('jp-display-invalid',!!el.value&&!ok); }
+
+  let syncing=false;
+  function syncBirthViewsFromCanonical(){
+    if(syncing)return; syncing=true;
+    if(dob&&dobView){dobView.value=displayDateFromCanonical(dob.value);mark(dobView,!dob.value||validYmd(dob.value));}
+    if(tob&&tobView&&tobAmPm){const t=displayTimeFrom24(tob.value);tobView.value=t.time;tobAmPm.value=t.ampm;mark(tobView,!tob.value||validHm24(tob.value));}
+    syncing=false;
+  }
+  function syncCalViewFromCanonical(){
+    if(syncing||!cal||!calDateView||!calTimeView||!calAmPm)return;
+    syncing=true;
+    const [d='',tRaw='']=String(cal.value||'').split('T');
+    calDateView.value=displayDateFromCanonical(d);
+    const t=displayTimeFrom24((tRaw||'').slice(0,5)); calTimeView.value=t.time; calAmPm.value=t.ampm;
+    mark(calDateView,!d||validYmd(d)); mark(calTimeView,!tRaw||validHm24((tRaw||'').slice(0,5)));
+    syncing=false;
+  }
+
+  // Intercept programmatic .value assignments made by existing profile/load/today code.
+  function watchValue(el,onSet){
+    if(!el)return;
+    const proto=Object.getOwnPropertyDescriptor(HTMLInputElement.prototype,'value');
+    if(!proto||!proto.get||!proto.set)return;
+    try{
+      Object.defineProperty(el,'value',{configurable:true,enumerable:true,
+        get(){return proto.get.call(el);},
+        set(v){proto.set.call(el,v); if(!syncing)queueMicrotask(onSet);}
+      });
+    }catch(e){}
+  }
+  watchValue(dob,syncBirthViewsFromCanonical);
+  watchValue(tob,syncBirthViewsFromCanonical);
+  watchValue(cal,syncCalViewFromCanonical);
+
+  function syncBirthCanonicalFromView(){
+    if(syncing)return; syncing=true;
+    const d=canonicalDateFromDisplay(dobView?.value||'');
+    const t=canonicalTimeFrom12(tobView?.value||'',tobAmPm?.value||'AM');
+    if(dob)dob.value=d; if(tob)tob.value=t;
+    mark(dobView,!!d); mark(tobView,!!t);
+    syncing=false;
+    if(dob)dispatchCanonical(dob); if(tob)dispatchCanonical(tob);
+  }
+  function syncCalCanonicalFromView(){
+    if(syncing)return; syncing=true;
+    const d=canonicalDateFromDisplay(calDateView?.value||'');
+    const t=canonicalTimeFrom12(calTimeView?.value||'',calAmPm?.value||'AM');
+    mark(calDateView,!!d); mark(calTimeView,!!t);
+    if(cal)cal.value=(d&&t)?`${d}T${t}`:'';
+    syncing=false;
+    if(cal)dispatchCanonical(cal);
+  }
+
+  dobView?.addEventListener('input',()=>{formatDateTyping(dobView);syncBirthCanonicalFromView();});
+  tobView?.addEventListener('input',()=>{formatTimeTyping(tobView);syncBirthCanonicalFromView();});
+  tobAmPm?.addEventListener('change',syncBirthCanonicalFromView);
+  calDateView?.addEventListener('input',()=>{formatDateTyping(calDateView);syncCalCanonicalFromView();});
+  calTimeView?.addEventListener('input',()=>{formatTimeTyping(calTimeView);syncCalCanonicalFromView();});
+  calAmPm?.addEventListener('change',syncCalCanonicalFromView);
+
+  function syncSummaryPretty(){
+    const canonical=document.getElementById('summaryCal');
+    const dv=document.getElementById('summaryCalDate');
+    const tv=document.getElementById('summaryCalTime');
+    const ap=document.getElementById('summaryCalAmPm');
+    if(!canonical||!dv||!tv||!ap)return;
+    const [d='',tr='']=String(canonical.value||cal?.value||'').split('T');
+    dv.value=displayDateFromCanonical(d);
+    const tt=displayTimeFrom24((tr||'').slice(0,5)); tv.value=tt.time; ap.value=tt.ampm;
+    if(dv.dataset.jpBound!=='1'){
+      dv.dataset.jpBound='1';
+      dv.addEventListener('input',()=>{formatDateTyping(dv);syncSummaryCanonical();});
+      tv.addEventListener('input',()=>{formatTimeTyping(tv);syncSummaryCanonical();});
+      ap.addEventListener('change',syncSummaryCanonical);
+    }
+  }
+  function syncSummaryCanonical(){
+    const canonical=document.getElementById('summaryCal');
+    const dv=document.getElementById('summaryCalDate');
+    const tv=document.getElementById('summaryCalTime');
+    const ap=document.getElementById('summaryCalAmPm');
+    if(!canonical||!dv||!tv||!ap)return;
+    const d=canonicalDateFromDisplay(dv.value||'');
+    const t=canonicalTimeFrom12(tv.value||'',ap.value||'AM');
+    mark(dv,!!d);mark(tv,!!t); canonical.value=(d&&t)?`${d}T${t}`:'';
+  }
+
+  // current summary is rebuilt by renderCurrent(); observe it and repopulate the pretty controls.
+  const currentBox=document.getElementById('current');
+  if(currentBox){new MutationObserver(()=>queueMicrotask(syncSummaryPretty)).observe(currentBox,{childList:true,subtree:true});}
+
+  function personSvg(female){
+    return female
+      ? `<svg viewBox="0 0 32 32" aria-hidden="true"><path d="M8.2 13.5C8.2 5.5 11.7 2 16 2s7.8 3.5 7.8 11.5c0 4.6-2.2 7.7-7.8 7.7s-7.8-3.1-7.8-7.7z" fill="currentColor" opacity=".22"/><circle cx="16" cy="10.5" r="5.6" fill="currentColor"/><path d="M6.5 28c.8-6.7 4.4-10.3 9.5-10.3S24.7 21.3 25.5 28" fill="currentColor"/><path d="M9.5 10c.5-5.2 3-7.5 6.5-7.5S22 4.8 22.5 10c-2.1-1.4-4.3-2.1-6.5-2.1S11.6 8.6 9.5 10z" fill="currentColor"/></svg>`
+      : `<svg viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="10" r="6" fill="currentColor" opacity=".95"/><path d="M6.5 28c.8-7.2 4.5-11 9.5-11s8.7 3.8 9.5 11" fill="currentColor" opacity=".95"/><path d="M10 8.5c1.2-4 10.2-4.3 12 0-2.3-1-4.3-1.6-6.2-1.5-2 .1-3.8.6-5.8 1.5z" fill="currentColor"/></svg>`;
+  }
+  function updateGenderUI(){
+    if(!gender)return; const female=gender.value==='female';
+    [genderAvatar,nameAvatar].forEach(el=>{
+      if(!el)return; el.innerHTML=personSvg(female);
+      el.classList.toggle('female',female); el.classList.toggle('male',!female);
+    });
+    gender.closest('.jp-gender-shell')?.classList.toggle('is-female',female);
+  }
+  if(gender&&!gender.value)gender.value='male';
+  gender?.addEventListener('change',updateGenderUI);
+
+  syncBirthViewsFromCanonical();
+  syncCalViewFromCanonical();
+  syncSummaryPretty();
+  updateGenderUI();
+  document.addEventListener('DOMContentLoaded',()=>{syncBirthViewsFromCanonical();syncCalViewFromCanonical();syncSummaryPretty();updateGenderUI();});
+  window.addEventListener('load',()=>{setTimeout(()=>{syncBirthViewsFromCanonical();syncCalViewFromCanonical();syncSummaryPretty();updateGenderUI();},30);});
+  document.addEventListener('click',e=>{
+    if(e.target.closest('#btnOpenProfile,#btnApi,#btnRun,.jp-profile-open-item')){
+      setTimeout(()=>{syncBirthViewsFromCanonical();syncCalViewFromCanonical();syncSummaryPretty();updateGenderUI();},100);
+    }
+  },true);
+})();
+</script>
+
+<style id="jp-remove-standalone-degree-row-v6">
+#dasaDegreeRow{display:none!important;height:0!important;min-height:0!important;margin:0!important;padding:0!important;border:0!important;outline:0!important;box-shadow:none!important;overflow:hidden!important;}
+</style>
+<script id="jp-remove-standalone-degree-row-v6-js">
+(function(){
+  function removeStandaloneDegreeRow(){
+    document.getElementById('dasaDegreeRow')?.remove();
+  }
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',removeStandaloneDegreeRow,{once:true});
+  else removeStandaloneDegreeRow();
+  window.addEventListener('load',removeStandaloneDegreeRow,{once:true});
+})();
+</script>
 </body>
 </html>
