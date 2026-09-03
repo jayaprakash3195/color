@@ -9944,6 +9944,8 @@ function applyALPBhavaRotation(state){
 
   // Navamsa: exact current ALP Navamsa position = Bhava 1.
   applyNavamsaBhavaNumbers();
+  // Also move the D9 Lagna marker + degree heading to the same Akshaya point.
+  if(typeof placePlanetsOnNavamsaChart==='function') placePlanetsOnNavamsaChart();
 
   // At the final 120-year return, retain the special 9-Pada balance
   // highlight without changing the ALP-based Bhava numbering.
@@ -9960,6 +9962,7 @@ function restoreBirthBhavaRotation(){
   applyRasiNumberChips();
   highlightLagnaNumberedBands(birthPada);
   applyNavamsaBhavaNumbers();
+  if(typeof placePlanetsOnNavamsaChart==='function') placePlanetsOnNavamsaChart();
 }
 
 function applyALPHighlight(){
@@ -10559,6 +10562,42 @@ function getNavamsaRasiIndexFromDegree(deg){
   return getExactNavamsaPosition(deg).navRasiIdx;
 }
 
+/* Reliable birth Lagna degree for Navamsa redraws.
+   Keep the D9 calculation unchanged; only provide safe data fallbacks. */
+function jpGetBirthLagnaDegreeForNavamsa(){
+  const candidates=[];
+  try{ candidates.push(savedPlanetsForChart?.Ascendant?.fullDegree); }catch(e){}
+  try{ candidates.push(savedPlanetsForChart?.Lagna?.fullDegree); }catch(e){}
+  try{ candidates.push(savedPlanetsForChart?.ascendant?.fullDegree); }catch(e){}
+  try{ candidates.push(planetDegrees?.Ascendant); }catch(e){}
+  try{
+    const d=Number(document.getElementById('lagna_deg')?.value);
+    const m=Number(document.getElementById('lagna_min')?.value);
+    const sec=Number(document.getElementById('lagna_sec')?.value);
+    if(Number.isFinite(d)) candidates.push(d+(Number.isFinite(m)?m:0)/60+(Number.isFinite(sec)?sec:0)/3600);
+  }catch(e){}
+  for(const v of candidates){
+    const n=Number(v);
+    if(Number.isFinite(n)) return ((n%360)+360)%360;
+  }
+  return null;
+}
+
+/* Active Lagna source for D9.
+   - Jenma mode  : birth Lagna degree
+   - Akshaya mode: exact current ALP/Akshaya Lagna longitude
+   This changes only which Lagna feeds the D9 marker/info; the D9 formula itself is unchanged. */
+function jpGetActiveLagnaDegreeForNavamsa(){
+  try{
+    if(typeof alpActive!=='undefined' && alpActive && typeof getALPState==='function'){
+      const st=getALPState();
+      const n=Number(st?.alpLongitude);
+      if(Number.isFinite(n)) return ((n%360)+360)%360;
+    }
+  }catch(e){}
+  return jpGetBirthLagnaDegreeForNavamsa();
+}
+
 function navGetLine(navRasiIdx,d9Longitude){
   const chart=document.getElementById('navamsaChart');
   if(!chart) return null;
@@ -10623,11 +10662,13 @@ function placePlanetsOnNavamsaChart(){
     });
   }
 
-  const asc=birth.Ascendant;
+  // D9 Lagna must follow the currently selected Lagna mode.
+  // In Akshaya mode use the exact current ALP longitude, not birth Lagna.
+  const lagnaDegree=jpGetActiveLagnaDegreeForNavamsa();
   const info=document.getElementById('navamsaLagnaInfo');
 
-  if(asc&&asc.fullDegree!=null){
-    const pos=getNavamsaLagnaPosition(asc.fullDegree);
+  if(lagnaDegree!=null){
+    const pos=getNavamsaLagnaPosition(lagnaDegree);
     const line=navGetLine(pos.navRasiIdx,pos.d9Longitude);
 
     if(line){
@@ -10641,11 +10682,14 @@ function placePlanetsOnNavamsaChart(){
       const r=RASIS[pos.navRasiIdx];
       const lonWithin=((pos.d9Longitude-(pos.navRasiIdx*30))%30+30)%30;
       const d=Math.floor(lonWithin);
-      const min=Math.floor((lonWithin-d)*60);
+      const minFloat=(lonWithin-d)*60;
+      const min=Math.floor(minFloat);
+      const sec=Math.round((minFloat-min)*60);
       const d9NakName=pos.d9NakId ? nameNakById(pos.d9NakId) : '';
+      const isAkshaya=(typeof alpActive!=='undefined' && alpActive);
       info.textContent=(typeof LANG!=='undefined'&&LANG==='ta')
-        ? `நவாம்ச லக்னம்: ${r.name.ta} • பாவம் 1 • ${d9NakName} ${pos.d9NakPada} • ${d}° ${min}′`
-        : `Navamsa Lagna: ${r.name.en} • Bhava 1 • ${d9NakName} ${pos.d9NakPada} • ${d}° ${min}′`;
+        ? `${isAkshaya?'அக்ஷய நவாம்ச லக்னம்':'நவாம்ச லக்னம்'}: ${r.name.ta} • பாவம் 1 • ${d9NakName} ${pos.d9NakPada} • ${d}° ${min}′ ${sec}″`
+        : `${isAkshaya?'Akshaya Navamsa Lagna':'Navamsa Lagna'}: ${r.name.en} • Bhava 1 • ${d9NakName} ${pos.d9NakPada} • ${d}° ${min}′ ${sec}″`;
     }
   }
 }
@@ -10653,10 +10697,10 @@ function placePlanetsOnNavamsaChart(){
 function applyNavamsaBhavaNumbers(){
   const birth=(typeof savedPlanetsForChart!=='undefined'&&savedPlanetsForChart)
     ? savedPlanetsForChart : {};
-  const asc=birth.Ascendant;
-  if(!asc||asc.fullDegree==null) return;
+  const lagnaDegree=jpGetBirthLagnaDegreeForNavamsa();
+  if(lagnaDegree==null) return;
 
-  const birthPos=getNavamsaLagnaPosition(asc.fullDegree);
+  const birthPos=getNavamsaLagnaPosition(lagnaDegree);
   let anchorPos=birthPos;
   let alpNav=null;
 
@@ -11355,10 +11399,7 @@ function renderSummary(md, mdPada, pt, ptPada, at, atPada){
     const range = (from && to) ? `<span class="muted">(${from} - ${to})</span>` : '';
     const lord = per?.lordKey ? namePlanet(per.lordKey) : '—';
     const deg = summaryDegree(mode);
-    const degreeLabel = LANG==='ta'
-      ? (mode==='dasa' ? 'தசை டிகிரி' : mode==='puthi' ? 'புக்தி டிகிரி' : 'அந்தரம் டிகிரி')
-      : (mode==='dasa' ? 'Dasa degree' : mode==='puthi' ? 'Puthi degree' : 'Anthara degree');
-    const degreeHtml = deg ? `<span class="jp-summary-degree">• ${degreeLabel}: ${deg}</span>` : '';
+    const degreeHtml = deg ? `<span class="jp-summary-degree">• ${deg}</span>` : '';
     return `
       <div class="navline jp-summary-${mode}" style="display:flex;align-items:center;gap:15px;margin:6px 0;">
         <button class="btn navbtn" data-mode="${mode}" data-dir="-1">◀</button>
@@ -19372,5 +19413,79 @@ box.innerHTML=
   window.addEventListener('load',removeStandaloneDegreeRow,{once:true});
 })();
 </script>
+
+<style id="jp-no-info-before-lagna-v7">
+/* Never show temporary feature/info cards above the Jenma/Akshaya Lagna switch.
+   Matra-feature cards become visible again only after the existing controller
+   moves them into the Rasi-chart centre. */
+#thithiSunyaCustomerBox:not(.rasi-analysis-moved-info),
+#mudakkuPariharaInfoBox:not(.rasi-analysis-moved-info),
+#yogiAvayogiInfoBox:not(.rasi-analysis-moved-info),
+#vainasigamInfoBox:not(.rasi-analysis-moved-info),
+#karanaInfoBox:not(.rasi-analysis-moved-info){
+  display:none!important;
+}
+
+/* The planet-bhava relation result belongs only in its dedicated research slot. */
+#currentPlanetBhavaTableBox:not(#bhavaRelationTableSlot #currentPlanetBhavaTableBox){
+  display:none!important;
+}
+</style>
+<script id="jp-no-info-before-lagna-v7-js">
+(function(){
+  if(window.__jpNoInfoBeforeLagnaV7)return;
+  window.__jpNoInfoBeforeLagnaV7=true;
+
+  const relationId='currentPlanetBhavaTableBox';
+  const lagnaId='lagnaModeSelector';
+
+  function relocateRelationBox(){
+    const box=document.getElementById(relationId);
+    const slot=document.getElementById('bhavaRelationTableSlot');
+    if(!box||!slot)return;
+    if(box.parentNode!==slot)slot.appendChild(box);
+    // Preserve the existing feature's own visible/hidden state.
+    if(typeof CPBH_MODE!=='undefined' && CPBH_MODE){
+      box.style.display='block';
+      box.style.visibility='visible';
+    }
+  }
+
+  function clearAnyLoosePreLagnaInfo(){
+    const lagna=document.getElementById(lagnaId);
+    if(!lagna||!lagna.parentNode)return;
+    const parent=lagna.parentNode;
+    const ids=[
+      'thithiSunyaCustomerBox','mudakkuPariharaInfoBox','yogiAvayogiInfoBox',
+      'vainasigamInfoBox','karanaInfoBox','currentPlanetBhavaTableBox'
+    ];
+    ids.forEach(id=>{
+      const el=document.getElementById(id);
+      if(!el)return;
+      if(id===relationId){ relocateRelationBox(); return; }
+      // If the Matra controller has not moved the box into Rasi yet, keep it hidden.
+      if(!el.classList.contains('rasi-analysis-moved-info') && el.parentNode===parent){
+        el.style.display='none';
+      }
+    });
+  }
+
+  const observer=new MutationObserver(()=>{
+    relocateRelationBox();
+    clearAnyLoosePreLagnaInfo();
+  });
+  observer.observe(document.body,{childList:true,subtree:true});
+
+  document.addEventListener('DOMContentLoaded',()=>{
+    relocateRelationBox();
+    clearAnyLoosePreLagnaInfo();
+  });
+  window.addEventListener('load',()=>{
+    setTimeout(relocateRelationBox,0);
+    setTimeout(clearAnyLoosePreLagnaInfo,0);
+  });
+})();
+</script>
+
 </body>
 </html>
