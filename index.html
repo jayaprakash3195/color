@@ -6689,6 +6689,7 @@ body.dark #current .jp-summary-anth .jp-summary-degree{color:#fbbf24;}
       <option value="yogi-avayogi">யோகி — அவயோகி</option>
       <option value="vainasigam">வைநாசிகம்</option>
       <option value="karana">கரணம்</option>
+      <option value="kubera-pulli">குபேர புள்ளி</option>
       <option value="kotcharam">கொச்சாரம்</option>
     </select>
   </div>
@@ -19484,6 +19485,229 @@ box.innerHTML=
     setTimeout(relocateRelationBox,0);
     setTimeout(clearAnyLoosePreLagnaInfo,0);
   });
+})();
+</script>
+
+
+<style id="jp-kubera-pulli-style-v1">
+/* ===== KUBERA PULLI — birth-chart-only highlight ===== */
+#rasiChart .line.jp-kubera-pulli-active{
+  position:relative;
+  z-index:8;
+  background:linear-gradient(90deg,#fff4b8,#ffe16a) !important;
+  color:#5a3a00 !important;
+  font-weight:900 !important;
+  outline:3px solid #d99a00 !important;
+  box-shadow:0 0 0 3px rgba(255,193,7,.18),0 0 16px rgba(217,154,0,.55) !important;
+  animation:jpKuberaPulse 1.35s ease-in-out infinite;
+}
+#rasiChart .line.jp-kubera-pulli-active::after{
+  content:"  ◆ குபேர புள்ளி";
+  margin-left:6px;
+  color:#9a5a00;
+  font-size:.78em;
+  font-weight:900;
+  white-space:nowrap;
+}
+body.dark #rasiChart .line.jp-kubera-pulli-active{
+  background:linear-gradient(90deg,#4b3600,#6a4b00) !important;
+  color:#ffe6a3 !important;
+  outline-color:#f6b817 !important;
+  box-shadow:0 0 0 3px rgba(246,184,23,.16),0 0 18px rgba(246,184,23,.48) !important;
+}
+body.dark #rasiChart .line.jp-kubera-pulli-active::after{color:#ffd56a;}
+@keyframes jpKuberaPulse{
+  0%,100%{filter:brightness(1);}
+  50%{filter:brightness(1.08);}
+}
+</style>
+
+<script id="jp-kubera-pulli-concept-v1">
+(function(){
+  if(window.__jpKuberaPulliV1)return;
+  window.__jpKuberaPulliV1=true;
+
+  const SELECT_ID='analysisPreferenceSelect';
+  const VALUE='kubera-pulli';
+  let active=false;
+  let lastResult=null;
+
+  const API_KEY={
+    sun:'Sun',moon:'Moon',mars:'Mars',mercury:'Mercury',jupiter:'Jupiter',
+    venus:'Venus',saturn:'Saturn',rahu:'Rahu',ketu:'Ketu',asc:'Ascendant'
+  };
+
+  function norm360(x){
+    x=Number(x);
+    return Number.isFinite(x)?((x%360)+360)%360:NaN;
+  }
+
+  function globalPadaFromDegree(deg){
+    const x=norm360(deg);
+    if(!Number.isFinite(x))return null;
+    return Math.min(108,Math.max(1,Math.floor(x/(360/108))+1));
+  }
+
+  function degreeOf(apiName,internalKey){
+    // First preference: complete saved birth-planet API object.
+    let v=Number((typeof savedPlanetsForChart!=='undefined' ? savedPlanetsForChart : null)?.[apiName]?.fullDegree);
+    if(Number.isFinite(v))return norm360(v);
+
+    // Existing numeric birth-degree cache.
+    v=Number((typeof planetDegrees!=='undefined' ? planetDegrees : null)?.[apiName]);
+    if(Number.isFinite(v))return norm360(v);
+    v=Number((typeof planetDegrees!=='undefined' ? planetDegrees : null)?.[internalKey]);
+    if(Number.isFinite(v))return norm360(v);
+
+    // Lagna has manual D/M/S fallback; ordinary planets intentionally do not.
+    if(apiName==='Ascendant'){
+      const d=Number(document.getElementById('lagna_deg')?.value);
+      const m=Number(document.getElementById('lagna_min')?.value||0);
+      const sec=Number(document.getElementById('lagna_sec')?.value||0);
+      if(Number.isFinite(d))return norm360(d+m/60+sec/3600);
+    }
+    return NaN;
+  }
+
+  function padaLabel(globalPada){
+    const p=Number(globalPada);
+    if(!(p>=1&&p<=108))return '—';
+    const ni=Math.floor((p-1)/4);
+    const pada=((p-1)%4)+1;
+    const n=(typeof NAKS!=='undefined' ? NAKS : [])?.[ni];
+    const name=n?.name?.ta || n?.name?.en || n?.id || '—';
+    return `${name} ${pada}`;
+  }
+
+  function compute(){
+    // Kubera Pulli is ALWAYS based on the birth chart, never Akshaya Lagna.
+    const lagnaDeg=degreeOf('Ascendant','asc');
+    const moonDeg=degreeOf('Moon','moon');
+    if(!Number.isFinite(lagnaDeg)||!Number.isFinite(moonDeg))return null;
+
+    const lagnaRasiIndex=Math.floor(norm360(lagnaDeg)/30); // 0..11
+    const secondRasiIndex=(lagnaRasiIndex+1)%12;
+    const secondRasi=(typeof RASIS!=='undefined' ? RASIS : [])?.[secondRasiIndex];
+    const secondLord=secondRasi?.lord;
+    const secondLordApi=API_KEY[secondLord];
+    if(!secondLord||!secondLordApi)return null;
+
+    const secondLordDeg=degreeOf(secondLordApi,secondLord);
+    if(!Number.isFinite(secondLordDeg))return null;
+
+    const moonPada=globalPadaFromDegree(moonDeg);
+    const lordPada=globalPadaFromDegree(secondLordDeg);
+    if(!moonPada||!lordPada)return null;
+
+    const product=moonPada*lordPada;
+    // User rule: remainder after dividing by 108; exact multiples map to pada 108.
+    const kuberaPada=((product-1)%108)+1;
+
+    return {
+      moonPada,
+      lordPada,
+      product,
+      kuberaPada,
+      secondRasiIndex,
+      secondRasiId:secondRasi?.id||null,
+      secondLord,
+      secondLordApi,
+      label:padaLabel(kuberaPada)
+    };
+  }
+
+  function clearHighlight(){
+    document.querySelectorAll('#rasiChart .jp-kubera-pulli-active')
+      .forEach(el=>el.classList.remove('jp-kubera-pulli-active'));
+  }
+
+  function applyHighlight(){
+    clearHighlight();
+    if(!active)return false;
+
+    const r=compute();
+    lastResult=r;
+    if(!r)return false;
+
+    const el=(typeof padaDomList!=='undefined' ? padaDomList : null)?.[r.kuberaPada];
+    if(!el)return false;
+    el.classList.add('jp-kubera-pulli-active');
+    el.title=`குபேர புள்ளி: ${r.label} (பாத எண் ${r.kuberaPada})`;
+    return true;
+  }
+
+  function activate(){
+    const sel=document.getElementById(SELECT_ID);
+
+    // First ask the EXISTING Matra controller to switch its previous feature OFF.
+    // This preserves its original cleanup logic and mutual-exclusion behavior.
+    if(sel){
+      try{
+        sel.value='off';
+        sel.dispatchEvent(new Event('change',{bubbles:true}));
+      }catch(e){}
+      sel.value=VALUE;
+      sel.classList.add('active');
+    }
+    active=true;
+
+    // Kubera Pulli itself adds only one D1 pada highlight.
+    try{ document.getElementById('rasiAnalysisCenter')?.remove(); }catch(e){}
+    try{ document.getElementById('rasiChart')?.classList.remove('jp-analysis-center-active'); }catch(e){}
+    try{ window.jpRenderDefaultBirthDetails?.(); }catch(e){}
+
+    if(!applyHighlight()){
+      setTimeout(applyHighlight,40);
+      setTimeout(applyHighlight,160);
+    }
+  }
+
+  function deactivate(){
+    active=false;
+    lastResult=null;
+    clearHighlight();
+  }
+
+  function onChangeCapture(ev){
+    if(ev.target?.id!==SELECT_ID)return;
+    if(ev.target.value===VALUE){
+      // Existing Matra controller does not know this new concept; stop only
+      // this change event from reaching it and run Kubera independently.
+      ev.stopImmediatePropagation();
+      activate();
+    }else{
+      deactivate();
+      // Other existing options continue to their original handlers unchanged.
+    }
+  }
+
+  document.addEventListener('change',onChangeCapture,true);
+
+  // Keep the highlight after any normal D1 redraw/profile load.
+  const oldDraw=window.drawChartGrid;
+  if(typeof oldDraw==='function'&&!window.__jpKuberaDrawWrapped){
+    window.drawChartGrid=function(){
+      const ret=oldDraw.apply(this,arguments);
+      if(active){setTimeout(applyHighlight,0);setTimeout(applyHighlight,80);}
+      return ret;
+    };
+    window.__jpKuberaDrawWrapped=true;
+  }
+
+  // Recalculate if birth data is freshly calculated/loaded while Kubera is ON.
+  const oldRun=window.run;
+  if(typeof oldRun==='function'&&!window.__jpKuberaRunWrapped){
+    window.run=async function(){
+      const ret=await oldRun.apply(this,arguments);
+      if(active){setTimeout(applyHighlight,30);setTimeout(applyHighlight,180);}
+      return ret;
+    };
+    window.__jpKuberaRunWrapped=true;
+  }
+
+  window.jpComputeKuberaPulli=compute;
+  window.jpApplyKuberaPulli=activate;
+  window.jpClearKuberaPulli=deactivate;
 })();
 </script>
 
